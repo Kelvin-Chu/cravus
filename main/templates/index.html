@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home - CravUs</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <base href="/"/>
+    {% include 'stylesheets.html' %}
+</head>
+{% verbatim %}
+<body ng-app="cravus" ng-cloak style="background-image: url({{ bgimg || 'static/img/bg2.jpg' }});">
+{% endverbatim %}
+<div id="bgndVideo" class="player"
+     data-property="{videoURL:'https://www.youtube.com/watch?v=_5PwDjRcFo4',containment:'body',autoPlay:true, mute:true, startAt:0, realfullscreen:true, optimizeDisplay:true, loop:false, startAt:28, stopAt: 56, quality:'hd1080', showControls: false, showYTLogo:false}">
+</div>
+<div ng-include="'{% static "partials/layout/navbar.html" %}'"></div>
+<div class="container-fluid content">
+    <div class="row">
+        <div class="col-xs-12 ng-view"></div>
+    </div>
+</div>
+{% include 'javascripts.html' %}
+</body>
+</html>

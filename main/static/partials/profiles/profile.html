@@ -1,0 +1,15 @@
+<div class="profile" ng-show="vm.profile">
+    <div class="jumbotron profile__header">
+        <h1 class="profile__username">+{{ vm.profile.username }}</h1>
+        <p class="profile__tagline">{{ vm.profile.tagline }}</p>
+    </div>
+
+    <dishes dishes="vm.dishes"></dishes>
+</div>
+
+<script>
+    try {
+        $('#bgndVideo').YTPApplyFilter('opacity', 1);
+        $('#bgndVideo').YTPStop();
+    } catch (e) {}
+</script>

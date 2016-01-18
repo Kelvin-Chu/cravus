@@ -1,0 +1,24 @@
+{
+  "name": "cravus",
+  "description": "cravus",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-cookies": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular": "~1.4.8",
+    "bootstrap-material-design": "~0.5.7",
+    "bootstrap": "~3.3.6",
+    "jquery": "~2.2.0",
+    "ng-dialog": "ngDialog#~0.5.6",
+    "snackbarjs": "~1.0.0",
+    "underscore": "~1.8.3"
+  }
+}

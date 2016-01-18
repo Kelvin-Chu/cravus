@@ -1,0 +1,14 @@
+<div class="row">
+    <dishes dishes="vm.dishes" ng-show="vm.dishes && vm.dishes.length"></dishes>
+    <a class="btn btn-primary btn-fab btn-raised mdi-content-add btn-add-new-dish" href="javascript:void(0)"
+       ng-show="vm.isAuthenticated" ng-dialog="/static/partials/dishes/new-dish.html"
+       ng-dialog-controller="newDishController as vm"></a>
+</div>
+
+<script>
+    try {
+        $('#bgndVideo').YTPApplyFilter('opacity', 1);
+        $('#bgndVideo').YTPStop();
+    } catch (e) {
+    }
+</script>

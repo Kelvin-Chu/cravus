@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b9854f5c-d0bf-4e63-8236-75a3ccf1ed43" name="cravus" url="http://cravus.com">
+        <fileTransfer host="cravus.com" port="22" privateKey="C:\Users\Kelvin Chu\Documents\keys\cravus" accessType="SFTP" username="www" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

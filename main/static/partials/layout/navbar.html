@@ -1,0 +1,63 @@
+<header id="header" role="banner">
+    <nav class="navbar navbar-white navbar-transparent" role="navigation" ng-controller="navbarController as vm">
+        <div class="navbar-top clearfix">
+            <div class="container-fluid">
+                <div class="pull-left">
+                    <ul class="navbar-top-nav clearfix hidden-xs">
+                        <li><i class="fa fa-search"></i>
+                            <input type="text" class="search" placeholder="Search Food"></li>
+                    </ul>
+                </div>
+                <div class="pull-right">
+                    <div class="navbar-collapse" ng-class="{collapse: vm.isCollapsed}">
+                        <ul class="nav navbar-nav">
+                            <li ng-class="{active: vm.route.current.activetab == 'dishes'}">
+                                <a href="/dishes" ng-click="vm.isCollapsed = true">Dishes</a>
+                            </li>
+                            <li ng-class="{active: vm.route.current.activetab == 'chefs'}">
+                                <a href="/chefs" ng-click="vm.isCollapsed = true">Chefs</a>
+                            </li>
+                            <li ng-show="vm.isAuthenticated"
+                                ng-class="{active: vm.route.current.activetab == 'user'}">
+                                <a href="/+{{ vm.user.username }}"
+                                   ng-click="vm.isCollapsed = true">+{{ vm.user.username }}</a>
+                            </li>
+                            <li ng-show="vm.isAuthenticated"
+                                ng-class="{active: vm.route.current.activetab == 'settings'}">
+                                <a href="/+{{ vm.user.username }}/settings"
+                                   ng-click="vm.isCollapsed = true">Settings</a>
+                            </li>
+                            <li class="right15" ng-show="vm.isAuthenticated">
+                                <a href="javascript:void(0)" ng-click="vm.isCollapsed = true; vm.logout()">Logout</a>
+                            </li>
+                            <li class="right15" ng-hide="vm.isAuthenticated"
+                                ng-class="{active: vm.route.current.activetab == 'login'}">
+                                <a href="/login" ng-click="vm.isCollapsed = true">Login</a>
+                            </li>
+                            <li class="border-left"><a href="#" ng-click="vm.isCollapsed = true"><i
+                                    class="fa fa-facebook"></i></a></li>
+                            <li><a href="#" ng-click="vm.isCollapsed = true"><i class="fa fa-twitter"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-inner sticky-menu">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand text-uppercase withoutripple" ng-click="vm.isCollapsed = true"
+                       ng-class="{'visible-xs': $root.hideHeader}" href="/">Crav<span
+                            class="colortext">us</span></a>
+                    <button type="button" class="navbar-toggle btn-circle pull-right collapsed"
+                            ng-click="vm.isCollapsed = !vm.isCollapsed">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
