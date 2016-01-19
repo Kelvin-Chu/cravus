@@ -11,7 +11,7 @@
     {% include 'stylesheets.html' %}
 </head>
 {% verbatim %}
-<body ng-app="cravus" ng-cloak style="background-image: url({{ bgimg || 'static/img/bg2.jpg' }});">
+<body ng-app="cravus" ng-cloak ng-attr-style="background-image: url({{ bgimg || 'static/img/bg2.jpg' }});">
 {% endverbatim %}
 <div id="bgndVideo" class="player"
      data-property="{videoURL:'https://www.youtube.com/watch?v=_5PwDjRcFo4',containment:'body',autoPlay:true, mute:true, startAt:0, realfullscreen:true, optimizeDisplay:true, loop:false, startAt:28, stopAt: 56, quality:'hd1080', showControls: false, showYTLogo:false}">

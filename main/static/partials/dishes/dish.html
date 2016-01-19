@@ -4,8 +4,8 @@
             <md-card-header>
                 <md-card-header-text>
                     <md-title>
-                        <a href="/+{{ dish.chef.username }}">
-                            +{{ dish.chef.username }}
+                        <a href="/+{{ card.chef.username }}">
+                            +{{ card.chef.username }}
                         </a>
                     </md-title>
                 </md-card-header-text>
@@ -13,10 +13,10 @@
             <img ng-src="http://images-cdn.9gag.com/photo/aX9qARV_460s.jpg" class="md-card-image" alt="Washed Out"
                  src="http://images-cdn.9gag.com/photo/aX9qARV_460s.jpg">
             <md-card-title>
-                <a href="#"><span class="md-headline">{{ dish.name }}</span></a>
+                <a href="#"><span class="md-headline">{{ card.name }}</span></a>
             </md-card-title>
             <md-card-content>
-                {{ dish.description }}
+                {{ card.description }}
             </md-card-content>
         </md-card>
     </div>

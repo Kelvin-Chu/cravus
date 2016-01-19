@@ -2,10 +2,18 @@
     'use strict';
 
     angular.module('cravus.profiles').controller('profileController', profileController);
-    profileController.$inject = ['$rootScope', '$location', '$routeParams', 'profileFactory', 'snackbarFactory'];
-    function profileController($rootScope, $location, $routeParams, profileFactory, snackbarFactory) {
+    profileController.$inject = [
+        '$rootScope',
+        '$location',
+        '$routeParams',
+        'profileFactory',
+        'snackbarFactory',
+        'ytplayerFactory'
+    ];
+    function profileController($rootScope, $location, $routeParams, profileFactory, snackbarFactory, ytplayerFactory) {
         $rootScope.bgimg = 'static/img/bg2.jpg';
         $rootScope.hideHeader = false;
+        ytplayerFactory.play();
         var vm = this;
         vm.profile = undefined;
         vm.dishes = [];

@@ -2,10 +2,17 @@
     'use strict';
 
     angular.module('cravus.authentication').controller('registerController', registerController);
-    registerController.$inject = ['$location', '$rootScope', '$scope', 'authFactory'];
-    function registerController($location, $rootScope, $scope, authFactory) {
+    registerController.$inject = [
+        '$location',
+        '$rootScope',
+        '$scope',
+        'authFactory',
+        'ytplayerFactory'
+    ];
+    function registerController($location, $rootScope, $scope, authFactory, ytplayerFactory) {
         $rootScope.bgimg = 'static/img/bg2.jpg';
         $rootScope.hideHeader = false;
+        ytplayerFactory.play();
         var vm = this;
         activate();
         function activate() {

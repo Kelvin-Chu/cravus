@@ -2,10 +2,18 @@
     'use strict';
 
     angular.module('cravus.layout').controller('listDishesController', listDishesController);
-    listDishesController.$inject = ['$rootScope', '$scope', 'authFactory', 'dishesFactory', 'snackbarFactory'];
-    function listDishesController($rootScope, $scope, authFactory, dishesFactory, snackbarFactory) {
+    listDishesController.$inject = [
+        '$rootScope',
+        '$scope',
+        'authFactory',
+        'dishesFactory',
+        'snackbarFactory',
+        'ytplayerFactory'
+    ];
+    function listDishesController($rootScope, $scope, authFactory, dishesFactory, snackbarFactory, ytplayerFactory) {
         $rootScope.bgimg = 'none';
         $rootScope.hideHeader = true;
+        ytplayerFactory.stop();
         var vm = this;
         vm.isAuthenticated = authFactory.isAuthenticated();
         vm.dishes = [];

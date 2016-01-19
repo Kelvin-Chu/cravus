@@ -6,6 +6,7 @@
         'ngAnimate',
         'ngMaterial',
         'ui.bootstrap',
+        'akoenig.deckgrid',
         'cravus.authentication',
         'cravus.layout',
         'cravus.profiles',

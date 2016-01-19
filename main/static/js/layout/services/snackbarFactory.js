@@ -2,7 +2,6 @@
     'use strict';
 
     angular.module('cravus.layout').factory('snackbarFactory', snackbarFactory);
-
     function snackbarFactory() {
 
         function _snackbar(content, options) {
