@@ -1,28 +1,62 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="well">
-                <form role="form" ng-submit="vm.register()">
-                    <div class="form-group">
-                        <label for="register__email">Email</label>
-                        <input type="email" class="form-control" id="register__email" ng-model="vm.email"
-                               placeholder="ex. john@gmail.com"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="register__username">Username</label>
-                        <input type="text" class="form-control" id="register__username" ng-model="vm.username"
-                               placeholder="ex. John"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="register__password">Password</label>
-                        <input type="password" class="form-control" id="register__password" ng-model="vm.password"
-                               placeholder="ex. verysecurepassword"/>
-                    </div>
-                    <div class="form-group text-right">
-                        <button type="submit" class="btn btn-raised btn-primary">Sign Up</button>
-                    </div>
-                </form>
-            </div>
+        <div class="col-md-4 col-md-offset-4 text-center">
+            <md-card>
+                <md-card-title>
+                    <h1 class="margin-bottom5">Sign Up</h1>
+                </md-card-title>
+                <md-card-content>
+                    <form role="form" ng-submit="vm.register()">
+                        <md-input-container class="md-block md-input-invalid">
+                            <label for="register__email">Email</label>
+                            <input required="" name="email" ng-model="vm.email" type="email"
+                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
+                                   id="register__email"
+                                   aria-required="true" aria-invalid="true" style="">
+                            <div class="md-errors-spacer"></div>
+                            <div ng-messages="form.email.$error"
+                                 class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+                                <div ng-message="required" class="md-input-message-animation ng-scope">Email is
+                                    required.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block md-input-invalid">
+                            <label for="register__username">Username</label>
+                            <input required="" name="username" ng-model="vm.username" type="text"
+                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
+                                   id="register__username"
+                                   aria-required="true" aria-invalid="true" style="">
+                            <div class="md-errors-spacer"></div>
+                            <div ng-messages="form.username.$error"
+                                 class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+                                <div ng-message="required" class="md-input-message-animation ng-scope">Username is
+                                    required.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block md-input-invalid">
+                            <label for="register__password">Password</label>
+                            <input required="" name="password" ng-model="vm.password" type="password"
+                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
+                                   id="register__password"
+                                   aria-required="true" aria-invalid="true" style="">
+                            <div class="md-errors-spacer"></div>
+                            <div ng-messages="form.password.$error"
+                                 class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+                                <div ng-message="required" class="md-input-message-animation ng-scope">Password is
+                                    required.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <div class="form-group text-right">
+                            <md-button class="btn md-raised md-primary btn-default" md-ink-ripple="#e9e9e9"
+                                       type="submit"><span class="ng-scope">Submit</span>
+                            </md-button>
+                        </div>
+                    </form>
+                </md-card-content>
+            </md-card>
         </div>
     </div>
 </div>

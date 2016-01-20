@@ -57,7 +57,7 @@
                 };
             }
         ]);
-        $mdThemingProvider.theme('default').primaryPalette('orange').accentPalette('indigo');
+        $mdThemingProvider.theme('default').primaryPalette('deep-orange').accentPalette('indigo');
     }
 
 })();
