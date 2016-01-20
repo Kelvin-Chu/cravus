@@ -7,10 +7,10 @@
         '$location',
         '$routeParams',
         'profileFactory',
-        'snackbarFactory',
+        '$mdToast',
         'ytplayerFactory'
     ];
-    function profileController($rootScope, $location, $routeParams, profileFactory, snackbarFactory, ytplayerFactory) {
+    function profileController($rootScope, $location, $routeParams, profileFactory, $mdToast, ytplayerFactory) {
         $rootScope.bgimg = 'static/img/bg2.jpg';
         $rootScope.hideHeader = false;
         ytplayerFactory.play();
@@ -30,7 +30,7 @@
 
             function profileErrorFn(data, status, headers, config) {
                 $location.url('/');
-                snackbarFactory.error('That user does not exist.');
+                $mdToast.show($mdToast.simple().textContent('That user does not exist').hideDelay(3000));
             }
         }
     }

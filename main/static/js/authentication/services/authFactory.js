@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.authentication').factory('authFactory', authFactory);
-    authFactory.$inject = ['$localStorage', '$http', 'snackbarFactory'];
-    function authFactory($localStorage, $http, snackbarFactory) {
+    authFactory.$inject = ['$localStorage', '$http', '$mdToast'];
+    function authFactory($localStorage, $http, $mdToast) {
         function register(email, password, username) {
             return $http.post('/api/v1/accounts/', {
                 username: username,
@@ -16,15 +16,14 @@
             }
 
             function registerErrorFn(data, status, headers, config) {
-                console.log(data);
-                if(data.data.email) {
-                    snackbarFactory.show('Email: ' + data.data.email[0]);
+                if (data.data.email) {
+                    $mdToast.show($mdToast.simple().textContent('Email: ' + data.data.email[0]).hideDelay(3000));
                 }
-                if(data.data.username) {
-                    snackbarFactory.show('Username: ' +data.data.username[0]);
+                if (data.data.username) {
+                    $mdToast.show($mdToast.simple().textContent('Username: ' + data.data.username[0]).hideDelay(3000));
                 }
-                if(data.data.password) {
-                    snackbarFactory.show('Password: ' +data.data.password[0]);
+                if (data.data.password) {
+                    $mdToast.show($mdToast.simple().textContent('Password: ' + data.data.password[0]).hideDelay(3000));
                 }
             }
         }
@@ -41,8 +40,7 @@
             }
 
             function loginErrorFn(data, status, headers, config) {
-                console.log('Incorrect email/password combination.');
-                snackbarFactory.error(data.error);
+                $mdToast.show($mdToast.simple().textContent('Incorrect email/password combination.').hideDelay(3000));
             }
         }
 
@@ -56,7 +54,7 @@
             }
 
             function logoutErrorFn(data, status, headers, config) {
-                snackbarFactory.error('Please log in.');
+                $mdToast.show($mdToast.simple().textContent('Please log in.').hideDelay(3000));
                 unauthenticate();
                 window.location = '/login';
             }
@@ -67,10 +65,11 @@
                 token: $localStorage.token
             }).then(logoutSuccessFn, logoutErrorFn);
 
-            function logoutSuccessFn(data, status, headers, config) {}
+            function logoutSuccessFn(data, status, headers, config) {
+            }
 
             function logoutErrorFn(data, status, headers, config) {
-                snackbarFactory.error('Please log in.');
+                $mdToast.show($mdToast.simple().textContent('Please log in.').hideDelay(3000));
                 unauthenticate();
                 window.location = '/';
             }

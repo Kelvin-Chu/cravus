@@ -7,10 +7,10 @@
         '$routeParams',
         'authFactory',
         'profileFactory',
-        'snackbarFactory',
+        '$mdToast',
         'ytplayerFactory'
     ];
-    function settingsController($rootScope, $location, $routeParams, authFactory, profileFactory, snackbarFactory, ytplayerFactory) {
+    function settingsController($rootScope, $location, $routeParams, authFactory, profileFactory, $mdToast, ytplayerFactory) {
         $rootScope.bgimg = 'static/img/bg2.jpg';
         $rootScope.hideHeader = false;
         ytplayerFactory.play();
@@ -25,11 +25,11 @@
 
             if (!authenticatedAccount) {
                 $location.url('/login');
-                snackbarFactory.error('You must log in to view this page.');
+                $mdToast.show($mdToast.simple().textContent('You must log in to view this page.').hideDelay(3000));
             } else {
                 if (authenticatedAccount.username !== username) {
                     $location.url('/');
-                    snackbarFactory.error('You are not authorized to view this page.');
+                    $mdToast.show($mdToast.simple().textContent('You are not authorized to view this page.').hideDelay(3000));
                 }
             }
 
@@ -39,7 +39,7 @@
             }
             function profileErrorFn(data, status, headers, config) {
                 $location.url('/');
-                snackbarFactory.error('You are not authorized to view this page.');
+                $mdToast.show($mdToast.simple().textContent('You are not authorized to view this page.').hideDelay(3000));
             }
         }
 
@@ -49,12 +49,11 @@
             function profileSuccessFn(data, status, headers, config) {
                 authFactory.unauthenticate();
                 window.location = '/';
-
-                snackbarFactory.show('Your account has been deleted.');
+                $mdToast.show($mdToast.simple().textContent('Your account has been deleted.').hideDelay(3000));
             }
 
             function profileErrorFn(data, status, headers, config) {
-                snackbarFactory.error(data.error);
+                $mdToast.show($mdToast.simple().textContent('There was an error processing your request.').hideDelay(3000));
             }
         }
 
@@ -62,11 +61,11 @@
             profileFactory.update(vm.profile).then(profileSuccessFn, profileErrorFn);
 
             function profileSuccessFn(data, status, headers, config) {
-                snackbarFactory.show('Your profile has been updated.');
+                $mdToast.show($mdToast.simple().textContent('Your profile has been updated.').hideDelay(3000));
             }
 
             function profileErrorFn(data, status, headers, config) {
-                snackbarFactory.error(data.error);
+                $mdToast.show($mdToast.simple().textContent('There was an error processing your request.').hideDelay(3000));
             }
         }
     }

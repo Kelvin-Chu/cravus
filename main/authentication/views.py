@@ -28,7 +28,6 @@ class AccountViewSet(viewsets.ModelViewSet):
             Account.objects.create_user(**serializer.validated_data)
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
-        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):

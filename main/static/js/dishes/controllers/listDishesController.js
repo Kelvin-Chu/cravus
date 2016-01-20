@@ -7,10 +7,10 @@
         '$scope',
         'authFactory',
         'dishesFactory',
-        'snackbarFactory',
+        '$mdToast',
         'ytplayerFactory'
     ];
-    function listDishesController($rootScope, $scope, authFactory, dishesFactory, snackbarFactory, ytplayerFactory) {
+    function listDishesController($rootScope, $scope, authFactory, dishesFactory, $mdToast, ytplayerFactory) {
         $rootScope.bgimg = 'none';
         $rootScope.hideHeader = true;
         ytplayerFactory.stop();
@@ -35,7 +35,7 @@
             }
 
             function dishesErrorFn(data, status, headers, config) {
-                snackbarFactory.error(data.error);
+                $mdToast.show($mdToast.simple().textContent('Site in maintenance, try again later!').hideDelay(3000));
             }
         }
     }

@@ -936,7 +936,7 @@ md-card md-card-title {
 @media (max-width: 767px) {
     .navbar-brand {
         height: 80px !important;
-        padding: 23px 15px !important;
+        padding: 23px 0 !important;
     }
 
     .navbar-inner {
