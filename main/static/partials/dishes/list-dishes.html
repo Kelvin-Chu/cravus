@@ -1,6 +1,10 @@
-<div class="row">
-    <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html" class="deckgrid"></div>
-    <a class="btn btn-primary btn-fab btn-raised mdi-content-add btn-add-new-dish" href="javascript:void(0)"
-       ng-show="vm.isAuthenticated" ng-dialog="/static/partials/dishes/new-dish.html"
-       ng-dialog-controller="newDishController as vm"></a>
+<div class="-">
+    <div class="container-fluid">
+        <div class="row">
+            <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html" class="deckgrid"></div>
+            <a class="btn btn-primary btn-fab btn-raised mdi-content-add btn-add-new-dish" href="javascript:void(0)"
+               ng-show="vm.isAuthenticated" ng-dialog="/static/partials/dishes/new-dish.html"
+               ng-dialog-controller="newDishController as vm"></a>
+        </div>
+    </div>
 </div>

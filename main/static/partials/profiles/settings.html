@@ -1,39 +1,42 @@
-<div class="col-md-4 col-md-offset-4">
-    <div class="well" ng-show="vm.profile">
-        <form role="form" class="settings" ng-submit="vm.update()">
-            <div class="form-group">
-                <label for="settings__email">Email</label>
-                <input type="text" class="form-control" id="settings__email" ng-model="vm.profile.email"
-                       placeholder="ex. john@example.com"/>
-            </div>
+<div class="container-fluid">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="well" ng-show="vm.profile">
+            <form role="form" class="settings" ng-submit="vm.update()">
+                <div class="form-group">
+                    <label for="settings__email">Email</label>
+                    <input type="text" class="form-control" id="settings__email" ng-model="vm.profile.email"
+                           placeholder="ex. john@example.com"/>
+                </div>
 
-            <div class="form-group">
-                <label for="settings__password">New Password</label>
-                <input type="password" class="form-control" id="settings__password" ng-model="vm.profile.password"
-                       placeholder="ex. supersecretpassword"/>
-            </div>
+                <div class="form-group">
+                    <label for="settings__password">New Password</label>
+                    <input type="password" class="form-control" id="settings__password" ng-model="vm.profile.password"
+                           placeholder="ex. supersecretpassword"/>
+                </div>
 
-            <div class="form-group">
-                <label for="settings__confirm-password">Confirm Password</label>
-                <input type="password" class="form-control" id="settings__confirm-password"
-                       ng-model="vm.profile.confirm_password" placeholder="ex. supersecretpassword"/>
-            </div>
+                <div class="form-group">
+                    <label for="settings__confirm-password">Confirm Password</label>
+                    <input type="password" class="form-control" id="settings__confirm-password"
+                           ng-model="vm.profile.confirm_password" placeholder="ex. supersecretpassword"/>
+                </div>
 
-            <div class="form-group">
-                <label for="settings__username">Username</label><br>
-                <h4>{{ vm.profile.username }}</h4>
-            </div>
+                <div class="form-group">
+                    <label for="settings__username">Username</label><br>
+                    <h4>{{ vm.profile.username }}</h4>
+                </div>
 
-            <div class="form-group">
-                <label for="settings__tagline">Tagline</label>
+                <div class="form-group">
+                    <label for="settings__tagline">Tagline</label>
                 <textarea class="form-control" id="settings__tagline" ng-model="vm.profile.tagline"
                           placeholder="ex. Boo!"/>
-            </div>
+                </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="button" class="btn btn-danger pull-right" ng-click="vm.destroy()">Delete Account</button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-danger pull-right" ng-click="vm.destroy()">Delete Account
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
