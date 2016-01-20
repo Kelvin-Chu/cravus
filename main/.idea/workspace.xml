@@ -4,16 +4,8 @@
     <list default="true" id="e5c38d61-73bb-484a-bd8f-b63f58954b40" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/styles.css" afterPath="$PROJECT_DIR$/static/css/styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/partials/authentication/login.html" afterPath="$PROJECT_DIR$/static/partials/authentication/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/partials/authentication/register.html" afterPath="$PROJECT_DIR$/static/partials/authentication/register.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/partials/dishes/dish.html" afterPath="$PROJECT_DIR$/static/partials/dishes/dish.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/partials/dishes/list-dishes.html" afterPath="$PROJECT_DIR$/static/partials/dishes/list-dishes.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/partials/layout/index.html" afterPath="$PROJECT_DIR$/static/partials/layout/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/partials/layout/navbar.html" afterPath="$PROJECT_DIR$/static/partials/layout/navbar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/partials/profiles/profile.html" afterPath="$PROJECT_DIR$/static/partials/profiles/profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/partials/profiles/settings.html" afterPath="$PROJECT_DIR$/static/partials/profiles/settings.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/templates/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/stylesheets.html" afterPath="$PROJECT_DIR$/templates/stylesheets.html" />
     </list>
     <ignored path="main.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/partials/layout/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.3076923">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6012862">
+              <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -102,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/static/partials/dishes/list-dishes.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+              <caret line="0" column="19" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -111,18 +103,18 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.423077">
-              <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+            <state vertical-scroll-proportion="-11.769231">
+              <caret line="18" column="62" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="62" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styles.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38263667">
-              <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="29" />
+            <state vertical-scroll-proportion="-19.615385">
+              <caret line="75" column="1" selection-start-line="75" selection-start-column="1" selection-end-line="75" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -198,14 +190,14 @@
         <option value="$PROJECT_DIR$/static/js/layout/services/ytplayerFactory.js" />
         <option value="$PROJECT_DIR$/static/partials/dishes/dish.html" />
         <option value="$PROJECT_DIR$/templates/stylesheets.html" />
-        <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/static/partials/authentication/login.html" />
         <option value="$PROJECT_DIR$/static/partials/authentication/register.html" />
         <option value="$PROJECT_DIR$/static/partials/profiles/settings.html" />
         <option value="$PROJECT_DIR$/static/partials/profiles/profile.html" />
-        <option value="$PROJECT_DIR$/static/css/styles.css" />
         <option value="$PROJECT_DIR$/static/partials/layout/navbar.html" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/static/partials/dishes/list-dishes.html" />
+        <option value="$PROJECT_DIR$/static/css/styles.css" />
         <option value="$PROJECT_DIR$/static/partials/layout/index.html" />
       </list>
     </option>
@@ -1225,14 +1217,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/seagreen.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-33.69091">
-          <caret line="109" column="22" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/cravus.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1249,10 +1233,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/partials/authentication/login.html">
+    <entry file="file://$PROJECT_DIR$/static/partials/layout/navbar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="29" />
+        <state vertical-scroll-proportion="-66.69231">
+          <caret line="102" column="22" selection-start-line="102" selection-start-column="22" selection-end-line="102" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/seagreen.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-33.69091">
+          <caret line="109" column="22" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1265,18 +1257,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/partials/layout/navbar.html">
+    <entry file="file://$PROJECT_DIR$/static/partials/authentication/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-66.69231">
-          <caret line="102" column="22" selection-start-line="102" selection-start-column="22" selection-end-line="102" selection-end-column="22" />
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.423077">
-          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+        <state vertical-scroll-proportion="-11.769231">
+          <caret line="18" column="62" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.615385">
+          <caret line="75" column="1" selection-start-line="75" selection-start-column="1" selection-end-line="75" selection-end-column="11" />
           <folding />
         </state>
       </provider>
@@ -1284,23 +1284,15 @@
     <entry file="file://$PROJECT_DIR$/static/partials/dishes/list-dishes.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+          <caret line="0" column="19" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/partials/layout/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3076923">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38263667">
-          <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.6012862">
+          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
           <folding />
         </state>
       </provider>
