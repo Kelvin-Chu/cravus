@@ -5,6 +5,7 @@
     navbarController.$inject = ['$route', 'authFactory'];
     function navbarController($route, authFactory) {
         var vm = this;
+        vm.isOpen = false;
         vm.isCollapsed = true;
         vm.route = $route;
         vm.isAuthenticated = authFactory.isAuthenticated();

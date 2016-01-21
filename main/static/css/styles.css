@@ -116,14 +116,15 @@ p {
     content: "\f107";
 }
 
-.margin-bottom5 {
-    margin-bottom: 5px !important;
+.cardformheader {
+    margin-top: 0 !important;
+    margin-bottom: 15px;
 }
 
 h1, .h1,
 h2, .h2,
 h3, .h3,
-h4, .h4{
+h4, .h4 {
     color: #e67e22;
 }
 
@@ -527,7 +528,6 @@ a.text-white:focus {
 }
 
 .navbar-top .dropdown-toggle {
-    line-height: 38px;
     display: block;
 }
 
@@ -583,7 +583,6 @@ a.text-white:focus {
 }
 
 .navbar-transparent {
-    background-color: transparent !important;
     position: relative;
     top: 0;
     left: 0;
@@ -783,6 +782,21 @@ a.text-white:focus {
 .btn-toggle.opened .icon-bar:after {
     -webkit-transform: rotate3d(0, 0, 1, -45deg);
     transform: rotate3d(0, 0, 1, -45deg);
+}
+
+.navbar-nav li > .dropdown-menu {
+    border: none;
+    border-top: 1px solid transparent;
+    background-color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 16px;
+    position: relative;
+    top: 6px;
+    margin-right: 10px;
 }
 
 .search {
@@ -1020,6 +1034,10 @@ md-card md-card-title {
     .navbar-top .account-dropdown.pull-right {
         margin-left: 15px;
     }
+
+    .navbar-transparent {
+        background-color: rgba(0, 0, 0, 0.65) !important;
+    }
 }
 
 @media (min-width: 768px) {
@@ -1088,7 +1106,7 @@ md-card md-card-title {
     }
 
     .search {
-        width: 70px;
+        width: 200px;
     }
 
     .container > .navbar-collapse,
@@ -1158,8 +1176,6 @@ md-card md-card-title {
     }
 
     .navbar-nav li > .dropdown-menu {
-        border: none;
-        border-top: 1px solid transparent;
         margin: 0;
         border-radius: 0;
         min-width: 220px;

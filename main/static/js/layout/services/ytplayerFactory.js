@@ -15,7 +15,6 @@
 
         function stop() {
             try {
-                $('#bgndVideo').YTPStop();
                 $('.mbYTP_wrapper').css({'z-index' : '-100'});
             } catch (e) {
             }
