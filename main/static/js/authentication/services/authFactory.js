@@ -28,7 +28,31 @@
             }
         }
 
-        function login(email, password) {
+        function chefRegister(email, password, username) {
+            return $http.post('/api/v1/chef/accounts/', {
+                username: username,
+                password: password,
+                email: email
+            }).then(registerSuccessFn, registerErrorFn);
+
+            function registerSuccessFn(data, status, headers, config) {
+                login(email, password);
+            }
+
+            function registerErrorFn(data, status, headers, config) {
+                if (data.data.email) {
+                    $mdToast.show($mdToast.simple().textContent('Email: ' + data.data.email[0]).hideDelay(3000));
+                }
+                if (data.data.username) {
+                    $mdToast.show($mdToast.simple().textContent('Username: ' + data.data.username[0]).hideDelay(3000));
+                }
+                if (data.data.password) {
+                    $mdToast.show($mdToast.simple().textContent('Password: ' + data.data.password[0]).hideDelay(3000));
+                }
+            }
+        }
+
+        function login(email, password, next) {
             return $http.post('/api/v1/auth/login/', {
                 email: email,
                 password: password
@@ -92,6 +116,14 @@
             return !!$localStorage.authenticatedAccount;
         }
 
+        function isChef() {
+            var user = getAuthenticatedAccount();
+            if (user) {
+                return user.is_chef;
+            }
+            return false;
+        }
+
         function setAuthenticatedAccount(account) {
             $localStorage.token = account.token;
             $localStorage.authenticatedAccount = JSON.stringify(account.user);
@@ -107,9 +139,11 @@
             isAuthenticated: isAuthenticated,
             login: login,
             register: register,
+            chefRegister: chefRegister,
             refresh: refresh,
             verify: verify,
             logout: logout,
+            isChef: isChef,
             setAuthenticatedAccount: setAuthenticatedAccount,
             unauthenticate: unauthenticate
         };

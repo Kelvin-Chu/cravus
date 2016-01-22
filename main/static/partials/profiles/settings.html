@@ -1,42 +1,68 @@
 <div class="container-fluid">
-    <div class="col-md-4 col-md-offset-4">
-        <div class="well" ng-show="vm.profile">
-            <form role="form" class="settings" ng-submit="vm.update()">
-                <div class="form-group">
-                    <label for="settings__email">Email</label>
-                    <input type="text" class="form-control" id="settings__email" ng-model="vm.profile.email"
-                           placeholder="ex. john@example.com"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="settings__password">New Password</label>
-                    <input type="password" class="form-control" id="settings__password" ng-model="vm.profile.password"
-                           placeholder="ex. supersecretpassword"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="settings__confirm-password">Confirm Password</label>
-                    <input type="password" class="form-control" id="settings__confirm-password"
-                           ng-model="vm.profile.confirm_password" placeholder="ex. supersecretpassword"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="settings__username">Username</label><br>
-                    <h4>{{ vm.profile.username }}</h4>
-                </div>
-
-                <div class="form-group">
-                    <label for="settings__tagline">Tagline</label>
-                <textarea class="form-control" id="settings__tagline" ng-model="vm.profile.tagline"
-                          placeholder="ex. Boo!"/>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-danger pull-right" ng-click="vm.destroy()">Delete Account
-                    </button>
-                </div>
-            </form>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <md-card ng-show="vm.profile">
+                <md-card-title>
+                    <h1 class="cardformheader">Settings</h1>
+                </md-card-title>
+                <md-card-content>
+                    <form role="form" class="settings" ng-submit="vm.update()">
+                        <md-input-container class="md-block md-input-invalid">
+                            <label for="settings__email">Email</label>
+                            <input ng-model="vm.profile.email" type="email" id="settings__email"
+                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
+                                   aria-required="true" aria-invalid="true" style="">
+                            <div class="md-errors-spacer"></div>
+                            <div ng-messages="form.email.$error"
+                                 class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+                                <div ng-message="required" class="md-input-message-animation ng-scope">
+                                    Email is required.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block md-input-invalid">
+                            <label for="settings__password">Password</label>
+                            <input ng-model="vm.profile.password" id="settings__password" type="password"
+                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
+                                   aria-required="true" aria-invalid="true" style="">
+                            <div class="md-errors-spacer"></div>
+                            <div ng-messages="form.password.$error"
+                                 class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+                                <div ng-message="required" class="md-input-message-animation ng-scope">
+                                    Password is required.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block md-input-invalid">
+                            <label for="settings__confirm-password">Confirm Password</label>
+                            <input ng-model="vm.profile.password" id="settings__confirm-password" type="password"
+                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
+                                   aria-required="true" aria-invalid="true" style="">
+                            <div class="md-errors-spacer"></div>
+                            <div ng-messages="form.confirm-password.$error"
+                                 class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
+                                <div ng-message="required" class="md-input-message-animation ng-scope">
+                                    Password change comfirmation required.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block md-input-invalid">
+                            <label for="settings__username">Username</label>
+                            <input ng-model="vm.profile.username" id="settings__username" type="text"
+                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" disabled
+                                   aria-required="true" aria-invalid="true">
+                        </md-input-container>
+                        <div class="form-group text-right">
+                            <md-button type="button" class="btn md-raised md-warn btn-default pull-left"
+                                       ng-click="vm.destroy()">Delete Account
+                            </md-button>
+                            <md-button class="btn md-raised md-primary btn-default" md-ink-ripple="#e9e9e9"
+                                       type="submit"><span class="ng-scope">Update</span>
+                            </md-button>
+                        </div>
+                    </form>
+                </md-card-content>
+            </md-card>
         </div>
     </div>
 </div>

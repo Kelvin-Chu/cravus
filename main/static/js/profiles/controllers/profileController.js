@@ -3,17 +3,14 @@
 
     angular.module('cravus.profiles').controller('profileController', profileController);
     profileController.$inject = [
-        '$rootScope',
         '$location',
         '$routeParams',
         'profileFactory',
         '$mdToast',
         'ytplayerFactory'
     ];
-    function profileController($rootScope, $location, $routeParams, profileFactory, $mdToast, ytplayerFactory) {
-        $rootScope.bgimg = 'static/img/bg2.jpg';
-        $rootScope.hideHeader = false;
-        ytplayerFactory.play();
+    function profileController($location, $routeParams, profileFactory, $mdToast, ytplayerFactory) {
+        ytplayerFactory.stop();
         var vm = this;
         vm.profile = undefined;
         vm.dishes = [];

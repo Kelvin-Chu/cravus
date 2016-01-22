@@ -9,6 +9,12 @@
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/register.html',
             activetab: 'register'
+        }).when('/chef/register', {
+            controller: 'registerController',
+            controllerAs: 'vm',
+            templateUrl: '/static/partials/authentication/register.html',
+            activetab: 'register',
+            chefregister: true
         }).when('/login', {
             controller: 'loginController',
             controllerAs: 'vm',
@@ -57,7 +63,7 @@
                 };
             }
         ]);
-        $mdThemingProvider.theme('default').primaryPalette('deep-orange').accentPalette('indigo');
+        $mdThemingProvider.theme('default').primaryPalette('deep-orange').warnPalette('grey');
     }
 
 })();

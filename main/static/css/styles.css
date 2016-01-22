@@ -531,10 +531,6 @@ a.text-white:focus {
     display: block;
 }
 
-.navbar-top .dropdown-toggle {
-    padding: 0;
-}
-
 .navbar-top.navbar-color .social-icon,
 .navbar-top.navbar-color .navbar-top-nav > li > a,
 .navbar-top.navbar-color .dropdown-toggle {
@@ -616,7 +612,8 @@ a.text-white:focus {
 .navbar-nav > li > a,
 .navbar-nav li a {
     display: block;
-    padding: 10px 0 0 15px !important;
+    padding: 10px 0;
+    margin-right: 15px;
     font: 700 14px/20px 'Open Sans', Verdana, sans-serif;
     text-transform: uppercase;
     min-height: 40px;
@@ -790,6 +787,10 @@ a.text-white:focus {
     background-color: rgba(0, 0, 0, 0.65) !important;
 }
 
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background-color: transparent;
+}
+
 .brand {
     font-family: 'Playfair Display', serif;
     font-weight: 900;
@@ -883,8 +884,8 @@ a.text-white:focus {
 }
 
 .container-fluid {
-    padding-right: 25px;
-    padding-left: 25px;
+    padding-right: 5px;
+    padding-left: 5px;
     max-width: 1600px;
 }
 
@@ -929,6 +930,28 @@ a.text-white:focus {
 .footer {
     margin-top: 30%;
     width: 100%;
+}
+
+.chefsignup > a {
+    background-color: #e67e22;
+    margin-left: 15px;
+    padding: 10px 5px !important;
+}
+
+.chefsignup > a:hover {
+    background-color: #e9e9e9 !important;
+}
+
+.dropdown-menu > li > a {
+    margin-left: 5px;
+}
+
+.margin-right0 {
+    margin-right: 0 !important;
+}
+
+.md-button {
+    font-weight: 700;
 }
 
 md-card {
@@ -1054,8 +1077,8 @@ md-card md-card-title {
         border-left: 1px solid #e1e1e1;
     }
 
-    .right15 {
-        margin-right: 15px !important;
+    .left15 {
+        margin-left: 15px !important;
     }
 
     .lead {
@@ -1352,10 +1375,6 @@ md-card md-card-title {
     .container-fluid .navbar-btn.navbar-right.last,
     .container-fluid .navbar-btn.pull-right.last {
         margin-right: 15px;
-    }
-
-    .navbar-top .dropdown-toggle {
-        padding: 0 15px;
     }
 
     .navbar-top .dropdowns-container.pull-right.last .currency-dropdown .dropdown-toggle {

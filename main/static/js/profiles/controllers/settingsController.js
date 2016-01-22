@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('cravus.profiles').controller('settingsController', settingsController);
-    settingsController.$inject = ['$rootScope',
+    settingsController.$inject = [
         '$location',
         '$routeParams',
         'authFactory',
@@ -10,10 +10,8 @@
         '$mdToast',
         'ytplayerFactory'
     ];
-    function settingsController($rootScope, $location, $routeParams, authFactory, profileFactory, $mdToast, ytplayerFactory) {
-        $rootScope.bgimg = 'static/img/bg2.jpg';
-        $rootScope.hideHeader = false;
-        ytplayerFactory.play();
+    function settingsController($location, $routeParams, authFactory, profileFactory, $mdToast, ytplayerFactory) {
+        ytplayerFactory.stop();
         var vm = this;
         vm.destroy = destroy;
         vm.update = update;
@@ -36,7 +34,9 @@
             profileFactory.get(username).then(profileSuccessFn, profileErrorFn);
             function profileSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
+                console.log(vm.profile);
             }
+
             function profileErrorFn(data, status, headers, config) {
                 $location.url('/');
                 $mdToast.show($mdToast.simple().textContent('You are not authorized to view this page.').hideDelay(3000));

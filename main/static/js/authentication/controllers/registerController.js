@@ -4,16 +4,14 @@
     angular.module('cravus.authentication').controller('registerController', registerController);
     registerController.$inject = [
         '$location',
-        '$rootScope',
-        '$scope',
+        '$route',
         'authFactory',
         'ytplayerFactory'
     ];
-    function registerController($location, $rootScope, $scope, authFactory, ytplayerFactory) {
-        $rootScope.bgimg = 'static/img/bg2.jpg';
-        $rootScope.hideHeader = false;
+    function registerController($location, $route, authFactory, ytplayerFactory) {
         ytplayerFactory.play();
         var vm = this;
+        vm.route = $route;
         activate();
         function activate() {
             if (authFactory.isAuthenticated()) {
@@ -22,8 +20,12 @@
         }
 
         vm.register = register;
-        function register() {
-            authFactory.register(vm.email, vm.password, vm.username);
+        function register(chefregister) {
+            if (!chefregister) {
+                authFactory.register(vm.email, vm.password, vm.username);
+            } else {
+                authFactory.chefRegister(vm.email, vm.password, vm.username);
+            }
         }
     }
 

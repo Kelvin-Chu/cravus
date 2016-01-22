@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status
+from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
 from authentication.models import Account
@@ -41,3 +42,14 @@ class AccountViewSet(viewsets.ModelViewSet):
             'token': token,
             'user': AccountSerializer(account).data
         })
+
+
+@api_view(['POST'])
+def create_chef(request):
+    serializer = AccountSerializer(data=request.data)
+
+    if serializer.is_valid():
+        Account.objects.create_chef(**serializer.validated_data)
+        return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

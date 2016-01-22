@@ -3,14 +3,11 @@
 
     angular.module('cravus.layout').controller('indexController', indexController);
     indexController.$inject = [
-        '$rootScope',
         '$location',
         'authFactory',
         'ytplayerFactory'
     ];
-    function indexController($rootScope, $location, authFactory, ytplayerFactory) {
-        $rootScope.bgimg = 'static/img/bg2.jpg';
-        $rootScope.hideHeader = false;
+    function indexController($location, authFactory, ytplayerFactory) {
         ytplayerFactory.play();
 
         activate();

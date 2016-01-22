@@ -17,13 +17,10 @@
                                     <li ng-class="{active: vm.route.current.activetab == 'dishes'}">
                                         <a href="/dishes" ng-click="vm.isCollapsed = true">Dishes</a>
                                     </li>
-                                    <li ng-class="{active: vm.route.current.activetab == 'chefs'}">
-                                        <a href="/chefs" ng-click="vm.isCollapsed = true">Chefs</a>
-                                    </li>
                                     <li uib-dropdown is-open="vm.isOpen" ng-show="vm.isAuthenticated" class="right15">
                                         <a href="#" uib-dropdown-toggle>+{{ vm.user.username }}</a>
                                         <ul uib-dropdown-menu role="menu">
-                                            <li role="menuitem">
+                                            <li role="menuitem" ng-show="vm.isChef">
                                                 <a href="/+{{ vm.user.username }}"
                                                    ng-click="vm.isCollapsed = true">Profile</a>
                                             </li>
@@ -37,17 +34,20 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="right15"
-                                        ng-hide="vm.isAuthenticated || vm.route.current.activetab == 'login'">
+                                    <li ng-hide="vm.isAuthenticated || vm.route.current.activetab == 'login'">
                                         <a href="/login" ng-click="vm.isCollapsed = true">Login</a>
                                     </li>
-                                    <li class="right15"
-                                        ng-show="!vm.isAuthenticated && vm.route.current.activetab == 'login'">
+                                    <li ng-show="!vm.isAuthenticated && vm.route.current.activetab == 'login'">
                                         <a href="/register" ng-click="vm.isCollapsed = true">Sign Up</a>
                                     </li>
-                                    <li class="border-left"><a href="#" ng-click="vm.isCollapsed = true"><i
+                                    <li class="border-left"><a class="left15" href="#" ng-click="vm.isCollapsed = true"><i
                                             class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#" ng-click="vm.isCollapsed = true"><i class="fa fa-twitter"></i></a>
+                                    <li><a href="#" ng-click="vm.isCollapsed = true" class="margin-right0"><i
+                                            class="fa fa-twitter"></i></a>
+                                    </li>
+                                    <li ng-show="!vm.isAuthenticated" class="chefsignup">
+                                        <a ng-click="vm.isCollapsed = true" href="/chef/register">Be
+                                            A Chef</a>
                                     </li>
                                 </ul>
                             </div>
@@ -79,13 +79,10 @@
                                     <li ng-class="{active: vm.route.current.activetab == 'dishes'}">
                                         <a href="/dishes" ng-click="vm.isCollapsed = true">Dishes</a>
                                     </li>
-                                    <li ng-class="{active: vm.route.current.activetab == 'chefs'}">
-                                        <a href="/chefs" ng-click="vm.isCollapsed = true">Chefs</a>
-                                    </li>
-                                    <li ng-show="vm.isAuthenticated"
+                                    <li ng-show="vm.isAuthenticated && vm.isChef"
                                         ng-class="{active: vm.route.current.activetab == 'user'}">
                                         <a href="/+{{ vm.user.username }}"
-                                           ng-click="vm.isCollapsed = true">+{{ vm.user.username }}</a>
+                                           ng-click="vm.isCollapsed = true">Profile</a>
                                     </li>
                                     <li ng-show="vm.isAuthenticated"
                                         ng-class="{active: vm.route.current.activetab == 'settings'}">
@@ -103,9 +100,13 @@
                                         ng-show="vm.route.current.activetab == 'login'">
                                         <a href="/register" ng-click="vm.isCollapsed = true">Sign Up</a>
                                     </li>
+                                    <li ng-show="!vm.isAuthenticated">
+                                        <a ng-click="vm.isCollapsed = true" href="/chef/register">Be A Chef</a>
+                                    </li>
                                     <li class="border-left"><a href="#" ng-click="vm.isCollapsed = true"><i
-                                            class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#" ng-click="vm.isCollapsed = true"><i class="fa fa-twitter"></i></a>
+                                            class="fa fa-facebook"></i> Follow On Facebook</a></li>
+                                    <li><a href="#" ng-click="vm.isCollapsed = true"><i class="fa fa-twitter"></i>
+                                        Follow On Twitter</a>
                                     </li>
                                 </ul>
                             </div>
