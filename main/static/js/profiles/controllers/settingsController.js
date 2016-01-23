@@ -34,7 +34,6 @@
             profileFactory.get(username).then(profileSuccessFn, profileErrorFn);
             function profileSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
-                console.log(vm.profile);
             }
 
             function profileErrorFn(data, status, headers, config) {

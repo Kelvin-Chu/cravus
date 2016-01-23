@@ -1,12 +1,52 @@
+<div class="container-fluid profile-container">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <img class="img-circle avatar" src="/static/img/avatar.jpg"/>
+            <md-button class="md-icon-button pull-right edit" md-ink-ripple="#e9e9e9">
+                <i class="fa fa-edit fa-lg"></i>
+                <md-tooltip md-visible="false" md-direction="bottom">
+                    Edit Settings
+                </md-tooltip>
+            </md-button>
+            <md-divider class="profile-divider"></md-divider>
+            <h1 class="name">Pengxiao Mao</h1>
+            Austin, TX
+            <div class="status">
+                <i class="fa fa-cutlery"> 5 Dishes Available </i><i class="fa fa-usd"> 94 Dishes Sold </i> <i class="fa fa-users"></i> 13 Followers</i>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row">
-        <div class="profile" ng-show="vm.profile">
-            <div class="jumbotron profile__header">
-                <h1 class="profile__username">+{{ vm.profile.username }}</h1>
-                <p class="profile__tagline">{{ vm.profile.tagline }}</p>
-            </div>
-
-            <dishes dishes="vm.dishes"></dishes>
+        <div class="col-sm-8 text-center">
+            <md-card ng-show="vm.profile" class="profile">
+                <md-card-title>What's New</md-card-title>
+                <md-card-content>
+                    {{ vm.profile.tagline }}
+                </md-card-content>
+            </md-card>
+            <md-card ng-show="vm.profile" class="profile">
+                <md-card-title>
+                    <h1 class="cardformheader">+{{ vm.profile.username }}</h1>
+                </md-card-title>
+                <md-card-content>
+                    {{ vm.profile.tagline }}
+                </md-card-content>
+            </md-card>
         </div>
+        <div class="col-sm-4 text-center">
+            <md-card ng-show="vm.profile" class="profile about">
+                <md-card-title>
+                    <h1 class="cardformheader white">+{{ vm.profile.username }}</h1>
+                </md-card-title>
+                <md-card-content>
+                    {{ vm.profile.tagline }}
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+    <div class="row">
+        <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html" class="deckgrid"></div>
     </div>
 </div>
