@@ -32,14 +32,14 @@ h1 {
 
 h2 {
     font-family: 'Droid Serif', serif;
-    font-weight: 400;
-    font-style: italic;
-    line-height: 23px;
+    font-weight: 600;
+    line-height: 30px;
 }
 
 h3 {
     font-family: 'Droid Serif', serif;
-    font-weight: 300;
+    font-weight: 400;
+    font-size: 20px;
     font-style: italic;
     line-height: 23px;
 }
@@ -884,8 +884,8 @@ a.text-white:focus {
 }
 
 .container-fluid {
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-right: 15px;
+    padding-left: 15px;
     max-width: 1600px;
 }
 
@@ -923,7 +923,7 @@ a.text-white:focus {
     width: 20%;
 }
 
-.wrapper {
+.greybackground {
     background: #e9e9e9 fixed center;
 }
 
@@ -955,16 +955,23 @@ a.text-white:focus {
 }
 
 .profile {
-    margin: 15px 0 0;
+    margin-top: 15px;
 }
 
 .profile-container {
+    width: 100%;
     margin-top: -10px;
     background-color: #fff;
     min-height: 275px;
     -webkit-box-shadow: 0 2px 2px -1px #7a7a7a;
     -moz-box-shadow: 0 2px 2px -1px #7a7a7a;
     box-shadow: 0 2px 2px -1px #7a7a7a;
+}
+
+.food-container {
+    width: 100%;
+    margin-top: 15px;
+    background-color: #fff;
 }
 
 .single-card {
@@ -976,13 +983,13 @@ a.text-white:focus {
 }
 
 .avatar {
-    margin: 15px 0;
+    margin: 20px 0;
     width: 150px;
     height: 150px;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
-    border:4px solid #eee;
+    border: 4px solid #eee;
 }
 
 .name {
@@ -991,6 +998,7 @@ a.text-white:focus {
 
 .edit {
     position: absolute;
+    margin: 10px !important;
     color: #e67e22;
 }
 
@@ -1009,9 +1017,28 @@ a.text-white:focus {
     margin-left: 10px;
 }
 
-.about {
+.latest-dishes {
     background-color: #e67e22;
     color: #f5f5f5;
+    padding: 0 !important;
+}
+
+.latest-dish-wrapper {
+    padding: 15px;
+}
+
+.latest-dish {
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 15px;
+}
+
+.latest-dishes > md-tabs > md-tabs-wrapper {
+    background-color: transparent !important;
+}
+
+.latest-dishes > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar {
+    background: #f5f5f5 !important;
 }
 
 md-card {
@@ -1028,6 +1055,20 @@ md-card md-card-title {
     .deckgrid[deckgrid]::before {
         content: '1 .column.column-1-1';
     }
+
+    .container-fluid {
+        overflow-y: hidden;
+    }
+
+    .latest-dish-wrapper {
+        padding: 2px 0 0 0;
+    }
+
+    .latest-dish {
+        padding-right: 1px;
+        padding-left: 1px;
+        padding-bottom: 2px;
+    }
 }
 
 @media screen and (min-width: 480px) and (max-width: 767px) {
@@ -1036,8 +1077,8 @@ md-card md-card-title {
     }
 
     .container-fluid {
-        padding-right: 50px;
-        padding-left: 50px;
+        padding-right: 30px;
+        padding-left: 30px;
     }
 }
 
