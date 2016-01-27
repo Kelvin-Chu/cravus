@@ -998,6 +998,7 @@ a.text-white:focus {
 
 .edit {
     position: absolute;
+    right: 0;
     margin: 10px !important;
     color: #e67e22;
 }

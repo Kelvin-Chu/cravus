@@ -1,14 +1,18 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, mixins
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
-from authentication.models import Account
+from authentication.models import Account, Address
 from authentication.permissions import IsAccountOwner
-from authentication.serializers import AccountSerializer
+from authentication.serializers import AccountSerializer, AddressSerializer
 from rest_framework_jwt.settings import api_settings
 
 
-class AccountViewSet(viewsets.ModelViewSet):
+class AccountViewSet(mixins.CreateModelMixin,
+                     mixins.RetrieveModelMixin,
+                     mixins.UpdateModelMixin,
+                     mixins.DestroyModelMixin,
+                     viewsets.GenericViewSet):
     lookup_field = 'username'
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
@@ -53,3 +57,26 @@ def create_chef(request):
         return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AddressViewSet(mixins.RetrieveModelMixin,
+                     mixins.UpdateModelMixin,
+                     viewsets.GenericViewSet):
+    queryset = Address.objects.select_related('account').all()
+    serializer_class = AddressSerializer
+
+    def get_permissions(self):
+        self.permission_classes = [IsAuthenticated, IsAccountOwner, ]
+        return super(AddressViewSet, self).get_permissions()
+
+
+class AccountAddressViewSet(viewsets.ViewSet):
+    queryset = Address.objects.select_related('account').all()
+    serializer_class = AddressSerializer
+
+    def list(self, request, account_username=None):
+        if request.user.username != account_username:
+            return Response([])
+        queryset = self.queryset.filter(account__username=account_username).order_by('id')
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)

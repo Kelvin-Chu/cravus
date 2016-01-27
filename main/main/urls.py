@@ -1,15 +1,17 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework_nested import routers
-from authentication.views import AccountViewSet, create_chef
+from authentication.views import AccountViewSet, create_chef, AccountAddressViewSet, AddressViewSet
 from cravus.views import IndexView
 from rest_framework_jwt import views
 from dishes.views import AccountDishesViewSet, DishViewSet
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
+router.register(r'addresses', AddressViewSet)
 router.register(r'dishes', DishViewSet)
 accounts_router = routers.NestedSimpleRouter(router, r'accounts', lookup='account')
+accounts_router.register(r'addresses', AccountAddressViewSet)
 accounts_router.register(r'dishes', AccountDishesViewSet)
 
 urlpatterns = [

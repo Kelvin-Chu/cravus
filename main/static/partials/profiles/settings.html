@@ -15,7 +15,7 @@
                                             <label for="settings__email">Email</label>
                                             <input ng-model="vm.profile.email" type="email" id="settings__email"
                                                    class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                                   aria-required="true" aria-invalid="true" style="">
+                                                   required aria-required="true" aria-invalid="true" style="">
                                             <div class="md-errors-spacer"></div>
                                             <div ng-messages="form.email.$error"
                                                  class="md-input-messages-animation md-auto-hide ng-active"
@@ -35,24 +35,19 @@
                                             <div ng-messages="form.password.$error"
                                                  class="md-input-messages-animation md-auto-hide ng-active"
                                                  aria-live="assertive">
-                                                <div ng-message="required" class="md-input-message-animation ng-scope">
-                                                    Password is required.
-                                                </div>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__confirm-password">Confirm Password</label>
-                                            <input ng-model="vm.profile.password" id="settings__confirm-password"
+                                            <label for="settings__confirm_password">Confirm Password</label>
+                                            <input ng-model="vm.profile.confirm_password"
+                                                   id="settings__confirm_password"
                                                    type="password"
                                                    class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
                                                    aria-required="true" aria-invalid="true" style="">
                                             <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.confirm-password.$error"
+                                            <div ng-messages="form.confirm_password.$error"
                                                  class="md-input-messages-animation md-auto-hide ng-active"
                                                  aria-live="assertive">
-                                                <div ng-message="required" class="md-input-message-animation ng-scope">
-                                                    Password change comfirmation required.
-                                                </div>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block md-input-invalid">
@@ -78,55 +73,70 @@
                                 <md-content class="md-padding">
                                     <form role="form" class="settings" ng-submit="vm.update()">
                                         <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__email">Email</label>
-                                            <input ng-model="vm.profile.email" type="email" id="settings__email"
-                                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                                   aria-required="true" aria-invalid="true" style="">
+                                            <label for="settings__firstname">First Name</label>
+                                            <input ng-model="vm.profile.firstname" type="text" id="settings__firstname"
+                                                   class="ng-pristine md-input ng-invalid ng-touched"
+                                                   aria-invalid="true" style="">
                                             <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.email.$error"
+                                            <div ng-messages="form.firstname.$error"
                                                  class="md-input-messages-animation md-auto-hide ng-active"
                                                  aria-live="assertive">
-                                                <div ng-message="required" class="md-input-message-animation ng-scope">
-                                                    Email is required.
-                                                </div>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__password">Password</label>
-                                            <input ng-model="vm.profile.password" id="settings__password"
-                                                   type="password"
-                                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                                   aria-required="true" aria-invalid="true" style="">
+                                            <label for="settings__lastname">Last Name</label>
+                                            <input ng-model="vm.profile.lastname" type="text" id="settings__lastname"
+                                                   class="ng-pristine md-input ng-invalid ng-touched"
+                                                   aria-invalid="true" style="">
                                             <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.password.$error"
+                                            <div ng-messages="form.lastname.$error"
                                                  class="md-input-messages-animation md-auto-hide ng-active"
                                                  aria-live="assertive">
-                                                <div ng-message="required" class="md-input-message-animation ng-scope">
-                                                    Password is required.
-                                                </div>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__confirm-password">Confirm Password</label>
-                                            <input ng-model="vm.profile.password" id="settings__confirm-password"
-                                                   type="password"
-                                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
+                                            <label for="settings__address">Address Line</label>
+                                            <input ng-model="vm.profile.address" id="settings__address" type="text"
+                                                   class="ng-pristine md-input ng-invalid ng-touched"
                                                    aria-required="true" aria-invalid="true" style="">
                                             <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.confirm-password.$error"
+                                            <div ng-messages="form.address.$error"
                                                  class="md-input-messages-animation md-auto-hide ng-active"
                                                  aria-live="assertive">
-                                                <div ng-message="required" class="md-input-message-animation ng-scope">
-                                                    Password change comfirmation required.
-                                                </div>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__username">Username</label>
-                                            <input ng-model="vm.profile.username" id="settings__username" type="text"
-                                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                                   disabled
-                                                   aria-required="true" aria-invalid="true">
+                                            <label for="settings__city">City</label>
+                                            <input ng-model="vm.profile.city" id="settings__city" type="text"
+                                                   class="ng-pristine md-input ng-invalid ng-touched"
+                                                   aria-required="true" aria-invalid="true" style="">
+                                            <div class="md-errors-spacer"></div>
+                                            <div ng-messages="form.city.$error"
+                                                 class="md-input-messages-animation md-auto-hide ng-active"
+                                                 aria-live="assertive">
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block md-input-invalid">
+                                            <label for="settings__state">State</label>
+                                            <input ng-model="vm.profile.state" id="settings__state" type="text"
+                                                   class="ng-pristine md-input ng-invalid ng-touched"
+                                                   aria-required="true" aria-invalid="true" style="">
+                                            <div class="md-errors-spacer"></div>
+                                            <div ng-messages="form.state.$error"
+                                                 class="md-input-messages-animation md-auto-hide ng-active"
+                                                 aria-live="assertive">
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block md-input-invalid">
+                                            <label for="settings__zip">Zip Code</label>
+                                            <input ng-model="vm.profile.zip" id="settings__zip" type="text"
+                                                   class="ng-pristine md-input ng-invalid ng-touched"
+                                                   aria-required="true" aria-invalid="true" style="">
+                                            <div class="md-errors-spacer"></div>
+                                            <div ng-messages="form.zip.$error"
+                                                 class="md-input-messages-animation md-auto-hide ng-active"
+                                                 aria-live="assertive">
+                                            </div>
                                         </md-input-container>
                                         <div class="form-group text-right">
                                             <md-button type="button" class="btn md-raised md-warn btn-default pull-left"

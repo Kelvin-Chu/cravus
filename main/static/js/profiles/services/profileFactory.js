@@ -24,6 +24,7 @@
         }
 
         function update(profile) {
+            console.log(profile);
             return $http.put('/api/v1/accounts/' + profile.username + '/', profile)
                 .then(updateSuccessFn, updateErrorFn);
 

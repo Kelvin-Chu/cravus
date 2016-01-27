@@ -3,13 +3,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 text-center">
+                    <div class="form-group edit">
+                        <md-button class="btn md-raised md-primary btn-default" md-ink-ripple="#e9e9e9"
+                                   ng-show="vm.myProfile" type="submit"><span class="ng-scope">Edit</span>
+                        </md-button>
+                    </div>
                     <img class="img-circle avatar" src="/static/img/avatar.jpg"/>
-                    <md-button class="md-icon-button pull-right edit" md-ink-ripple="#e9e9e9">
-                        <i class="fa fa-edit fa-lg"></i>
-                        <md-tooltip md-visible="false" md-direction="bottom">
-                            Edit Settings
-                        </md-tooltip>
-                    </md-button>
                     <md-divider class="profile-divider"></md-divider>
                     <h1 class="name">Pengxiao Mao</h1>
                     Austin, TX
@@ -28,26 +27,26 @@
                     <md-tabs md-dynamic-height md-border-bottom class="md-accent">
                         <md-tab label="Today" class="white">
                             <md-card-content class="latest-dish-wrapper">
-                                <div class="col-xs-4 latest-dish">
+                                <div class="col-xs-12 col-sm-4 latest-dish">
                                     <img src="/static/img/food1.jpg" class="img-responsive"/>
                                 </div>
-                                <div class="col-xs-4 latest-dish">
+                                <div class="col-xs-12 col-sm-4 latest-dish">
                                     <img src="/static/img/food2.jpg" class="img-responsive"/>
                                 </div>
-                                <div class="col-xs-4 latest-dish">
+                                <div class="col-xs-12 col-sm-4 latest-dish">
                                     <img src="/static/img/food3.jpg" class="img-responsive"/>
                                 </div>
                             </md-card-content>
                         </md-tab>
                         <md-tab label="Tomorrow" class="white">
                             <md-card-content class="latest-dish-wrapper">
-                                <div class="col-xs-4 latest-dish">
+                                <div class="col-xs-12 col-sm-4 latest-dish">
                                     <img src="/static/img/food1.jpg" class="img-responsive"/>
                                 </div>
-                                <div class="col-xs-4 latest-dish">
+                                <div class="col-xs-12 col-sm-4 latest-dish">
                                     <img src="/static/img/food2.jpg" class="img-responsive"/>
                                 </div>
-                                <div class="col-xs-4 latest-dish">
+                                <div class="col-xs-12 col-sm-4 latest-dish">
                                     <img src="/static/img/food3.jpg" class="img-responsive"/>
                                 </div>
                             </md-card-content>
@@ -58,20 +57,38 @@
                     <md-card-title>
                         <h2 class="cardformheader">Tasty food made from veggies with the dirt washed off 'em</h2>
                     </md-card-title>
-                    <div class="col-xs-12">
-                        <md-divider></md-divider>
-                    </div>
                     <md-card-content class="text-left">
                         <div class="col-md-6">
-                            Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin
-                            venenatis ipsum ac feugiat.
-                            Vestibulum ullamcorper sodales nisi nec condimentum. Mauris convallis mauris at pellentesque
-                            volutpat. Phasellus at ultricies neque, quis malesuada augue. Donec eleifend<br><br>
-
-                            Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac
-                            feugiat.
-                            Vestibulum ullamcorper sodales nisi nec condimentum. Mauris convallis mauris at pellentesque
-                            volutpat. Phasellus at ultricies neque, quis malesuada augue. Donec eleifend<br><br>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Cuisine</th>
+                                    <th>Chinese</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="td-main">Type</td>
+                                    <td class="td-second">Homemade, Local Restaurant</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-main">Payment</td>
+                                    <td class="td-second">Cash, Visa, Mastercard</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-main">E-mail</td>
+                                    <td class="td-second"><a href="mailto:mail@example.com">email@example.com</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-main">Phone</td>
+                                    <td class="td-second"><a href="tel:01234567890">123-4567-8910</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-main">Website</td>
+                                    <td class="td-second"><a href="www.example.net">www.example.com</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="col-md-6">
                             Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac
@@ -94,7 +111,9 @@
     </div>
     <div class="food-container">
         <div class="container-fluid">
-            <h1>All Dishes</h1>
+            <div class="col-xs-12">
+                <h1>All Dishes</h1>
+            </div>
             <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
                  class="deckgrid"></div>
         </div>

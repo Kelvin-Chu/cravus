@@ -6,9 +6,9 @@
     function authFactory($localStorage, $http, $mdToast) {
         function register(email, password, username) {
             return $http.post('/api/v1/accounts/', {
-                username: username,
+                email: email,
                 password: password,
-                email: email
+                username: username
             }).then(registerSuccessFn, registerErrorFn);
 
             function registerSuccessFn(data, status, headers, config) {
