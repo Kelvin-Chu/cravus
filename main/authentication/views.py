@@ -7,14 +7,12 @@ from authentication.models import Account, Address
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer, AddressSerializer
 from rest_framework_jwt.settings import api_settings
+
 from cravus.utils import check_img, crop_img
 
 
-class AccountViewSet(mixins.CreateModelMixin,
-                     mixins.RetrieveModelMixin,
-                     mixins.UpdateModelMixin,
-                     mixins.DestroyModelMixin,
-                     viewsets.GenericViewSet):
+class AccountViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
+                     mixins.DestroyModelMixin, viewsets.GenericViewSet):
     lookup_field = 'username'
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
@@ -72,9 +70,7 @@ def create_chef(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class AddressViewSet(mixins.RetrieveModelMixin,
-                     mixins.UpdateModelMixin,
-                     viewsets.GenericViewSet):
+class AddressViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
     queryset = Address.objects.select_related('account').all()
     serializer_class = AddressSerializer
 

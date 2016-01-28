@@ -18,7 +18,7 @@ class DishViewSet(viewsets.ModelViewSet):
         return super(DishViewSet, self).get_permissions()
 
     def perform_create(self, serializer):
-        instance = serializer.save(chef=self.request.user)
+        serializer.save(chef=self.request.user)
         return super(DishViewSet, self).perform_create(serializer)
 
 
