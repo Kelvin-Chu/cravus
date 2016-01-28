@@ -1,11 +1,13 @@
 from rest_framework import viewsets, status, mixins
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, detail_route, parser_classes
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import AllowAny, SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
 from authentication.models import Account, Address
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer, AddressSerializer
 from rest_framework_jwt.settings import api_settings
+from cravus.utils import check_img, crop_img
 
 
 class AccountViewSet(mixins.CreateModelMixin,
@@ -26,15 +28,7 @@ class AccountViewSet(mixins.CreateModelMixin,
             self.permission_classes = [IsAuthenticated, IsAccountOwner, ]
         return super(AccountViewSet, self).get_permissions()
 
-    def create(self, request, **kwargs):
-        serializer = self.serializer_class(data=request.data)
-
-        if serializer.is_valid():
-            Account.objects.create_user(**serializer.validated_data)
-            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    # Token gets invalidated if the email is changed, override update method to return the new token after an update
     def update(self, request, *args, **kwargs):
         super(AccountViewSet, self).update(request, *args, **kwargs)
         account = self.get_object()
@@ -46,6 +40,25 @@ class AccountViewSet(mixins.CreateModelMixin,
             'token': token,
             'user': AccountSerializer(account).data
         })
+
+    @detail_route(methods=['PUT'], permission_classes=[IsAuthenticated, IsAccountOwner, ])
+    @parser_classes((FormParser, MultiPartParser,))
+    def image(self, request, *args, **kwargs):
+        error = 'Unable to read image, try a different image'
+        if 'upload' in request.data and 'crop' in request.data:
+            upload = request.data['upload']
+            crop = request.data['crop']
+            error = check_img(upload)
+            if not error:
+                crop_image = crop_img(upload, crop)
+                if isinstance(crop_image, str):
+                    error = crop_image
+                else:
+                    account = self.get_object()
+                    account.avatar.delete()
+                    account.avatar.save(upload.name, crop_image)
+                    return Response({'upload': [account.avatar.url]}, status=status.HTTP_201_CREATED)
+        return Response({'upload': [error]}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])

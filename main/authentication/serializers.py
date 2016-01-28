@@ -1,18 +1,18 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-
 from authentication.models import Account, Address
 from django.core.validators import validate_email
+from cravus.utils import check_img, crop_img
 
 
 class EmailField(serializers.Field):
+    # Override the default and send the entire object to to_representation instead of a single field
     def get_attribute(self, obj):
-        # Override the default and send the entire object to to_representation instead of a single field
         return obj
 
+    # This method is used to return the value of EmailField when a read request is made
+    # Unless the call is by the account owner or an internal call (such as check from login), return null
     def to_representation(self, obj):
-        # This method is used to return the value of EmailField when a read request is made
-        # Unless the call is by the account owner or an internal call (such as check from login), return null
         user = None
         request = self.context.get("request")
         if request and hasattr(request, "user"):
@@ -21,9 +21,9 @@ class EmailField(serializers.Field):
             return obj.email
         return ""
 
+    # This method is used to return the value of EmailField when a write request is made
+    # It is possible to get the entire request dictionary by overwriting the get_value method
     def to_internal_value(self, email):
-        # This method is used to return the value of EmailField when a write request is made
-        # It is possible to get the entire request dictionary by overwriting the get_value method
         validate_email(email)
         request = self.context.get("request")
         if request and hasattr(request, "user"):
@@ -39,23 +39,43 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ['id', 'email', 'username', 'created_at', 'updated_at', 'first_name', 'last_name', 'avatar',
-                  'password', 'confirm_password', 'is_chef']
-        read_only_fields = ['id', 'created_at', 'updated_at', 'avatar', 'is_chef']
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'avatar', 'password', 'confirm_password',
+                  'is_chef']
+        read_only_fields = ['id', 'is_chef']
+
+    # Overriding default create method to use create_user from account manager instead of going through serializer
+    # Otherwise the serializer will store the password in clear by default
+    def create(self, validated_data):
+        account = Account.objects.create_user(**validated_data)
+        return account
 
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.avatar = validated_data.get('avatar', instance.avatar)
         instance.save()
         password = validated_data.get('password', None)
         confirm_password = validated_data.get('confirm_password', None)
-
         if password and confirm_password and password == confirm_password:
             instance.set_password(password)
             instance.save()
-
         return instance
+
+    def validate_avatar(self, avatar):
+        error = 'Unable to read image, try a different image'
+        request = self.context.get('request')
+        if request and hasattr(request, 'data'):
+            if 'crop' in request.data:
+                crop = request.data['crop']
+                error = check_img(avatar)
+                if not error:
+                    crop_image = crop_img(avatar, crop)
+                    if isinstance(crop_image, str):
+                        error = crop_image
+                    else:
+                        return crop_image
+        raise ValidationError(error)
 
 
 class AddressSerializer(serializers.ModelSerializer):

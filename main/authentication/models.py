@@ -18,7 +18,7 @@ STATE_CHOICES = (
 
 def generate_avatar_filename(self, filename):
     extension = os.path.splitext(filename)[1]
-    path = os.path.join('avatars/' + datetime.now().strftime("%Y/%m/%d") + self.user.username, "/%s%s")
+    path = os.path.join('avatars/' + datetime.now().strftime("%Y/%m/%d") + '/' + self.username, '%s%s')
     return path % (uuid.uuid4(), extension)
 
 
