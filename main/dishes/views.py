@@ -1,8 +1,8 @@
-from rest_framework import viewsets
-from rest_framework.permissions import SAFE_METHODS, AllowAny, IsAuthenticated
+from rest_framework import viewsets, status
+from rest_framework.permissions import SAFE_METHODS, AllowAny
 from rest_framework.response import Response
 from dishes.models import Dish
-from dishes.permissions import IsChefOfDish
+from dishes.permissions import IsChefOfDish, IsChef
 from dishes.serializers import DishSerializer
 
 
@@ -13,8 +13,10 @@ class DishViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.request.method in SAFE_METHODS:
             self.permission_classes = [AllowAny, ]
+        elif self.request.method == 'POST':
+            self.permission_classes = [IsChef, ]
         else:
-            self.permission_classes = [IsAuthenticated, IsChefOfDish, ]
+            self.permission_classes = [IsChefOfDish, ]
         return super(DishViewSet, self).get_permissions()
 
     def perform_create(self, serializer):

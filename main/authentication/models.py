@@ -63,7 +63,7 @@ class Account(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.email
 
     def get_full_name(self):
@@ -95,5 +95,5 @@ class Address(models.Model):
     state = models.CharField(max_length=2, choices=STATE_CHOICES, default='-')
     zip = models.CharField(max_length=10, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s at %s" % (self.account, self.address1)
