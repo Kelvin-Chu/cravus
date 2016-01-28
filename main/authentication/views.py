@@ -1,5 +1,5 @@
 from rest_framework import viewsets, status, mixins
-from rest_framework.decorators import api_view, detail_route, parser_classes
+from rest_framework.decorators import api_view, detail_route, parser_classes, throttle_classes
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import AllowAny, SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
@@ -7,8 +7,8 @@ from authentication.models import Account, Address
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer, AddressSerializer
 from rest_framework_jwt.settings import api_settings
-
 from cravus.utils import check_img, crop_img
+from .utils import AccountThrottle
 
 
 class AccountViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
@@ -16,6 +16,7 @@ class AccountViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.
     lookup_field = 'username'
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    throttle_classes = [AccountThrottle, ]
 
     def get_permissions(self):
         if self.request.method in SAFE_METHODS:
@@ -60,6 +61,7 @@ class AccountViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.
 
 
 @api_view(['POST'])
+@throttle_classes([AccountThrottle, ])
 def create_chef(request):
     serializer = AccountSerializer(data=request.data)
 

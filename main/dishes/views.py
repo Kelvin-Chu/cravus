@@ -1,14 +1,16 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.permissions import SAFE_METHODS, AllowAny
 from rest_framework.response import Response
-from dishes.models import Dish
-from dishes.permissions import IsChefOfDish, IsChef
-from dishes.serializers import DishSerializer
+from .utils import DishThrottle
+from .models import Dish
+from .permissions import IsChefOfDish, IsChef
+from .serializers import DishSerializer
 
 
 class DishViewSet(viewsets.ModelViewSet):
     queryset = Dish.objects.order_by('-created_at')
     serializer_class = DishSerializer
+    throttle_classes = [DishThrottle, ]
 
     def get_permissions(self):
         if self.request.method in SAFE_METHODS:
@@ -29,6 +31,6 @@ class AccountDishesViewSet(viewsets.ViewSet):
     serializer_class = DishSerializer
 
     def list(self, request, account_username=None):
-        queryset = self.queryset.filter(chef__username=account_username)
+        queryset = self.queryset.filter(chef__username=account_username).order_by('-created_at')
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)

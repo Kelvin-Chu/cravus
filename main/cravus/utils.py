@@ -1,8 +1,12 @@
 import json
 import traceback
+from django.core.cache import cache
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
 from io import BytesIO
+from ipware.ip import get_ip
+from rest_framework.exceptions import Throttled
+from rest_framework.throttling import BaseThrottle
 
 
 def check_img(image):
@@ -49,3 +53,22 @@ def crop_img(image, crop):
     except Exception:
         print(traceback.format_exc())
         return 'Unable to read image, try a different image'
+
+
+class IPThrottlePostMixin(BaseThrottle):
+    cache_name = '_ip_throttle'
+    throttle = 25
+    detail = "Only %s requests allowed per day." % throttle
+
+    def allow_request(self, request, view):
+        if request.POST:
+            ip = get_ip(request)
+            if ip is not None:
+                name = str(ip)
+                count = cache.get(name + self.cache_name, 0)
+                if count >= self.throttle:
+                    raise Throttled(detail=self.detail)
+                else:
+                    count += 1
+                    cache.set(name + self.cache_name, count, 24 * 60 * 60)
+        return True
