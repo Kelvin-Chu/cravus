@@ -33,10 +33,10 @@
 
             function profileSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
-                console.log(vm.profile);
-                if (authFactory.getAuthenticatedAccount().username == vm.profile.username) {
-                    vm.myProfile = true;
-                    console.log('success');
+                if (authFactory.isAuthenticated()) {
+                    if (authFactory.getAuthenticatedAccount().username == vm.profile.username) {
+                        vm.myProfile = true;
+                    }
                 }
             }
 

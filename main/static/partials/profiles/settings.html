@@ -2,157 +2,122 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <md-card ng-show="vm.profile" class="single-card">
-                    <md-card-title>
-                        <h1 class="cardformheader">Settings</h1>
-                    </md-card-title>
-                    <md-card-content>
-                        <md-tabs md-dynamic-height md-border-bottom>
-                            <md-tab label="Account">
-                                <md-content class="md-padding">
-                                    <form role="form" class="settings" ng-submit="vm.update()">
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__email">Email</label>
-                                            <input ng-model="vm.profile.email" type="email" id="settings__email"
-                                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                                   required aria-required="true" aria-invalid="true" style="">
-                                            <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.email.$error"
-                                                 class="md-input-messages-animation md-auto-hide ng-active"
-                                                 aria-live="assertive">
-                                                <div ng-message="required" class="md-input-message-animation ng-scope">
-                                                    Email is required.
+                <form name="userForm" class="settings" ng-submit="vm.update()">
+                    <md-card ng-show="vm.profile" class="single-card">
+                        <md-card-title>
+                            <h1 class="cardformheader">Settings</h1>
+                        </md-card-title>
+                        <md-card-content>
+                            <md-tabs md-dynamic-height md-border-bottom>
+                                <md-tab label="Account">
+                                    <md-content class="md-padding">
+                                        <md-input-container class="md-block">
+                                            <label>Email</label>
+                                            <input name="email" ng-model="vm.profile.email" type="email" required>
+                                            <div ng-messages="userForm.email.$error">
+                                                <div ng-message="required" class="my-message">Email is required.</div>
+                                                <div ng-message="email" class="my-message">Invalid email format.</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <label>Password</label>
+                                            <input name="password" ng-model="vm.profile.password" type="password"
+                                                   ng-minlength="7">
+                                            <div ng-messages="userForm.password.$error">
+                                                <div ng-message="minlength">Your password needs to be at least 7
+                                                    characters.
                                                 </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__password">Password</label>
-                                            <input ng-model="vm.profile.password" id="settings__password"
-                                                   type="password"
-                                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                                   aria-required="true" aria-invalid="true" style="">
-                                            <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.password.$error"
-                                                 class="md-input-messages-animation md-auto-hide ng-active"
-                                                 aria-live="assertive">
+                                        <md-input-container class="md-block">
+                                            <label>Confirm Password</label>
+                                            <input name="confirm_password" ng-model="vm.profile.confirm_password"
+                                                   type="password" ng-minlength="7">
+                                            <div ng-messages="userForm.confirm_password.$error">
+                                                <div ng-message="minlength">Your password needs to be at least 7
+                                                    characters.
+                                                </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__confirm_password">Confirm Password</label>
-                                            <input ng-model="vm.profile.confirm_password"
-                                                   id="settings__confirm_password"
-                                                   type="password"
-                                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                                   aria-required="true" aria-invalid="true" style="">
-                                            <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.confirm_password.$error"
-                                                 class="md-input-messages-animation md-auto-hide ng-active"
-                                                 aria-live="assertive">
-                                            </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__username">Username</label>
-                                            <input ng-model="vm.profile.username" id="settings__username" type="text"
-                                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                                   disabled
-                                                   aria-required="true" aria-invalid="true">
+                                        <md-input-container class="md-block">
+                                            <label>Username</label>
+                                            <input ng-model="vm.profile.username" type="text" disabled>
                                         </md-input-container>
                                         <div class="form-group text-right">
                                             <md-button type="button" class="btn md-raised md-warn btn-default pull-left"
                                                        ng-click="vm.destroy()">Delete
                                             </md-button>
                                             <md-button class="btn md-raised md-primary btn-default"
-                                                       md-ink-ripple="#e9e9e9"
-                                                       type="submit"><span class="ng-scope">Update</span>
+                                                       md-ink-ripple="#e9e9e9" type="submit">
+                                                <span class="ng-scope">Update</span>
                                             </md-button>
                                         </div>
-                                    </form>
-                                </md-content>
-                            </md-tab>
-                            <md-tab label="Personal">
-                                <md-content class="md-padding">
-                                    <form role="form" class="settings" ng-submit="vm.update()">
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__firstname">First Name</label>
-                                            <input ng-model="vm.profile.firstname" type="text" id="settings__firstname"
-                                                   class="ng-pristine md-input ng-invalid ng-touched"
-                                                   aria-invalid="true" style="">
-                                            <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.firstname.$error"
-                                                 class="md-input-messages-animation md-auto-hide ng-active"
-                                                 aria-live="assertive">
-                                            </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Personal">
+                                    <md-content class="md-padding">
+                                        <md-input-container class="md-block">
+                                            <label>First Name</label>
+                                            <input name="first_name" ng-model="vm.profile.first_name" type="text">
+                                            <div ng-messages="userForm.firs_name.$error"></div>
                                         </md-input-container>
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__lastname">Last Name</label>
-                                            <input ng-model="vm.profile.lastname" type="text" id="settings__lastname"
-                                                   class="ng-pristine md-input ng-invalid ng-touched"
-                                                   aria-invalid="true" style="">
-                                            <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.lastname.$error"
-                                                 class="md-input-messages-animation md-auto-hide ng-active"
-                                                 aria-live="assertive">
-                                            </div>
+                                        <md-input-container class="md-block">
+                                            <label>Last Name</label>
+                                            <input name="last_name" ng-model="vm.profile.last_name" type="text">
+                                            <div ng-messages="userForm.last_name.$error"></div>
                                         </md-input-container>
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__address">Address</label>
-                                            <input ng-model="vm.profile.address" id="settings__address" type="text"
-                                                   class="ng-pristine md-input ng-invalid ng-touched"
-                                                   aria-required="true" aria-invalid="true" style="">
-                                            <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.address.$error"
-                                                 class="md-input-messages-animation md-auto-hide ng-active"
-                                                 aria-live="assertive">
-                                            </div>
+                                        <md-input-container class="md-block">
+                                            <label>Address</label>
+                                            <input name="address1" ng-model="vm.address.address1" type="text">
+                                            <div ng-messages="userForm.address1.$error"></div>
                                         </md-input-container>
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__city">City</label>
-                                            <input ng-model="vm.profile.city" id="settings__city" type="text"
-                                                   class="ng-pristine md-input ng-invalid ng-touched"
-                                                   aria-required="true" aria-invalid="true" style="">
-                                            <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.city.$error"
-                                                 class="md-input-messages-animation md-auto-hide ng-active"
-                                                 aria-live="assertive">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-5">
+                                                <md-input-container class="md-block">
+                                                    <label>City</label>
+                                                    <input name="city" ng-model="vm.address.city" type="text">
+                                                    <div ng-messages="userForm.city.$error"></div>
+                                                </md-input-container>
                                             </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__state">State</label>
-                                            <input ng-model="vm.profile.state" id="settings__state" type="text"
-                                                   class="ng-pristine md-input ng-invalid ng-touched"
-                                                   aria-required="true" aria-invalid="true" style="">
-                                            <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.state.$error"
-                                                 class="md-input-messages-animation md-auto-hide ng-active"
-                                                 aria-live="assertive">
+                                            <div class="col-xs-4 col-md-3">
+                                                <md-input-container class="md-block">
+                                                    <label>State</label>
+                                                    <md-select ng-model="vm.address.state" id="settings__state">
+                                                        <md-option ng-repeat="state in vm.states"
+                                                                   value="{{ state.abbrev }}">{{ state.abbrev }}
+                                                        </md-option>
+                                                    </md-select>
+                                                    <div ng-messages="userForm.state.$error"></div>
+                                                </md-input-container>
                                             </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block md-input-invalid">
-                                            <label for="settings__zip">Zip Code</label>
-                                            <input ng-model="vm.profile.zip" id="settings__zip" type="text"
-                                                   class="ng-pristine md-input ng-invalid ng-touched"
-                                                   aria-required="true" aria-invalid="true" style="">
-                                            <div class="md-errors-spacer"></div>
-                                            <div ng-messages="form.zip.$error"
-                                                 class="md-input-messages-animation md-auto-hide ng-active"
-                                                 aria-live="assertive">
+                                            <div class="col-xs-8 col-md-4">
+                                                <md-input-container class="md-block">
+                                                    <label>Zip Code</label>
+                                                    <input name="zip" ng-model="vm.address.zip"
+                                                           ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+                                                    <div ng-messages="userForm.zip.$error">
+                                                        <div ng-message="pattern" class="my-message">That doesn't look
+                                                            like a valid postal code.
+                                                        </div>
+                                                        <div ng-message="md-maxlength" class="my-message">
+                                                            Please use the 5 digit zip code.
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
                                             </div>
-                                        </md-input-container>
+                                        </div>
                                         <div class="form-group text-right">
-                                            <md-button type="button" class="btn md-raised md-warn btn-default pull-left"
-                                                       ng-click="vm.destroy()">Delete
-                                            </md-button>
                                             <md-button class="btn md-raised md-primary btn-default"
                                                        md-ink-ripple="#e9e9e9"
                                                        type="submit"><span class="ng-scope">Update</span>
                                             </md-button>
                                         </div>
-                                    </form>
-                                </md-content>
-                            </md-tab>
-                        </md-tabs>
-                    </md-card-content>
-                </md-card>
+                                    </md-content>
+                                </md-tab>
+                            </md-tabs>
+                        </md-card-content>
+                    </md-card>
+                </form>
             </div>
         </div>
     </div>

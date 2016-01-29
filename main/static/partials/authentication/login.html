@@ -6,32 +6,20 @@
                     <h1 class="cardformheader">Log In</h1>
                 </md-card-title>
                 <md-card-content>
-                    <form role="form" ng-submit="vm.login()">
-                        <md-input-container class="md-block md-input-invalid">
-                            <label for="login__email">Email</label>
-                            <input required="" name="email" ng-model="vm.email" type="email"
-                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                   id="login__email" aria-required="true" aria-invalid="true" style="">
-                            <div class="md-errors-spacer"></div>
-                            <div ng-messages="form.email.$error"
-                                 class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
-                                <div ng-message="required" class="md-input-message-animation ng-scope">Email is
-                                    required.
-                                </div>
+                    <form name="userForm" ng-submit="vm.login()">
+                        <md-input-container class="md-block">
+                            <label>Email</label>
+                            <input required name="email" ng-model="vm.email" type="email">
+                            <div ng-messages="userForm.email.$error">
+                                <div ng-message="required" class="my-message">Email is required.</div>
+                                <div ng-message="email" class="my-message">Invalid email format.</div>
                             </div>
                         </md-input-container>
-                        <md-input-container class="md-block md-input-invalid">
-                            <label for="login__password">Password</label>
-                            <input required="" name="password" ng-model="vm.password" type="password"
-                                   class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched"
-                                   id="login__password"
-                                   aria-required="true" aria-invalid="true" style="">
-                            <div class="md-errors-spacer"></div>
-                            <div ng-messages="form.password.$error"
-                                 class="md-input-messages-animation md-auto-hide ng-active" aria-live="assertive">
-                                <div ng-message="required" class="md-input-message-animation ng-scope">Password is
-                                    required.
-                                </div>
+                        <md-input-container class="md-block">
+                            <label>Password</label>
+                            <input required name="password" ng-model="vm.password" type="password">
+                            <div ng-messages="userForm.password.$error">
+                                <div ng-message="required" class="my-message">Password is required.</div>
                             </div>
                         </md-input-container>
                         <div class="form-group text-right">

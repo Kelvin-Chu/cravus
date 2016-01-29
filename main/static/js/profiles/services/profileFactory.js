@@ -24,17 +24,8 @@
         }
 
         function update(profile) {
-            console.log(profile);
-            return $http.put('/api/v1/accounts/' + profile.username + '/', profile)
-                .then(updateSuccessFn, updateErrorFn);
-
-            function updateSuccessFn(data, status, headers, config) {
-                authFactory.setAuthenticatedAccount(data.data);
-            }
-
-            function updateErrorFn(data, status, headers, config) {
-                console.error('Epic failure!');
-            }
+            delete profile['avatar'];
+            return $http.put('/api/v1/accounts/' + profile.username + '/', profile);
         }
 
         return {

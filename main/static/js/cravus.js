@@ -5,6 +5,7 @@
         'ngRoute',
         'ngAnimate',
         'ngMaterial',
+        'ngMessages',
         'ui.bootstrap',
         'akoenig.deckgrid',
         'cravus.authentication',

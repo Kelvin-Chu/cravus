@@ -7,14 +7,20 @@
         '$routeParams',
         'authFactory',
         'profileFactory',
+        'addressFactory',
         '$mdToast',
         'ytplayerFactory'
     ];
-    function settingsController($location, $routeParams, authFactory, profileFactory, $mdToast, ytplayerFactory) {
+    function settingsController($location, $routeParams, authFactory, profileFactory, addressFactory, $mdToast, ytplayerFactory) {
         ytplayerFactory.stop();
         var vm = this;
         vm.destroy = destroy;
         vm.update = update;
+        vm.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
+        'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY')
+            .split(' ').map(function (state) {
+                return {abbrev: state};
+            });
 
         activate();
         function activate() {
@@ -34,6 +40,15 @@
             profileFactory.get(username).then(profileSuccessFn, profileErrorFn);
             function profileSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
+                addressFactory.get(username).then(addressSuccessFn, addressErrorFn);
+
+                function addressSuccessFn(data, status, headers, config) {
+                    vm.address = data.data[0];
+                }
+
+                function addressErrorFn(data, status, headers, config) {
+                    $mdToast.show($mdToast.simple().textContent('Could not retrieve address information.').hideDelay(3000));
+                }
             }
 
             function profileErrorFn(data, status, headers, config) {
@@ -58,8 +73,10 @@
 
         function update() {
             profileFactory.update(vm.profile).then(profileSuccessFn, profileErrorFn);
+            addressFactory.update(vm.address);
 
             function profileSuccessFn(data, status, headers, config) {
+                authFactory.setAuthenticatedAccount(data.data);
                 $mdToast.show($mdToast.simple().textContent('Your profile has been updated.').hideDelay(3000));
             }
 
