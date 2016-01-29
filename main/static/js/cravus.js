@@ -14,10 +14,13 @@
         'cravus.dishes'
     ]);
     angular.module('cravus').run(run);
-    run.$inject = ['$http'];
-    function run($http) {
+    run.$inject = ['$rootScope', '$route', '$http'];
+    function run($rootScope, $route, $http) {
         $http.defaults.xsrfHeaderName = 'X-CSRFToken';
         $http.defaults.xsrfCookieName = 'csrftoken';
+        $rootScope.$on("$locationChangeStart", function (event, next, current) {
+            $rootScope.route = $route;
+        });
     }
 
 })();

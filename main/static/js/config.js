@@ -8,37 +8,44 @@
             controller: 'registerController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/register.html',
-            activetab: 'register'
+            activetab: 'register',
+            animate: true
         }).when('/chef/register', {
             controller: 'registerController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/register.html',
             activetab: 'register',
+            animate: true,
             chefregister: true
         }).when('/login', {
             controller: 'loginController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/login.html',
-            activetab: 'login'
+            activetab: 'login',
+            animate: true
         }).when('/dishes', {
             controller: 'listDishesController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/dishes/list-dishes.html',
-            activetab: 'dishes'
+            activetab: 'dishes',
+            animate: false
         }).when('/+:username', {
             controller: 'profileController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/profiles/profile.html',
-            activetab: 'user'
+            activetab: 'user',
+            animate: false
         }).when('/+:username/settings', {
             controller: 'settingsController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/profiles/settings.html',
-            activetab: 'settings'
+            activetab: 'settings',
+            animate: true
         }).when('/', {
             controller: 'indexController',
             controllerAs: 'vm',
-            templateUrl: '/static/partials/layout/index.html'
+            templateUrl: '/static/partials/layout/index.html',
+            animate: false
         }).otherwise('/');
         $locationProvider.html5Mode(true);
         $locationProvider.hashPrefix('!');

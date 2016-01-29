@@ -4,17 +4,17 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="pull-left">
+                        <div class="pull-left def">
                             <ul class="navbar-top-nav clearfix">
                                 <li><a href="/" class="brand">C</a></li>
                                 <li><i class="fa fa-search"></i>
                                     <input type="text" class="search" placeholder="Search Food"></li>
                             </ul>
                         </div>
-                        <div class="pull-right">
+                        <div class="pull-right default-margin-right">
                             <div class="navbar-collapse">
                                 <ul class="nav navbar-nav">
-                                    <li ng-class="{active: vm.route.current.activetab == 'dishes'}">
+                                    <li ng-class="{active: $root.route.current.activetab == 'dishes'}">
                                         <a href="/dishes" ng-click="vm.isCollapsed = true">Dishes</a>
                                     </li>
                                     <li uib-dropdown is-open="vm.isOpen" ng-show="$root.isAuthenticated" class="right15">
@@ -34,10 +34,10 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li ng-hide="$root.isAuthenticated || vm.route.current.activetab == 'login'">
+                                    <li ng-hide="$root.isAuthenticated || $root.route.current.activetab == 'login'">
                                         <a href="/login" ng-click="vm.isCollapsed = true">Login</a>
                                     </li>
-                                    <li ng-show="!$root.isAuthenticated && vm.route.current.activetab == 'login'">
+                                    <li ng-show="!$root.isAuthenticated && $root.route.current.activetab == 'login'">
                                         <a href="/register" ng-click="vm.isCollapsed = true">Sign Up</a>
                                     </li>
                                     <li class="border-left"><a class="left15" href="#" ng-click="vm.isCollapsed = true"><i
@@ -76,16 +76,16 @@
                         <div class="hidden-md hidden-lg hidden-sm">
                             <div class="navbar-collapse" ng-class="{collapse: vm.isCollapsed}">
                                 <ul class="nav navbar-nav">
-                                    <li ng-class="{active: vm.route.current.activetab == 'dishes'}">
+                                    <li ng-class="{active: $root.route.current.activetab == 'dishes'}">
                                         <a href="/dishes" ng-click="vm.isCollapsed = true">Dishes</a>
                                     </li>
                                     <li ng-show="$root.isAuthenticated && $root.isChef"
-                                        ng-class="{active: vm.route.current.activetab == 'user'}">
+                                        ng-class="{active: $root.route.current.activetab == 'user'}">
                                         <a href="/+{{ $root.authenticatedAccount.username }}"
                                            ng-click="vm.isCollapsed = true">Profile</a>
                                     </li>
                                     <li ng-show="$root.isAuthenticated"
-                                        ng-class="{active: vm.route.current.activetab == 'settings'}">
+                                        ng-class="{active: $root.route.current.activetab == 'settings'}">
                                         <a href="/+{{ $root.authenticatedAccount.username }}/settings"
                                            ng-click="vm.isCollapsed = true">Settings</a>
                                     </li>
@@ -93,11 +93,11 @@
                                         <a href="javascript:void(0)"
                                            ng-click="vm.isCollapsed = true; vm.logout()">Logout</a>
                                     </li>
-                                    <li ng-hide="$root.isAuthenticated || vm.route.current.activetab == 'login'">
+                                    <li ng-hide="$root.isAuthenticated || $root.route.current.activetab == 'login'">
                                         <a href="/login" ng-click="vm.isCollapsed = true">Login</a>
                                     </li>
                                     <li ng-hide="$root.isAuthenticated" class="right15"
-                                        ng-show="vm.route.current.activetab == 'login'">
+                                        ng-show="$root.route.current.activetab == 'login'">
                                         <a href="/register" ng-click="vm.isCollapsed = true">Sign Up</a>
                                     </li>
                                     <li ng-show="!$root.isAuthenticated">
