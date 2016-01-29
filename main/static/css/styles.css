@@ -59,6 +59,10 @@ p {
     color: #e67e22 !important;
 }
 
+.red {
+    color: rgb(213,0,0) !important;
+}
+
 .grey {
     color: #444444 !important;
 }

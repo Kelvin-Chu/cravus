@@ -4,67 +4,46 @@
     angular.module('cravus.authentication').factory('authFactory', authFactory);
     authFactory.$inject = ['$localStorage', '$http', '$mdToast'];
     function authFactory($localStorage, $http, $mdToast) {
-        function register(email, password, username) {
-            return $http.post('/api/v1/accounts/', {
-                email: email,
-                password: password,
-                username: username
-            }).then(registerSuccessFn, registerErrorFn);
+        function register(vm) {
+            return $http.post('/api/v1/accounts/', {email: vm.email, password: vm.password, username: vm.username})
+                .then(registerSuccessFn, registerErrorFn);
 
             function registerSuccessFn(data, status, headers, config) {
-                login(email, password);
+                clearErrors(vm);
+                login(vm);
             }
 
             function registerErrorFn(data, status, headers, config) {
-                if (data.data.email) {
-                    $mdToast.show($mdToast.simple().textContent('Email: ' + data.data.email[0]).hideDelay(3000));
-                }
-                if (data.data.username) {
-                    $mdToast.show($mdToast.simple().textContent('Username: ' + data.data.username[0]).hideDelay(3000));
-                }
-                if (data.data.password) {
-                    $mdToast.show($mdToast.simple().textContent('Password: ' + data.data.password[0]).hideDelay(3000));
-                }
+                setErrors(vm, data);
             }
         }
 
-        function chefRegister(email, password, username) {
-            return $http.post('/api/v1/chef/accounts/', {
-                username: username,
-                password: password,
-                email: email
-            }).then(registerSuccessFn, registerErrorFn);
+        function chefRegister(vm) {
+            return $http.post('/api/v1/chef/accounts/', {email: vm.email, password: vm.password, username: vm.username})
+                .then(chefRegisterSuccessFn, chefRegisterErrorFn);
 
-            function registerSuccessFn(data, status, headers, config) {
-                login(email, password);
+            function chefRegisterSuccessFn(data, status, headers, config) {
+                clearErrors(vm);
+                login(vm);
             }
 
-            function registerErrorFn(data, status, headers, config) {
-                if (data.data.email) {
-                    $mdToast.show($mdToast.simple().textContent('Email: ' + data.data.email[0]).hideDelay(3000));
-                }
-                if (data.data.username) {
-                    $mdToast.show($mdToast.simple().textContent('Username: ' + data.data.username[0]).hideDelay(3000));
-                }
-                if (data.data.password) {
-                    $mdToast.show($mdToast.simple().textContent('Password: ' + data.data.password[0]).hideDelay(3000));
-                }
+            function chefRegisterErrorFn(data, status, headers, config) {
+                setErrors(vm, data);
             }
         }
 
-        function login(email, password, next) {
-            return $http.post('/api/v1/auth/login/', {
-                email: email,
-                password: password
-            }).then(loginSuccessFn, loginErrorFn);
+        function login(vm) {
+            return $http.post('/api/v1/auth/login/', {email: vm.email, password: vm.password})
+                .then(loginSuccessFn, loginErrorFn);
 
             function loginSuccessFn(data, status, headers, config) {
                 setAuthenticatedAccount(data.data);
+                clearErrors(vm);
                 window.location = '/';
             }
 
             function loginErrorFn(data, status, headers, config) {
-                $mdToast.show($mdToast.simple().textContent('Incorrect email/password combination.').hideDelay(3000));
+                setErrors(vm, data);
             }
         }
 

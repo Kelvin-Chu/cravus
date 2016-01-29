@@ -7,19 +7,24 @@
                 </md-card-title>
                 <md-card-content>
                     <form name="userForm" ng-submit="vm.login()">
+                        <div ng-messages="vm.non_field_errors" class="red">
+                            <div ng-message="server">{{ vm.formErrors.non_field_errors }}</div>
+                        </div>
                         <md-input-container class="md-block">
                             <label>Email</label>
                             <input required name="email" ng-model="vm.email" type="email">
                             <div ng-messages="userForm.email.$error">
-                                <div ng-message="required" class="my-message">Email is required.</div>
-                                <div ng-message="email" class="my-message">Invalid email format.</div>
+                                <div ng-message="required">Email is required.</div>
+                                <div ng-message="email">Invalid email format.</div>
+                                <div ng-message="server">{{ vm.formErrors.email }}</div>
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Password</label>
                             <input required name="password" ng-model="vm.password" type="password">
                             <div ng-messages="userForm.password.$error">
-                                <div ng-message="required" class="my-message">Password is required.</div>
+                                <div ng-message="required">Password is required.</div>
+                                <div ng-message="server">{{ vm.formErrors.password }}</div>
                             </div>
                         </md-input-container>
                         <div class="form-group text-right">

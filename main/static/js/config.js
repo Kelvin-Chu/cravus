@@ -63,7 +63,10 @@
                 };
             }
         ]);
-        $mdThemingProvider.theme('default').primaryPalette('deep-orange').warnPalette('grey');
+        $mdThemingProvider.theme('default')
+            .primaryPalette('deep-orange')
+            .warnPalette('red')
+            .accentPalette('grey', {'default': '500'});
     }
 
 })();

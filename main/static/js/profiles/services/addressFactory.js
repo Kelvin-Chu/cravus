@@ -10,15 +10,7 @@
         }
 
         function update(address) {
-            return $http.put('/api/v1/addresses/' + address.id + '/', address)
-                .then(updateSuccessFn, updateErrorFn);
-
-            function updateSuccessFn(data, status, headers, config) {
-            }
-
-            function updateErrorFn(data, status, headers, config) {
-                console.error('Epic failure!');
-            }
+            return $http.put('/api/v1/addresses/' + address.id + '/', address);
         }
 
         return {

@@ -11,12 +11,16 @@
                             <md-tabs md-dynamic-height md-border-bottom>
                                 <md-tab label="Account">
                                     <md-content class="md-padding">
+                                        <div ng-messages="vm.non_field_errors" class="text-center red">
+                                            <div ng-message="server">{{ vm.formErrors.non_field_errors }}</div>
+                                        </div>
                                         <md-input-container class="md-block">
                                             <label>Email</label>
                                             <input name="email" ng-model="vm.profile.email" type="email" required>
                                             <div ng-messages="userForm.email.$error">
                                                 <div ng-message="required" class="my-message">Email is required.</div>
                                                 <div ng-message="email" class="my-message">Invalid email format.</div>
+                                                <div ng-message="server">{{ vm.formErrors.email }}</div>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block">
@@ -27,6 +31,7 @@
                                                 <div ng-message="minlength">Your password needs to be at least 7
                                                     characters.
                                                 </div>
+                                                <div ng-message="server">{{ vm.formErrors.password }}</div>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block">
@@ -37,6 +42,7 @@
                                                 <div ng-message="minlength">Your password needs to be at least 7
                                                     characters.
                                                 </div>
+                                                <div ng-message="server">{{ vm.formErrors.confirm_password }}</div>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block">
@@ -44,8 +50,8 @@
                                             <input ng-model="vm.profile.username" type="text" disabled>
                                         </md-input-container>
                                         <div class="form-group text-right">
-                                            <md-button type="button" class="btn md-raised md-warn btn-default pull-left"
-                                                       ng-click="vm.destroy()">Delete
+                                            <md-button type="button" ng-click="vm.destroy()"
+                                                       class="btn md-raised md-accent btn-default pull-left">Delete
                                             </md-button>
                                             <md-button class="btn md-raised md-primary btn-default"
                                                        md-ink-ripple="#e9e9e9" type="submit">
@@ -59,24 +65,32 @@
                                         <md-input-container class="md-block">
                                             <label>First Name</label>
                                             <input name="first_name" ng-model="vm.profile.first_name" type="text">
-                                            <div ng-messages="userForm.firs_name.$error"></div>
+                                            <div ng-messages="userForm.first_name.$error">
+                                                <div ng-message="server">{{ vm.formErrors.first_name }}</div>
+                                            </div>
                                         </md-input-container>
                                         <md-input-container class="md-block">
                                             <label>Last Name</label>
                                             <input name="last_name" ng-model="vm.profile.last_name" type="text">
-                                            <div ng-messages="userForm.last_name.$error"></div>
+                                            <div ng-messages="userForm.last_name.$error">
+                                                <div ng-message="server">{{ vm.formErrors.last_name }}</div>
+                                            </div>
                                         </md-input-container>
                                         <md-input-container class="md-block">
                                             <label>Address</label>
                                             <input name="address1" ng-model="vm.address.address1" type="text">
-                                            <div ng-messages="userForm.address1.$error"></div>
+                                            <div ng-messages="userForm.address1.$error">
+                                                <div ng-message="server">{{ vm.formErrors.address1 }}</div>
+                                            </div>
                                         </md-input-container>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-5">
                                                 <md-input-container class="md-block">
                                                     <label>City</label>
                                                     <input name="city" ng-model="vm.address.city" type="text">
-                                                    <div ng-messages="userForm.city.$error"></div>
+                                                    <div ng-messages="userForm.city.$error">
+                                                        <div ng-message="server">{{ vm.formErrors.city }}</div>
+                                                    </div>
                                                 </md-input-container>
                                             </div>
                                             <div class="col-xs-4 col-md-3">
@@ -87,7 +101,9 @@
                                                                    value="{{ state.abbrev }}">{{ state.abbrev }}
                                                         </md-option>
                                                     </md-select>
-                                                    <div ng-messages="userForm.state.$error"></div>
+                                                    <div ng-messages="userForm.state.$error">
+                                                        <div ng-message="server">{{ vm.formErrors.state }}</div>
+                                                    </div>
                                                 </md-input-container>
                                             </div>
                                             <div class="col-xs-8 col-md-4">
@@ -102,6 +118,7 @@
                                                         <div ng-message="md-maxlength" class="my-message">
                                                             Please use the 5 digit zip code.
                                                         </div>
+                                                        <div ng-message="server">{{ vm.formErrors.zip }}</div>
                                                     </div>
                                                 </md-input-container>
                                             </div>

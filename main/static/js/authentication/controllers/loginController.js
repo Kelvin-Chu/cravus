@@ -3,21 +3,24 @@
 
     angular.module('cravus.authentication').controller('loginController', loginController);
     loginController.$inject = [
+        '$scope',
         '$location',
         'authFactory',
         'ytplayerFactory'
     ];
-    function loginController($location, authFactory, ytplayerFactory) {
+    function loginController($scope, $location, authFactory, ytplayerFactory) {
         ytplayerFactory.play();
         var vm = this;
+        vm.scope = $scope;
+        vm.non_field_errors = {};
+        vm.formErrors = {};
         vm.login = login;
         function login() {
-            authFactory.login(vm.email, vm.password);
+            authFactory.login(vm);
         }
 
         activate();
         function activate() {
-            // If the user is authenticated, they should not be here.be here.
             if (authFactory.isAuthenticated()) {
                 $location.url('/');
             }

@@ -54,7 +54,9 @@ class AccountSerializer(serializers.ModelSerializer):
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.avatar = validated_data.get('avatar', instance.avatar)
-        instance.set_password(validated_data.get('password', None))
+        password = validated_data.get('password')
+        if password:
+            instance.set_password(password)
         instance.save()
         return instance
 
@@ -75,7 +77,9 @@ class AccountSerializer(serializers.ModelSerializer):
 
     def validate_password(self, password):
         request = self.context.get('request')
-        if request and hasattr(request, 'data'):
+        if not request or request.method == 'POST':
+            return password
+        if request.method == 'PUT' and hasattr(request, 'data'):
             if 'confirm_password' in request.data:
                 if request.data['confirm_password'] == password:
                     return password
