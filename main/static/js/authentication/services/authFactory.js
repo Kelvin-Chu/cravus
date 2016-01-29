@@ -19,7 +19,7 @@
         }
 
         function chefRegister(vm) {
-            return $http.post('/api/v1/chef/accounts/', {email: vm.email, password: vm.password, username: vm.username})
+            return $http.post('/api/v1/chefs/', {email: vm.email, password: vm.password, username: vm.username})
                 .then(chefRegisterSuccessFn, chefRegisterErrorFn);
 
             function chefRegisterSuccessFn(data, status, headers, config) {

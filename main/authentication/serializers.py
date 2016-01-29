@@ -77,11 +77,11 @@ class AccountSerializer(serializers.ModelSerializer):
 
     def validate_password(self, password):
         request = self.context.get('request')
-        if not request or request.method == 'POST':
-            return password
         if request.method == 'PUT' and hasattr(request, 'data'):
             if 'confirm_password' in request.data:
                 if request.data['confirm_password'] == password:
+                    return password
+        if request.method == 'POST':
                     return password
         raise ValidationError('Password confirmation mismatch.')
 

@@ -60,18 +60,6 @@ class AccountViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.
         return Response({'upload': [error]}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
-@throttle_classes([AccountThrottle, ])
-def create_chef(request):
-    serializer = AccountSerializer(data=request.data)
-
-    if serializer.is_valid():
-        Account.objects.create_chef(**serializer.validated_data)
-        return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
-
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class AddressViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
     queryset = Address.objects.select_related('account').all()
     serializer_class = AddressSerializer
