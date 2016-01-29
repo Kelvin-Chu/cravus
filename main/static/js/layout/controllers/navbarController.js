@@ -8,12 +8,15 @@
         vm.isOpen = false;
         vm.isCollapsed = true;
         vm.route = $route;
-        vm.isAuthenticated = authFactory.isAuthenticated();
-        vm.isChef = authFactory.isChef();
-        vm.user = authFactory.getAuthenticatedAccount();
         vm.logout = logout;
         function logout() {
             authFactory.logout();
+        }
+
+        activate();
+        function activate() {
+            authFactory.isAuthenticated();
+            authFactory.getAuthenticatedAccount();
         }
     }
 

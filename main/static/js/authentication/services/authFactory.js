@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.authentication').factory('authFactory', authFactory);
-    authFactory.$inject = ['$localStorage', '$http', '$mdToast'];
-    function authFactory($localStorage, $http, $mdToast) {
+    authFactory.$inject = ['$rootScope', '$location', '$localStorage', '$http', '$mdToast'];
+    function authFactory($rootScope, $location, $localStorage, $http, $mdToast) {
         function register(vm) {
             return $http.post('/api/v1/accounts/', {email: vm.email, password: vm.password, username: vm.username})
                 .then(registerSuccessFn, registerErrorFn);
@@ -39,7 +39,7 @@
             function loginSuccessFn(data, status, headers, config) {
                 setAuthenticatedAccount(data.data);
                 clearErrors(vm);
-                window.location = '/';
+                $location.url('/dishes');
             }
 
             function loginErrorFn(data, status, headers, config) {
@@ -59,22 +59,22 @@
             function logoutErrorFn(data, status, headers, config) {
                 $mdToast.show($mdToast.simple().textContent('Please log in.').hideDelay(3000));
                 unauthenticate();
-                window.location = '/login';
+                $location.url('/login');
             }
         }
 
         function verify() {
             return $http.post('/api/v1/auth/verify/', {
                 token: $localStorage.token
-            }).then(logoutSuccessFn, logoutErrorFn);
+            }).then(verifySuccessFn, verifyErrorFn);
 
-            function logoutSuccessFn(data, status, headers, config) {
+            function verifySuccessFn(data, status, headers, config) {
             }
 
-            function logoutErrorFn(data, status, headers, config) {
+            function verifyErrorFn(data, status, headers, config) {
                 $mdToast.show($mdToast.simple().textContent('Please log in.').hideDelay(3000));
                 unauthenticate();
-                window.location = '/';
+                $location.url('/login');
             }
         }
 
@@ -87,30 +87,29 @@
             if (!$localStorage.authenticatedAccount) {
                 return;
             }
-
-            return JSON.parse($localStorage.authenticatedAccount);
+            $rootScope.authenticatedAccount = JSON.parse($localStorage.authenticatedAccount);
+            $rootScope.isChef = $rootScope.authenticatedAccount.is_chef;
+            return $rootScope.authenticatedAccount;
         }
 
         function isAuthenticated() {
+            $rootScope.isAuthenticated = !!$localStorage.authenticatedAccount;
             return !!$localStorage.authenticatedAccount;
-        }
-
-        function isChef() {
-            var user = getAuthenticatedAccount();
-            if (user) {
-                return user.is_chef;
-            }
-            return false;
         }
 
         function setAuthenticatedAccount(account) {
             $localStorage.token = account.token;
             $localStorage.authenticatedAccount = JSON.stringify(account.user);
+            $rootScope.isAuthenticated = true;
+            getAuthenticatedAccount();
         }
 
         function unauthenticate() {
             delete $localStorage.token;
             delete $localStorage.authenticatedAccount;
+            delete $rootScope.isAuthenticated;
+            delete $rootScope.authenticatedAccount;
+            delete $rootScope.isChef;
         }
 
         return {
@@ -122,7 +121,6 @@
             refresh: refresh,
             verify: verify,
             logout: logout,
-            isChef: isChef,
             setAuthenticatedAccount: setAuthenticatedAccount,
             unauthenticate: unauthenticate
         };

@@ -2,17 +2,10 @@
     'use strict';
 
     angular.module('cravus.profiles').controller('settingsController', settingsController);
-    settingsController.$inject = [
-        '$scope',
-        '$location',
-        '$routeParams',
-        'authFactory',
-        'profileFactory',
-        'addressFactory',
-        '$mdToast',
-        'ytplayerFactory'
-    ];
-    function settingsController($scope, $location, $routeParams, authFactory, profileFactory, addressFactory, $mdToast, ytplayerFactory) {
+    settingsController.$inject = ['$rootScope', '$scope', '$location', '$routeParams', 'authFactory', 'profileFactory',
+        'addressFactory', '$mdToast', 'ytplayerFactory'];
+    function settingsController($rootScope, $scope, $location, $routeParams, authFactory, profileFactory,
+                                addressFactory, $mdToast, ytplayerFactory) {
         ytplayerFactory.stop();
         var vm = this;
         vm.scope = $scope;
@@ -28,14 +21,13 @@
 
         activate();
         function activate() {
-            var authenticatedAccount = authFactory.getAuthenticatedAccount();
             var username = $routeParams.username.substr(1);
 
-            if (!authenticatedAccount) {
+            if (!$rootScope.authenticatedAccount) {
                 $location.url('/login');
                 $mdToast.show($mdToast.simple().textContent('You must log in to view this page.').hideDelay(3000));
             } else {
-                if (authenticatedAccount.username !== username) {
+                if ($rootScope.authenticatedAccount.username !== username) {
                     $location.url('/');
                     $mdToast.show($mdToast.simple().textContent('You are not authorized to view this page.').hideDelay(3000));
                 }
@@ -66,7 +58,7 @@
 
             function profileDelSuccessFn(data, status, headers, config) {
                 authFactory.unauthenticate();
-                window.location = '/';
+                $location.url('/');
                 $mdToast.show($mdToast.simple().textContent('Your account has been deleted.').hideDelay(3000));
             }
 

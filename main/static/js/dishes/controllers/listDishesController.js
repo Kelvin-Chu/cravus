@@ -4,15 +4,13 @@
     angular.module('cravus.layout').controller('listDishesController', listDishesController);
     listDishesController.$inject = [
         '$scope',
-        'authFactory',
         'dishesFactory',
         '$mdToast',
         'ytplayerFactory'
     ];
-    function listDishesController($scope, authFactory, dishesFactory, $mdToast, ytplayerFactory) {
+    function listDishesController($scope, dishesFactory, $mdToast, ytplayerFactory) {
         ytplayerFactory.stop();
         var vm = this;
-        vm.isAuthenticated = authFactory.isAuthenticated();
         vm.dishes = [];
 
         activate();

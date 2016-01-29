@@ -2,22 +2,10 @@
     'use strict';
 
     angular.module('cravus.profiles').controller('profileController', profileController);
-    profileController.$inject = [
-        '$location',
-        '$routeParams',
-        'dishesFactory',
-        'profileFactory',
-        'authFactory',
-        '$mdToast',
-        'ytplayerFactory'
-    ];
-    function profileController($location,
-                               $routeParams,
-                               dishesFactory,
-                               profileFactory,
-                               authFactory,
-                               $mdToast,
-                               ytplayerFactory) {
+    profileController.$inject = ['$rootScope', '$location', '$routeParams', 'dishesFactory', 'profileFactory',
+        'authFactory', '$mdToast', 'ytplayerFactory'];
+    function profileController($rootScope, $location, $routeParams, dishesFactory, profileFactory, authFactory,
+                               $mdToast, ytplayerFactory) {
         ytplayerFactory.stop();
         var vm = this;
         vm.profile = undefined;
@@ -33,8 +21,8 @@
 
             function profileSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
-                if (authFactory.isAuthenticated()) {
-                    if (authFactory.getAuthenticatedAccount().username == vm.profile.username) {
+                if ($rootScope.isAuthenticated) {
+                    if ($rootScope.authenticatedAccount.username == vm.profile.username) {
                         vm.myProfile = true;
                     }
                 }

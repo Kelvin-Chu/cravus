@@ -11,9 +11,7 @@
             $rootScope.$broadcast('dish.created', {
                 name: vm.name,
                 description: vm.description,
-                chef: {
-                    username: authFactory.getAuthenticatedAccount().username
-                }
+                chef: $rootScope.authenticatedAccount.username
             });
             $scope.closeThisDialog();
             dishesFactory.create(vm.name, vm.description).then(createDishSuccessFn, createDishErrorFn);
