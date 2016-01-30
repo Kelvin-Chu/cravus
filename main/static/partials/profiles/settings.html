@@ -63,6 +63,21 @@
                                 <md-tab label="Personal">
                                     <md-content class="md-padding">
                                         <md-input-container class="md-block">
+                                            <div ngf-drop ng-model="vm.profile.avatar" ngf-pattern="image/*"
+                                                 class="cropArea">
+                                                <div class="text-center">
+                                                    <img ng-src="{{ vm.croppedDataUrl }}" class="croppedArea"/>
+                                                </div>
+                                                <img-crop image="vm.profile.avatar | ngfDataUrl"
+                                                          result-image="vm.croppedDataUrl" ng-init="croppedDataUrl=''">
+                                                </img-crop>
+                                            </div>
+                                            <button ng-model="vm.profile.avatar" accept="image/*" ngf-select
+                                                    class="md-primary md-hue-1 md-button pull-right">
+                                                <span class="ng-scope">Change Picture</span>
+                                            </button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
                                             <label>First Name</label>
                                             <input name="first_name" ng-model="vm.profile.first_name" type="text">
                                             <div ng-messages="userForm.first_name.$error">

@@ -6,6 +6,8 @@
         'ngAnimate',
         'ngMaterial',
         'ngMessages',
+        'ngImgCrop',
+        'ngFileUpload',
         'ui.bootstrap',
         'akoenig.deckgrid',
         'cravus.authentication',

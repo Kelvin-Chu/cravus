@@ -11,6 +11,7 @@
         vm.scope = $scope;
         vm.destroy = destroy;
         vm.update = update;
+        vm.croppedDataUrl = "/static/img/profile_default.png";
         vm.formErrors = {};
         vm.non_field_errors = {};
         vm.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
@@ -22,7 +23,8 @@
         activate();
         function activate() {
             var username = $routeParams.username.substr(1);
-
+            authFactory.isAuthenticated();
+            authFactory.getAuthenticatedAccount();
             if (!$rootScope.authenticatedAccount) {
                 $location.url('/login');
                 $mdToast.show($mdToast.simple().textContent('You must log in to view this page.').hideDelay(3000));
@@ -36,6 +38,7 @@
             profileFactory.get(username).then(profileGetSuccessFn, profileGetErrorFn);
             function profileGetSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
+
                 addressFactory.get(username).then(addressGetSuccessFn, addressGetErrorFn);
 
                 function addressGetSuccessFn(data, status, headers, config) {
