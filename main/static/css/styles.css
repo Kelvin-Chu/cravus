@@ -25,6 +25,11 @@ body {
     overflow-y: scroll;
 }
 
+img {
+    min-height: 0;
+    min-width: 0;
+}
+
 h1 {
     font-family: 'Playfair Display', serif;
     font-weight: 900;
