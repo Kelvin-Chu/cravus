@@ -2,13 +2,8 @@
     'use strict';
 
     angular.module('cravus.authentication').controller('loginController', loginController);
-    loginController.$inject = [
-        '$scope',
-        '$location',
-        'authFactory',
-        'ytplayerFactory'
-    ];
-    function loginController($scope, $location, authFactory, ytplayerFactory) {
+    loginController.$inject = ['$scope', 'authFactory', 'ytplayerFactory'];
+    function loginController($scope, authFactory, ytplayerFactory) {
         ytplayerFactory.play();
         var vm = this;
         vm.scope = $scope;
@@ -21,8 +16,8 @@
 
         activate();
         function activate() {
-            if (authFactory.isAuthenticated()) {
-                $location.url('/');
+            if (!authFactory.isAuthenticated()) {
+                ytplayerFactory.play();
             }
         }
     }

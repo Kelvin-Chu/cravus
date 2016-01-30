@@ -2,18 +2,12 @@
     'use strict';
 
     angular.module('cravus.layout').controller('indexController', indexController);
-    indexController.$inject = [
-        '$location',
-        'authFactory',
-        'ytplayerFactory'
-    ];
-    function indexController($location, authFactory, ytplayerFactory) {
-        ytplayerFactory.play();
-
+    indexController.$inject = ['ytplayerFactory', 'authFactory'];
+    function indexController(ytplayerFactory, authFactory) {
         activate();
         function activate() {
-            if (authFactory.isAuthenticated()) {
-                $location.url('/dishes');
+            if (!authFactory.isAuthenticated()) {
+                ytplayerFactory.play();
             }
         }
     }

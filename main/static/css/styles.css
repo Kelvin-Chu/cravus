@@ -1052,9 +1052,10 @@ a.text-white:focus {
 }
 
 .cropArea {
-    background: transparent;
+    background: #E4E4E4;
     overflow: hidden;
-    height:250px;
+    width: 500px;
+    height: 350px;
 }
 
 .avatarlg {

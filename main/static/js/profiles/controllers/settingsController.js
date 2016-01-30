@@ -6,7 +6,6 @@
         'addressFactory', '$mdToast', 'ytplayerFactory', 'cropperFactory'];
     function settingsController($rootScope, $scope, $location, $routeParams, authFactory, profileFactory,
                                 addressFactory, $mdToast, ytplayerFactory, cropperFactory) {
-        ytplayerFactory.stop();
         var vm = this;
         vm.scope = $scope;
         vm.destroy = destroy;
@@ -25,14 +24,12 @@
             var username = $routeParams.username.substr(1);
             authFactory.isAuthenticated();
             authFactory.getAuthenticatedAccount();
-            if (!$rootScope.authenticatedAccount) {
-                $location.url('/login');
-                $mdToast.show($mdToast.simple().textContent('You must log in to view this page.').hideDelay(3000));
-            } else {
+            if ($rootScope.authenticatedAccount) {
                 if ($rootScope.authenticatedAccount.username !== username) {
-                    $location.url('/');
+                    $location.url('/dishes');
                     $mdToast.show($mdToast.simple().textContent('You are not authorized to view this page.').hideDelay(3000));
                 }
+                ytplayerFactory.stop();
             }
 
             profileFactory.get(username).then(profileGetSuccessFn, profileGetErrorFn);

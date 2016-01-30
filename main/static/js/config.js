@@ -9,20 +9,23 @@
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/register.html',
             activetab: 'register',
-            animate: true
+            animate: true,
+            resolve: {"check": loggedIn}
         }).when('/chef/register', {
             controller: 'registerController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/register.html',
             activetab: 'register',
             animate: true,
-            chefregister: true
+            chefregister: true,
+            resolve: {"check": loggedIn}
         }).when('/login', {
             controller: 'loginController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/login.html',
             activetab: 'login',
-            animate: true
+            animate: true,
+            resolve: {"check": loggedIn}
         }).when('/dishes', {
             controller: 'listDishesController',
             controllerAs: 'vm',
@@ -40,12 +43,14 @@
             controllerAs: 'vm',
             templateUrl: '/static/partials/profiles/settings.html',
             activetab: 'settings',
-            animate: true
+            animate: true,
+            resolve: {"check": notLoggedIn}
         }).when('/', {
             controller: 'indexController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/layout/index.html',
-            animate: false
+            animate: false,
+            resolve: {"check": loggedIn}
         }).otherwise('/');
         $locationProvider.html5Mode(true);
         $locationProvider.hashPrefix('!');
@@ -74,6 +79,18 @@
             .primaryPalette('deep-orange')
             .warnPalette('red')
             .accentPalette('grey', {'default': '500'});
+
+        function loggedIn($location, authFactory) {
+            if (authFactory.isAuthenticated()) {
+                $location.path('/dishes');
+            }
+        }
+
+        function notLoggedIn($location, authFactory) {
+            if (!authFactory.isAuthenticated()) {
+                $location.path('/login');
+            }
+        }
     }
 
 })();
