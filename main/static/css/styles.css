@@ -11,6 +11,7 @@ html, body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    overflow: hidden !important;
 }
 
 body {
@@ -22,7 +23,7 @@ body {
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
-    overflow-y: scroll;
+    overflow-y: scroll !important;
 }
 
 img {
@@ -1056,7 +1057,7 @@ a.text-white:focus {
     height:250px;
 }
 
-.croppedArea {
+.avatarlg {
     margin-right: auto;
     margin-left: auto;
     width: 250px;
