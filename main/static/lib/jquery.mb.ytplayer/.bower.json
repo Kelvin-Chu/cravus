@@ -1,0 +1,36 @@
+{
+  "name": "jquery.mb.ytplayer",
+  "version": "2.9.11",
+  "homepage": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer",
+  "authors": [
+    "pupunzi <matteo@open-lab.com>"
+  ],
+  "description": "This plugin let you play any public YouTube video as background of your page. It can also be used as a customized player in page.",
+  "main": "dist/jquery.mb.YTPlayer.js",
+  "keywords": [
+    "jquery-plugin",
+    "video",
+    "Youtube",
+    "html5",
+    "player"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "buildnum": "5797",
+  "_release": "2.9.11",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.9.11",
+    "commit": "563663e767ed387ff7e2e9b2c9433c81d224d05b"
+  },
+  "_source": "git://github.com/pupunzi/jquery.mb.YTPlayer.git",
+  "_target": "~2.9.11",
+  "_originalSource": "jquery.mb.YTPlayer",
+  "_direct": true
+}

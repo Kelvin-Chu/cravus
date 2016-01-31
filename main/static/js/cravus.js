@@ -41,7 +41,6 @@ function setErrors(vm, data) {
 }
 
 function clearErrors(vm) {
-    console.log(vm.scope.userForm);
     for (var name in vm.formErrors) {
         if (vm.scope.userForm[name]) {
             vm.scope.userForm[name].$setValidity('server', true);

@@ -10,6 +10,8 @@
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
+            <md-button ngf-select ng-model="picFile" accept="image/*" class="pull-left">
+            Select Picture</md-button>
             <md-button ng-click="vm.answer('Cancel')">
                 Cancel
             </md-button>
