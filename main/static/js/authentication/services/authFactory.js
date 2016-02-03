@@ -14,6 +14,7 @@
             }
 
             function registerErrorFn(data, status, headers, config) {
+                clearErrors(vm);
                 setErrors(vm, data);
             }
         }
@@ -28,6 +29,7 @@
             }
 
             function chefRegisterErrorFn(data, status, headers, config) {
+                clearErrors(vm);
                 setErrors(vm, data);
             }
         }
@@ -43,6 +45,7 @@
             }
 
             function loginErrorFn(data, status, headers, config) {
+                clearErrors(vm);
                 setErrors(vm, data);
             }
         }
@@ -66,16 +69,7 @@
         function verify() {
             return $http.post('/api/v1/auth/verify/', {
                 token: $localStorage.token
-            }).then(verifySuccessFn, verifyErrorFn);
-
-            function verifySuccessFn(data, status, headers, config) {
-            }
-
-            function verifyErrorFn(data, status, headers, config) {
-                $mdToast.show($mdToast.simple().textContent('Please log in.').hideDelay(3000));
-                unauthenticate();
-                $location.url('/login');
-            }
+            });
         }
 
         function logout() {

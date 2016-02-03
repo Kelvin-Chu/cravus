@@ -7,8 +7,8 @@
                 </md-card-title>
                 <md-card-content>
                     <form name="userForm" ng-submit="vm.register(vm.route.current.chefregister)">
-                        <div ng-messages="vm.non_field_errors" class="text-center red">
-                            <div ng-message="server">{{ vm.formErrors.non_field_errors }}</div>
+                        <div ng-messages="vm.errors" class="text-center red">
+                            <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
                         </div>
                         <md-input-container class="md-block">
                             <label>Email</label>
@@ -16,7 +16,9 @@
                             <div ng-messages="userForm.email.$error">
                                 <div ng-message="required">Email is required.</div>
                                 <div ng-message="email">Invalid email format.</div>
-                                <div ng-message="server">{{ vm.formErrors.email }}</div>
+                            </div>
+                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                <div ng-message="email">{{ vm.formErrors.email }}</div>
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block md-input-invalid">
@@ -24,7 +26,9 @@
                             <input required name="username" ng-model="vm.username">
                             <div ng-messages="userForm.username.$error">
                                 <div ng-message="required">Username is required.</div>
-                                <div ng-message="server">{{ vm.formErrors.username }}</div>
+                            </div>
+                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                <div ng-message="username">{{ vm.formErrors.username }}</div>
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block md-input-invalid">
@@ -33,7 +37,9 @@
                             <div ng-messages="userForm.password.$error">
                                 <div ng-message="required">Password is required.</div>
                                 <div ng-message="minlength">Your password needs to be at least 7 characters.</div>
-                                <div ng-message="server">{{ vm.formErrors.password }}</div>
+                            </div>
+                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                <div ng-message="password">{{ vm.formErrors.password }}</div>
                             </div>
                         </md-input-container>
                         <div class="form-group text-right">

@@ -7,7 +7,7 @@
         ytplayerFactory.play();
         var vm = this;
         vm.scope = $scope;
-        vm.non_field_errors = {};
+        vm.errors = {};
         vm.formErrors = {};
         vm.login = login;
         function login() {

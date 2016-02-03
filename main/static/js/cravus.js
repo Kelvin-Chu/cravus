@@ -28,25 +28,16 @@
 })();
 
 function setErrors(vm, data) {
-    for (var name in data.data) {
-        if (vm.scope.userForm[name]) {
-            vm.formErrors[name] = data.data[name][0];
-            vm.scope.userForm[name].$setValidity('server', false);
-        }
-        else if (name == 'non_field_errors') {
-            vm.non_field_errors['server'] = true;
-            vm.formErrors[name] = data.data[name][0];
-        }
+    var errorMessages = data.data;
+    for (var name in errorMessages) {
+        vm.errors[name] = true;
+        vm.formErrors[name] = errorMessages[name][0];
     }
 }
 
 function clearErrors(vm) {
     for (var name in vm.formErrors) {
-        if (vm.scope.userForm[name]) {
-            vm.scope.userForm[name].$setValidity('server', true);
-        }
-        else if (name == 'non_field_errors') {
-            vm.non_field_errors['server'] = false;
-        }
+        vm.errors[name] = false;
     }
+    vm.formErrors = {};
 }

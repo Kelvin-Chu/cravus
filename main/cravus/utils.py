@@ -61,7 +61,7 @@ class IPThrottlePostMixin(BaseThrottle):
     detail = "Only %s requests allowed per day." % throttle
 
     def allow_request(self, request, view):
-        if request.POST:
+        if request.method == 'POST':
             ip = get_ip(request)
             if ip is not None:
                 name = str(ip)

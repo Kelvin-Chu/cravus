@@ -2,16 +2,15 @@
     'use strict';
 
     angular.module('cravus.profiles').controller('settingsController', settingsController);
-    settingsController.$inject = ['$rootScope', '$scope', '$location', '$routeParams', 'authFactory', 'profileFactory',
+    settingsController.$inject = ['$rootScope', '$location', '$routeParams', 'authFactory', 'profileFactory',
         'addressFactory', '$mdToast', 'ytplayerFactory', 'cropperFactory'];
-    function settingsController($rootScope, $scope, $location, $routeParams, authFactory, profileFactory,
+    function settingsController($rootScope, $location, $routeParams, authFactory, profileFactory,
                                 addressFactory, $mdToast, ytplayerFactory, cropperFactory) {
         var vm = this;
-        vm.scope = $scope;
         vm.destroy = destroy;
         vm.update = update;
         vm.formErrors = {};
-        vm.non_field_errors = {};
+        vm.errors = {};
         vm.cropper = cropperFactory.cropper;
         vm.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
         'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY')
@@ -35,7 +34,6 @@
             profileFactory.get(username).then(profileGetSuccessFn, profileGetErrorFn);
             function profileGetSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
-
                 addressFactory.get(username).then(addressGetSuccessFn, addressGetErrorFn);
 
                 function addressGetSuccessFn(data, status, headers, config) {
@@ -68,18 +66,23 @@
         }
 
         function update() {
-            profileFactory.update(vm.profile).then(profileUpdateSuccessFn, profileUpdateErrorFn);
+            profileFactory.update(vm.profile).then(profileUpdateSuccessFn, profileUpdateErrorFn, profileUpdateProgFn);
             addressFactory.update(vm.address);
 
-            function profileUpdateSuccessFn(data, status, headers, config) {
+            function profileUpdateSuccessFn(data) {
                 authFactory.setAuthenticatedAccount(data.data);
                 clearErrors(vm);
                 $mdToast.show($mdToast.simple().textContent('Your profile has been updated.').hideDelay(3000));
             }
 
-            function profileUpdateErrorFn(data, status, headers, config) {
+            function profileUpdateErrorFn(data) {
+                clearErrors(vm);
                 setErrors(vm, data);
                 $mdToast.show($mdToast.simple().textContent('There was an error processing your request.').hideDelay(3000));
+            }
+
+            function profileUpdateProgFn(data) {
+
             }
         }
     }

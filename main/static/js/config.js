@@ -75,14 +75,18 @@
                 };
             }
         ]);
-        $mdThemingProvider.theme('default')
-            .primaryPalette('deep-orange')
-            .warnPalette('red')
-            .accentPalette('grey', {'default': '500'});
 
         function loggedIn($location, authFactory) {
-            if (authFactory.isAuthenticated()) {
-                $location.path('/dishes');
+            authFactory.verify().then(verifySuccessFn, verifyErrorFn);
+
+            function verifySuccessFn(data, status, headers, config) {
+                if (authFactory.isAuthenticated()) {
+                    $location.path('/dishes');
+                }
+            }
+
+            function verifyErrorFn(data, status, headers, config) {
+                authFactory.unauthenticate();
             }
         }
 
@@ -91,6 +95,11 @@
                 $location.path('/login');
             }
         }
+
+        $mdThemingProvider.theme('default')
+            .primaryPalette('deep-orange')
+            .warnPalette('red')
+            .accentPalette('grey', {'default': '500'});
     }
 
 })();
