@@ -2,24 +2,49 @@
     'use strict';
 
     angular.module('cravus.layout').controller('cropperController', cropperController);
-    cropperController.$inject = ['$mdDialog', 'image'];
-    function cropperController($mdDialog, image) {
+    cropperController.$inject = ['$scope', '$mdDialog', 'image', 'Upload', '$timeout', 'Cropper'];
+    function cropperController($scope, $mdDialog, image, Upload, $timeout, Cropper) {
         var vm = this;
-        vm.hide = hide;
+        var cropped;
         vm.cancel = cancel;
-        vm.answer = answer;
-        console.log(image);
+        vm.crop = crop;
+        vm.showEvent = 'show';
+        vm.hideEvent = 'hide';
+        vm.cropper = {};
+        vm.options = {
+            maximize: false,
+            aspectRatio: 2 / 1,
+            crop: function (dataNew) {
+                cropped = dataNew;
+            }
+        };
+        //vm.cropperProxy = 'cropper.first';
+        //Upload.dataUrl(image, false)['finally'](function () {
+        //    $timeout(function () {
+        //        vm.image = image.$ngfBlobUrl;
+        //        showCropper();
+        //    });
+        //});
 
-        function hide() {
-            $mdDialog.hide();
-        }
+        Cropper.encode(image).then(function (dataUrl) {
+            vm.image = dataUrl;
+            $timeout(showCropper);  // wait for $digest to set image's src
+        });
 
         function cancel() {
             $mdDialog.cancel();
         }
 
-        function answer(answer) {
-            $mdDialog.hide(answer);
+        function crop() {
+            $mdDialog.hide();
+        }
+
+        function showCropper() {
+            $scope.$broadcast(vm.showEvent);
+        }
+
+        function hideCropper() {
+            $scope.$broadcast(vm.hideEvent);
         }
     }
 

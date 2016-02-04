@@ -76,7 +76,8 @@
                                                 <img ngf-thumbnail="vm.profile.avatar || '/static/img/profile_default.png'"
                                                      class="avatarlg"/>
                                             </div>
-                                            <ngcropper name="avatar" ng-model="vm.profile.avatar"></ngcropper>
+                                            <ng-cropper-upload name="avatar" ng-model="vm.profile.avatar">
+                                            </ng-cropper-upload>
                                         </md-input-container>
                                         <md-input-container class="md-block">
                                             <label>First Name</label>

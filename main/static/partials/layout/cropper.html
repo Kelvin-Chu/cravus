@@ -1,21 +1,21 @@
 <md-dialog aria-label="Cropper">
     <form>
         <md-dialog-content style="max-width:800px;max-height:810px; ">
-            <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
-                 class="cropArea">
-                <img-crop image="picFile  | ngfDataUrl"
-                          result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
-                </img-crop>
+            <div ng-if="vm.image" class="cropArea">
+                <img ng-src="{{ vm.image }}"
+                     ng-cropper
+                     ng-cropper-proxy="vm.cropperProxy"
+                     ng-cropper-show="vm.showEvent"
+                     ng-cropper-hide="vm.hideEvent"
+                     ng-cropper-options="vm.options">
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button ngf-select ng-model="picFile" accept="image/*" class="pull-left">
-            Select Picture</md-button>
-            <md-button ng-click="vm.answer('Cancel')">
+            <md-button ng-click="vm.cancel()">
                 Cancel
             </md-button>
-            <md-button ng-click="vm.answer('Upload')" style="margin-right:20px;">
+            <md-button ng-click="vm.crop()" style="margin-right:20px;">
                 Upload
             </md-button>
         </md-dialog-actions>
