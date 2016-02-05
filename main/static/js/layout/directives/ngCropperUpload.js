@@ -3,9 +3,9 @@
 
     angular.module('cravus.layout').directive('ngCropperUpload', ngCropperUpload);
     function ngCropperUpload() {
-        var template = '<md-button name="vm.name" ng-model="vm.temp" accept="image/*" type="button"' +
-            'class="md-primary md-hue-1 pull-right" ngf-select="vm.cropper($event)"' +
-            '><span class="ng-scope">Change Picture</span></md-button>';
+        var template = '<md-button name="vm.name" ng-model="vm.temp" accept="image/*" type="button" ' +
+            'class="md-primary md-hue-1 pull-right" id="uploader" ngf-select="vm.cropper($event)">' +
+            '<span class="ng-scope">Change Picture</span></md-button>';
         var controller = ['$scope', '$mdDialog', 'Upload', function ($scope, $mdDialog, Upload) {
             var vm = this;
             vm.cropper = function (event) {
@@ -16,8 +16,9 @@
                         bindToController: true,
                         templateUrl: '/static/partials/layout/cropper.html',
                         parent: angular.element(document.body),
-                        targetEvent: event,
-                        clickOutsideToClose: true,
+                        openFrom: "#uploader",
+                        closeTo: "#uploader",
+                        clickOutsideToClose: false,
                         locals: {
                             image: vm.temp
                         }

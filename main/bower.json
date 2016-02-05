@@ -19,12 +19,12 @@
     "underscore": "~1.8.3",
     "font-awesome": "~4.5.0",
     "jquery.mb.ytplayer": "jquery.mb.YTPlayer#~2.9.11",
-    "angular-material": "~1.0.2",
+    "angular-material": "~1.0.5",
     "angular-bootstrap": "~1.0.3",
     "angular-animate": "~1.4.9",
     "angular-deckgrid": "~0.5.0",
     "ng-file-upload": "~11.2.3",
-    "ng-img-crop": "ngImgCrop#~0.3.2"
+    "cropper": "^2.2.5"
   },
   "resolutions": {
     "angular": "1.4.9"

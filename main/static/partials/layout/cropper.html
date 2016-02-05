@@ -1,8 +1,9 @@
 <md-dialog aria-label="Cropper">
     <form>
         <md-dialog-content style="max-width:800px;max-height:810px; ">
-            <div ng-if="vm.image" class="cropArea">
-                <img ng-src="{{ vm.image }}"
+            <div class="cropArea">
+                <spinner ng-show="vm.loading">Loading...</spinner>
+                <img ng-src="{{ vm.image }}" class="cropImage"
                      ng-cropper
                      ng-cropper-proxy="vm.cropperProxy"
                      ng-cropper-show="vm.showEvent"
@@ -15,7 +16,7 @@
             <md-button ng-click="vm.cancel()">
                 Cancel
             </md-button>
-            <md-button ng-click="vm.crop()" style="margin-right:20px;">
+            <md-button ng-click="vm.crop()" ng-disabled="vm.loading" style="margin-right:20px;" class="orange">
                 Upload
             </md-button>
         </md-dialog-actions>
