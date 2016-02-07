@@ -5,12 +5,13 @@
     cropperController.$inject = ['$scope', '$mdDialog', 'image', 'Upload', '$timeout'];
     function cropperController($scope, $mdDialog, image, Upload, $timeout) {
         var vm = this;
-        var cropped;
+        var cropData;
         vm.cancel = cancel;
         vm.crop = crop;
         vm.showEvent = 'show';
         vm.hideEvent = 'hide';
         vm.loading = true;
+        vm.filename = image.name;
         vm.cropperProxy = 'vm.cropper.first';
         vm.cropper = {};
         vm.options = {
@@ -18,35 +19,37 @@
             minCropBoxWidth: 100,
             aspectRatio: 1,
             viewMode: 1,
+            dragMode: 'move',
+            rotatable: false,
             crop: function (dataNew) {
-                cropped = dataNew;
+                cropData = dataNew;
             }
         };
-
-        Upload.resize(image, 1024, 768).then(
-            Upload.dataUrl(image, true)['finally'](function () {
-                $timeout(function () {
-                    vm.image = image.$ngfDataUrl;
-                    $timeout(showCropper);
+        Upload.applyExifRotation(image).then(function (fixedImage) {
+            if (Upload.isResizeSupported()) {
+                Upload.resize(fixedImage, 1024, 768).then(function (resizedImage) {
+                    Upload.dataUrl(resizedImage, true)['finally'](function () {
+                        $timeout(function () {
+                            vm.image = resizedImage.$ngfDataUrl;
+                            $timeout(showCropper);
+                        });
+                    });
                 });
-            }));
+            } else {
+                Upload.dataUrl(fixedImage, true)['finally'](function () {
+                    $timeout(function () {
+                        vm.image = fixedImage.$ngfDataUrl;
+                        $timeout(showCropper);
+                    });
+                });
+            }
+        });
 
         $scope.$watchCollection('vm.cropper', function () {
             if (vm.cropper.first) {
                 vm.loading = false;
-                console.log(vm.cropper.first("getData"));
             }
         });
-
-        function cancel() {
-            hideCropper();
-            $mdDialog.cancel();
-        }
-
-        function crop() {
-            hideCropper();
-            $mdDialog.hide();
-        }
 
         function showCropper() {
             $scope.$broadcast(vm.showEvent);
@@ -54,6 +57,21 @@
 
         function hideCropper() {
             $scope.$broadcast(vm.hideEvent);
+        }
+
+        function cancel() {
+            hideCropper();
+            $mdDialog.cancel();
+        }
+
+        function crop() {
+            var imageData = vm.cropper.first("getImageData");
+            cropData.image = Upload.dataUrltoBlob(vm.image, vm.filename);
+            cropData.crop = vm.cropper.first("getData");
+            cropData.naturalHeight = imageData.naturalHeight;
+            cropData.naturalWidth = imageData.naturalWidth;
+            hideCropper();
+            $mdDialog.hide(cropData);
         }
     }
 

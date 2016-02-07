@@ -72,11 +72,12 @@
                                             <div ng-message="avatar">{{ vm.formErrors.avatar }}</div>
                                         </div>
                                         <md-input-container class="md-block">
-                                            <div class="text-center">
-                                                <img ngf-thumbnail="vm.profile.avatar || '/static/img/profile_default.png'"
+                                            <div id="cropperPreview" class="text-center preview preview-avatar">
+                                                <img ngf-src="vm.profile.avatar || '/static/img/profile_default.png'"
                                                      class="avatarlg"/>
                                             </div>
-                                            <ng-cropper-upload name="avatar" ng-model="vm.profile.avatar">
+                                            <ng-cropper-upload name="avatar" image="vm.profile.avatar"
+                                                               crop="vm.profile.crop" preview="cropperPreview">
                                             </ng-cropper-upload>
                                         </md-input-container>
                                         <md-input-container class="md-block">

@@ -24,10 +24,18 @@
         }
 
         function update(profile) {
-            delete profile['avatar'];
-            //console.log(profile['avatar']);
-            //profile.crop = '{"x": 0, "y": 0, "height": 500, "width": 500}';
-            //console.log(profile);
+            if (!profile.crop) {
+                return Upload.upload({
+                    url: '/api/v1/accounts/' + profile.username + '/',
+                    method: 'PUT',
+                    fields: {
+                        'first_name': profile.first_name,
+                        'last_name': profile.last_name,
+                        'email': profile.email,
+                        'username': profile.username
+                    }
+                });
+            }
             return Upload.upload({
                 url: '/api/v1/accounts/' + profile.username + '/',
                 method: 'PUT',

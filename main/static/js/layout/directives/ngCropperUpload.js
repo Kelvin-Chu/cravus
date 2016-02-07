@@ -1,4 +1,4 @@
-(function () {
+(function ($, _) {
     'use strict';
 
     angular.module('cravus.layout').directive('ngCropperUpload', ngCropperUpload);
@@ -22,16 +22,52 @@
                         locals: {
                             image: vm.temp
                         }
+                    }).then(function (result) {
+                        vm.image = result.image;
+                        vm.crop = JSON.stringify(result.crop);
+                        fauxCrop(result);
+                    }, function () {
+
                     });
-                    //vm.ngModel = ''; //test to see if changing this ngmodel changes the caller's ngmodel
+
                 }
             };
+            function fauxCrop(result) {
+                var container = $('#' + vm.preview);
+                var originalWidth = container.outerWidth();
+                var originalHeight = container.outerHeight();
+                var newWidth = originalWidth;
+                var newHeight = originalHeight;
+                var width = result.naturalWidth;
+                var height = result.naturalHeight;
+                var ratio = 1;
+                if (result.crop.width) {
+                    ratio = originalWidth / result.crop.width;
+                    newHeight = result.crop.height * ratio;
+                }
+                if (result.crop.height && newHeight > originalHeight) {
+                    ratio = originalHeight / result.crop.height;
+                    newWidth = result.crop.width * ratio;
+                    newHeight = originalHeight;
+                }
+                container.css({
+                    width: newWidth,
+                    height: newHeight
+                }).find('img').css({
+                    width: width * ratio,
+                    height: height * ratio,
+                    marginLeft: -result.crop.x * ratio,
+                    marginTop: -result.crop.y * ratio
+                });
+            }
         }];
         return {
             restrict: 'E',
-            require: 'ngModel',
+            require: ['image', 'crop', 'name'],
             scope: {
-                ngModel: '=',
+                image: '=',
+                crop: '=',
+                preview: '@',
                 name: '@'
             },
             controller: controller,
@@ -41,4 +77,4 @@
         };
     }
 
-})();
+})($, _);

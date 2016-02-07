@@ -7,7 +7,7 @@
 
         function stop() {
             $rootScope.bgimg = 'none';
-            $rootScope.hideHeader = true;
+            $rootScope.showBrand = false;
             try {
                 $('.mbYTP_wrapper').css({'z-index': '-100'});
             } catch (e) {
@@ -16,10 +16,11 @@
 
         function play() {
             $rootScope.bgimg = 'static/img/bg2.jpg';
-            $rootScope.hideHeader = false;
+            $rootScope.showBrand = true;
             try {
-                $(".player").YTPlayer();
-                $('#bgndVideo').YTPPlay();
+                var player = $('#bgndVideo');
+                player.YTPlayer();
+                player.YTPPlay();
                 $('.mbYTP_wrapper').css({'z-index': '0'});
             } catch (e) {
             }

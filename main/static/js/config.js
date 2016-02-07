@@ -79,10 +79,12 @@
         function loggedIn($location, authFactory) {
             authFactory.verify().then(verifySuccessFn, verifyErrorFn);
 
+            if (authFactory.isAuthenticated()) {
+                $location.path('/dishes');
+            }
+
             function verifySuccessFn(data, status, headers, config) {
-                if (authFactory.isAuthenticated()) {
-                    $location.path('/dishes');
-                }
+
             }
 
             function verifyErrorFn(data, status, headers, config) {
