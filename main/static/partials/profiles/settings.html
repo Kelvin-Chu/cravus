@@ -8,6 +8,7 @@
                             <h1 class="cardformheader">Settings</h1>
                         </md-card-title>
                         <md-card-content>
+                            <div id="toastBounds"></div>
                             <md-tabs md-dynamic-height md-border-bottom>
                                 <md-tab label="Account">
                                     <md-content class="md-padding">
@@ -56,12 +57,11 @@
                                             <input ng-model="vm.profile.username" type="text" disabled>
                                         </md-input-container>
                                         <div class="form-group text-right">
-                                            <md-button type="button" ng-click="vm.destroy()"
+                                            <md-button type="button" ng-click="vm.destroy()" disabled
                                                        class="btn md-raised md-accent btn-default pull-left">Delete
                                             </md-button>
-                                            <md-button class="btn md-raised md-primary btn-default"
-                                                       md-ink-ripple="#e9e9e9" type="submit">
-                                                Update
+                                            <md-button class="btn md-raised md-primary btn-default" type="button"
+                                                       md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">Save
                                             </md-button>
                                         </div>
                                     </md-content>
@@ -71,14 +71,14 @@
                                         <div ng-messages="vm.errors" class="red">
                                             <div ng-message="avatar">{{ vm.formErrors.avatar }}</div>
                                         </div>
-                                        <md-input-container class="md-block">
+                                        <md-input-container class="md-block text-right">
+                                            <ng-cropper-upload name="avatar" image="vm.profile.avatar"
+                                                               crop="vm.profile.crop" preview="cropperPreview">
+                                            </ng-cropper-upload>
                                             <div id="cropperPreview" class="text-center preview preview-avatar">
                                                 <img ngf-src="vm.profile.avatar || '/static/img/profile_default.png'"
                                                      class="avatarlg"/>
                                             </div>
-                                            <ng-cropper-upload name="avatar" image="vm.profile.avatar"
-                                                               crop="vm.profile.crop" preview="cropperPreview">
-                                            </ng-cropper-upload>
                                         </md-input-container>
                                         <md-input-container class="md-block">
                                             <label>First Name</label>
@@ -145,7 +145,7 @@
                                         </div>
                                         <div class="form-group text-right">
                                             <md-button class="btn md-raised md-primary btn-default"
-                                                       md-ink-ripple="#e9e9e9" type="submit">Update
+                                                       md-ink-ripple="#e9e9e9" type="submit">Save
                                             </md-button>
                                         </div>
                                     </md-content>

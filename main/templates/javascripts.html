@@ -6,8 +6,10 @@
     <script type="text/javascript" src="{% static 'lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/underscore/underscore.js' %}"></script>
     {#    Cropper has been customized to add support for safari#}
+    {#    https://github.com/fengyuanchen/cropper/issues/509 #}
     <script type="text/javascript" src="{% static 'lib/cropper/dist/cropper.js' %}"></script>
     {#    End Comment#}
+    <script type="text/javascript" src="{% static 'lib/toastr/toastr.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/angular/angular.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/angular-animate/angular-animate.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/ng-file-upload/ng-file-upload.js' %}"></script>
@@ -16,6 +18,7 @@
     <script type="text/javascript" src="{% static 'lib/angular-messages/angular-messages.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/angular-material/angular-material.js' %}"></script>
     {#    Deckgrid has been customized to add support for safari#}
+    {#    https://github.com/akoenig/angular-deckgrid/issues/69 #}
     <script type="text/javascript" src="{% static 'lib/angular-deckgrid/angular-deckgrid.js' %}"></script>
     {#    End Comment#}
     <script type="text/javascript" src="{% static 'lib/angular-route/angular-route.js' %}"></script>
@@ -27,6 +30,7 @@
     <script type="text/javascript" src="{% static 'js/layout/controllers/navbarController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/controllers/indexController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/controllers/cropperController.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/layout/controllers/toastController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/directives/ngCropperUpload.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/directives/ngCropper.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/directives/spinner.js' %}"></script>

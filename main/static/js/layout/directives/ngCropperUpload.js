@@ -1,12 +1,12 @@
-(function ($, _) {
+(function () {
     'use strict';
 
     angular.module('cravus.layout').directive('ngCropperUpload', ngCropperUpload);
     function ngCropperUpload() {
         var template = '<md-button name="vm.name" ng-model="vm.temp" accept="image/*" type="button" ' +
-            'class="md-primary md-hue-1 pull-right" id="uploader" ngf-select="vm.cropper($event)">' +
+            'class="md-primary md-hue-1" id="uploader" ngf-select="vm.cropper($event)">' +
             '<span class="ng-scope">Change Picture</span></md-button>';
-        var controller = ['$scope', '$mdDialog', 'Upload', function ($scope, $mdDialog, Upload) {
+        var controller = ['$scope', '$mdDialog', function ($scope, $mdDialog) {
             var vm = this;
             vm.cropper = function (event) {
                 if (event.type === "change") {
@@ -26,12 +26,14 @@
                         vm.image = result.image;
                         vm.crop = JSON.stringify(result.crop);
                         fauxCrop(result);
+                        showToast();
                     }, function () {
 
                     });
 
                 }
             };
+
             function fauxCrop(result) {
                 var container = $('#' + vm.preview);
                 var originalWidth = container.outerWidth();
@@ -60,6 +62,16 @@
                     marginTop: -result.crop.y * ratio
                 });
             }
+
+            function showToast() {
+                toastr.options = {
+                    'target': $('#toastBounds'),
+                    'closeButton': true,
+                    'positionClass': 'toast-black',
+                    'timeOut': 6000
+                };
+                toastr['info']('Remember to save your changes');
+            }
         }];
         return {
             restrict: 'E',
@@ -77,4 +89,4 @@
         };
     }
 
-})($, _);
+})();

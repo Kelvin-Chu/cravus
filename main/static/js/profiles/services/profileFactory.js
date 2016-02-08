@@ -24,29 +24,22 @@
         }
 
         function update(profile) {
-            if (!profile.crop) {
-                return Upload.upload({
-                    url: '/api/v1/accounts/' + profile.username + '/',
-                    method: 'PUT',
-                    fields: {
-                        'first_name': profile.first_name,
-                        'last_name': profile.last_name,
-                        'email': profile.email,
-                        'username': profile.username
-                    }
-                });
+            var fields = {
+                'first_name': profile.first_name,
+                'last_name': profile.last_name,
+                'email': profile.email,
+                'username': profile.username,
+                'password': profile.password,
+                'password_confirm': profile.password_confirm
+            };
+            if (profile.crop) {
+                fields['avatar'] = profile.avatar;
+                fields['crop'] = profile.crop;
             }
             return Upload.upload({
                 url: '/api/v1/accounts/' + profile.username + '/',
                 method: 'PUT',
-                fields: {
-                    'first_name': profile.first_name,
-                    'last_name': profile.last_name,
-                    'email': profile.email,
-                    'username': profile.username,
-                    'avatar': profile.avatar,
-                    'crop': profile.crop
-                }
+                fields: fields
             });
         }
 
