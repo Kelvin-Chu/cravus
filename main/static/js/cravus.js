@@ -40,3 +40,19 @@ function clearErrors(vm) {
     }
     vm.formErrors = {};
 }
+
+function toast(level, target, message, style) {
+    toastr.remove();
+    toastr.options = {
+        'target': $(target),
+        'closeButton': true,
+        'timeOut': 5000,
+        "preventDuplicates": true
+    };
+    if (style) {
+        toastr.options['positionClass'] = style;
+    } else {
+        toastr.options['positionClass'] = 'toast-black';
+    }
+    toastr[level](message);
+}

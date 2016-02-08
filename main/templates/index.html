@@ -19,6 +19,7 @@
 <div ng-include="'{% static "partials/layout/navbar.html" %}'"></div>
 {% verbatim %}
 <div class="view-container">
+    <div id="globalToast"></div>
     <div ng-view ng-class="{ 'view-frame': route.current.animate  }" ng-cloak></div>
 </div>
 {% endverbatim %}

@@ -26,7 +26,7 @@
                         vm.image = result.image;
                         vm.crop = JSON.stringify(result.crop);
                         fauxCrop(result);
-                        showToast();
+                        toast('info', '#toastBounds', 'Remember to save your changes.');
                     }, function () {
 
                     });
@@ -61,16 +61,6 @@
                     marginLeft: -result.crop.x * ratio,
                     marginTop: -result.crop.y * ratio
                 });
-            }
-
-            function showToast() {
-                toastr.options = {
-                    'target': $('#toastBounds'),
-                    'closeButton': true,
-                    'positionClass': 'toast-black',
-                    'timeOut': 6000
-                };
-                toastr['info']('Remember to save your changes');
             }
         }];
         return {

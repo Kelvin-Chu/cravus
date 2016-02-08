@@ -18,8 +18,8 @@
                         if (shown) return;
                         shown = true;
                         var options = scope.options || {};
-                        setProxy(element);
                         element.cropper(options);
+                        setProxy(element);
                     });
 
                     function setProxy(element) {

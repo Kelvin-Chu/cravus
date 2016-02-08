@@ -3,14 +3,15 @@
 
     angular.module('cravus.profiles').controller('settingsController', settingsController);
     settingsController.$inject = ['$rootScope', '$location', '$routeParams', 'authFactory', 'profileFactory',
-        'addressFactory', '$mdToast', 'ytplayerFactory'];
+        'addressFactory', 'ytplayerFactory'];
     function settingsController($rootScope, $location, $routeParams, authFactory, profileFactory,
-                                addressFactory, $mdToast, ytplayerFactory) {
+                                addressFactory, ytplayerFactory) {
         var vm = this;
         vm.destroy = destroy;
         vm.update = update;
         vm.formErrors = {};
         vm.errors = {};
+        vm.loading = false;
         vm.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
         'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY')
             .split(' ').map(function (state) {
@@ -24,8 +25,8 @@
             authFactory.getAuthenticatedAccount();
             if ($rootScope.authenticatedAccount) {
                 if ($rootScope.authenticatedAccount.username !== username) {
+                    toast('error', '#globalToast', 'You are not authorized to view this page.', 'none');
                     $location.url('/dishes');
-                    $mdToast.show($mdToast.simple().textContent('You are not authorized to view this page.').hideDelay(3000));
                 }
                 ytplayerFactory.stop();
             }
@@ -40,13 +41,13 @@
                 }
 
                 function addressGetErrorFn(data, status, headers, config) {
-                    $mdToast.show($mdToast.simple().textContent('Could not retrieve address information.').hideDelay(3000));
+                    toast('warning', '#toastBounds', 'Could not retrieve address information.');
                 }
             }
 
             function profileGetErrorFn(data, status, headers, config) {
-                $location.url('/');
-                $mdToast.show($mdToast.simple().textContent('You are not authorized to view this page.').hideDelay(3000));
+                toast('warning', '#toastBounds', 'Could not retrieve profile information.');
+
             }
         }
 
@@ -55,29 +56,32 @@
 
             function profileDelSuccessFn(data, status, headers, config) {
                 authFactory.unauthenticate();
+                toast('info', '#globalToast', 'Your account has been deleted.');
                 $location.url('/');
-                $mdToast.show($mdToast.simple().textContent('Your account has been deleted.').hideDelay(3000));
             }
 
             function profileDelErrorFn(data, status, headers, config) {
-                $mdToast.show($mdToast.simple().textContent('There was an error processing your request.').hideDelay(3000));
+                toast('error', '#toastBounds', 'There was an error processing your request.', 'none');
             }
         }
 
-        function update() {
+        function update(event) {
+            vm.loading = true;
             profileFactory.update(vm.profile).then(profileUpdateSuccessFn, profileUpdateErrorFn, profileUpdateProgFn);
             addressFactory.update(vm.address);
 
             function profileUpdateSuccessFn(data) {
                 authFactory.setAuthenticatedAccount(data.data);
                 clearErrors(vm);
-                $mdToast.show($mdToast.simple().textContent('Your profile has been updated.').hideDelay(3000));
+                toast('success', '#toastBounds', 'Your profile has been updated.', 'none');
+                vm.loading = false;
             }
 
             function profileUpdateErrorFn(data) {
                 clearErrors(vm);
                 setErrors(vm, data);
-                $mdToast.show($mdToast.simple().textContent('There was an error processing your request.').hideDelay(3000));
+                toast('error', '#toastBounds', 'There was an error processing your request.', 'none');
+                vm.loading = false;
             }
 
             function profileUpdateProgFn(data) {

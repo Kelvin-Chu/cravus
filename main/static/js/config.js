@@ -101,7 +101,7 @@
         $mdThemingProvider.theme('default')
             .primaryPalette('deep-orange')
             .warnPalette('red')
-            .accentPalette('grey', {'default': '500'});
+            .accentPalette('grey', {'default': '500', 'hue-1': '50'});
     }
 
 })();
