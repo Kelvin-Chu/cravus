@@ -46,7 +46,8 @@ class MobileField(serializers.CharField):
         if request and hasattr(request, "user"):
             user = request.user
         if obj == user or not request:
-            return obj.mobile[1:]
+            if obj.mobile:
+                return obj.mobile[1:]
         return ""
 
     def to_internal_value(self, data):
@@ -81,7 +82,7 @@ class AccountSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.mobile = validated_data.get('mobile', instance.mobile)
+        instance.mobile = validated_data.get('mobile', None)
         instance.avatar = validated_data.get('avatar', instance.avatar)
         password = validated_data.get('password')
         if password:

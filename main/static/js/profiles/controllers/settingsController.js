@@ -47,7 +47,7 @@
 
             function profileGetErrorFn(data, status, headers, config) {
                 toast('warning', '#toastBounds', 'Could not retrieve profile information.');
-
+                $location.url('/dishes');
             }
         }
 
