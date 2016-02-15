@@ -27,6 +27,7 @@
             var fields = {
                 'first_name': profile.first_name,
                 'last_name': profile.last_name,
+                'mobile': profile.mobile,
                 'email': profile.email,
                 'username': profile.username,
                 'password': profile.password,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="cravus">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="cravus" promptOnLocalOverwrite="false">
     <serverData>
       <paths name="50.112.172.124">
         <serverdata>

@@ -9,6 +9,7 @@
         'ngFileUpload',
         'ui.bootstrap',
         'akoenig.deckgrid',
+        'ui.mask',
         'cravus.authentication',
         'cravus.layout',
         'cravus.profiles',
@@ -27,6 +28,7 @@
 })();
 
 function setErrors(vm, data) {
+    vm.showHints = false;
     var errorMessages = data.data;
     for (var name in errorMessages) {
         vm.errors[name] = true;
@@ -35,6 +37,7 @@ function setErrors(vm, data) {
 }
 
 function clearErrors(vm) {
+    vm.showHints = true;
     for (var name in vm.formErrors) {
         vm.errors[name] = false;
     }

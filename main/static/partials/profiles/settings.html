@@ -99,6 +99,19 @@
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block">
+                                            <label>Phone Number</label>
+                                            <input name="mobile" ng-model="vm.profile.mobile" type="text"
+                                                   ui-mask="(999) 999-9999" placeholder="">
+                                            <div ng-messages="userForm.mobile.$error">
+                                                <div ng-message="pattern">(###) ###-#### - Please enter a valid phone
+                                                    number.
+                                                </div>
+                                            </div>
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="mobile">{{ vm.formErrors.mobile }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
                                             <label>Address</label>
                                             <input name="address1" ng-model="vm.address.address1" type="text">
                                             <div ng-messages="vm.errors" class="red" md-auto-hide="false">

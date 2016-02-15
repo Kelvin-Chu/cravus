@@ -1,11 +1,15 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from authentication.models import Account, Address
-from django.core.validators import validate_email
+from authentication.utils import trim_mobile
 from cravus.utils import check_img, crop_img
 
 
-class EmailField(serializers.Field):
+def jwt_response_payload_handler(token, user=None, request=None):
+    return {'token': token, 'user': AccountSerializer(user).data}
+
+
+class EmailField(serializers.EmailField):
     # Override the default and send the entire object to to_representation instead of a single field
     def get_attribute(self, obj):
         return obj
@@ -23,24 +27,48 @@ class EmailField(serializers.Field):
 
     # This method is used to return the value of EmailField when a write request is made
     # It is possible to get the entire request dictionary by overwriting the get_value method
-    def to_internal_value(self, email):
-        validate_email(email)
+    def to_internal_value(self, data):
+        validated_data = super(EmailField, self).to_internal_value(data)
         request = self.context.get("request")
         if request and hasattr(request, "user"):
-            if Account.objects.exclude(pk=request.user.pk).filter(email=email).exists():
+            if Account.objects.exclude(pk=request.user.pk).filter(email=validated_data).exists():
                 raise ValidationError("Email used by another user.")
-        return email
+        return validated_data
+
+
+class MobileField(serializers.CharField):
+    def get_attribute(self, obj):
+        return obj
+
+    def to_representation(self, obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        if obj == user or not request:
+            return obj.mobile[1:]
+        return ""
+
+    def to_internal_value(self, data):
+        validated_data = super(MobileField, self).to_internal_value(data)
+        validated_data = trim_mobile(validated_data)
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            if Account.objects.exclude(pk=request.user.pk).filter(mobile=validated_data).exists():
+                raise ValidationError("Mobile used by another user.")
+        return validated_data
 
 
 class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
     confirm_password = serializers.CharField(write_only=True, required=False)
-    email = EmailField()  # The email field should only be populated if it's the account owner
+    email = EmailField(required=False)  # The email field should only be populated if it's the account owner
+    mobile = MobileField(required=False)
 
     class Meta:
         model = Account
-        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'avatar', 'password', 'confirm_password',
-                  'is_chef']
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'mobile', 'avatar', 'password',
+                  'confirm_password', 'is_chef']
         read_only_fields = ['id', 'is_chef']
 
     # Overriding default create method to use create_user from account manager instead of going through serializer
@@ -53,6 +81,7 @@ class AccountSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.mobile = validated_data.get('mobile', instance.mobile)
         instance.avatar = validated_data.get('avatar', instance.avatar)
         password = validated_data.get('password')
         if password:
@@ -82,7 +111,7 @@ class AccountSerializer(serializers.ModelSerializer):
                 if request.data['confirm_password'] == password:
                     return password
         if request.method == 'POST':
-                    return password
+            return password
         raise ValidationError('Password confirmation mismatch.')
 
 

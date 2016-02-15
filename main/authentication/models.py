@@ -53,6 +53,7 @@ class Account(AbstractBaseUser):
     username = models.CharField(max_length=40, unique=True)
     first_name = models.CharField(max_length=40, blank=True)
     last_name = models.CharField(max_length=40, blank=True)
+    mobile = models.CharField(max_length=16, unique=True, blank=True, null=True)
     avatar = ProcessedImageField(upload_to=generate_avatar_filename, processors=[Transpose(Transpose.AUTO)],
                                  format='JPEG', options={'quality': 85}, blank=True)
     is_admin = models.BooleanField(default=False)
