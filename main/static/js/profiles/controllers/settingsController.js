@@ -9,6 +9,9 @@
         var vm = this;
         vm.destroy = destroy;
         vm.update = update;
+        vm.profile = {};
+        vm.chef = {};
+        vm.address = {};
         vm.formErrors = {};
         vm.errors = {};
         vm.loading = false;
@@ -17,6 +20,7 @@
             .split(' ').map(function (state) {
                 return {abbrev: state};
             });
+        vm.types = ['Homemade', 'Restaurant', 'Food Truck', 'Fast Food', 'Specialty'];
 
         activate();
         function activate() {
@@ -32,22 +36,23 @@
             }
 
             profileFactory.get(username).then(profileGetSuccessFn, profileGetErrorFn);
+            addressFactory.get(username).then(addressGetSuccessFn, addressGetErrorFn);
+
             function profileGetSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
-                addressFactory.get(username).then(addressGetSuccessFn, addressGetErrorFn);
-
-                function addressGetSuccessFn(data, status, headers, config) {
-                    vm.address = data.data[0];
-                }
-
-                function addressGetErrorFn(data, status, headers, config) {
-                    toast('warning', '#toastBounds', 'Could not retrieve address information.');
-                }
             }
 
             function profileGetErrorFn(data, status, headers, config) {
                 toast('warning', '#toastBounds', 'Could not retrieve profile information.');
                 $location.url('/dishes');
+            }
+
+            function addressGetSuccessFn(data, status, headers, config) {
+                vm.address = data.data[0];
+            }
+
+            function addressGetErrorFn(data, status, headers, config) {
+                toast('warning', '#toastBounds', 'Could not retrieve address information.');
             }
         }
 

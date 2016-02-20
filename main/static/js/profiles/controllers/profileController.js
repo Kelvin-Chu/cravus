@@ -3,14 +3,17 @@
 
     angular.module('cravus.profiles').controller('profileController', profileController);
     profileController.$inject = ['$rootScope', '$location', '$routeParams', 'dishesFactory', 'profileFactory',
-        'authFactory', '$mdToast', 'ytplayerFactory'];
-    function profileController($rootScope, $location, $routeParams, dishesFactory, profileFactory, authFactory,
+        'addressFactory', '$mdToast', 'ytplayerFactory'];
+    function profileController($rootScope, $location, $routeParams, dishesFactory, profileFactory, addressFactory,
                                $mdToast, ytplayerFactory) {
         ytplayerFactory.stop();
         var vm = this;
-        vm.profile = undefined;
+        vm.loading = true;
+        vm.profile = {};
         vm.dishes = [];
+        vm.address = [];
         vm.myProfile = false;
+        vm.reviewed = false; //need to be worked on
 
         activate();
         function activate() {
@@ -18,6 +21,7 @@
 
             profileFactory.get(username).then(profileSuccessFn, profileErrorFn);
             dishesFactory.get(username).then(dishesSuccessFn, dishesErrorFn);
+            addressFactory.get(username).then(addressSuccessFn, addressErrorFn);
 
             function profileSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
@@ -26,6 +30,7 @@
                         vm.myProfile = true;
                     }
                 }
+                vm.loading = false;
             }
 
             function profileErrorFn(data, status, headers, config) {
@@ -39,6 +44,15 @@
             }
 
             function dishesErrorFn(data, status, headers, config) {
+
+            }
+
+            function addressSuccessFn(data, status, headers, config) {
+                vm.address = data.data[0];
+                console.log(vm.address);
+            }
+
+            function addressErrorFn(data, status, headers, config) {
 
             }
         }

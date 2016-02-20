@@ -1,3 +1,3 @@
 from django.db import models
 
-# Create your models here.
+# Chef model has to been in authentication\models because of dependency

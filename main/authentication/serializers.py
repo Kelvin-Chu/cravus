@@ -70,12 +70,15 @@ class AccountSerializer(serializers.ModelSerializer):
         model = Account
         fields = ['id', 'email', 'username', 'first_name', 'last_name', 'mobile', 'avatar', 'password',
                   'confirm_password', 'is_chef']
-        read_only_fields = ['id', 'is_chef']
+        read_only_fields = ['id']
 
     # Overriding default create method to use create_user from account manager instead of going through serializer
     # Otherwise the serializer will store the password in clear by default
     def create(self, validated_data):
-        account = Account.objects.create_user(**validated_data)
+        if validated_data.get('is_chef'):
+            account = Account.objects.create_chef(**validated_data)
+        else:
+            account = Account.objects.create_user(**validated_data)
         return account
 
     def update(self, instance, validated_data):

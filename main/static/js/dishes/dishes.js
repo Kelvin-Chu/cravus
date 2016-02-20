@@ -1,6 +1,6 @@
 (function () {
     'use strict';
 
-    angular.module('cravus.dishes', ['ngDialog']);
+    angular.module('cravus.dishes', []);
 
 })();

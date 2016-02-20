@@ -60,6 +60,16 @@ class AccountViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.
         return Response({'upload': [error]}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ChefAccountViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    lookup_field = 'username'
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    throttle_classes = [AccountThrottle, ]
+
+    def perform_create(self, serializer):
+        serializer.save(is_chef=True)
+
+
 class AddressViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
     queryset = Address.objects.select_related('account').all()
     serializer_class = AddressSerializer
@@ -75,7 +85,13 @@ class AccountAddressViewSet(viewsets.ViewSet):
 
     def list(self, request, account_username=None):
         if request.user.username != account_username:
-            return Response([])
+            try:
+                account = Account.objects.get(username=account_username)
+                if account.is_chef:
+                    address = self.queryset.filter(account__username=account_username).order_by('id').first()
+                    return Response([{'city': address.city, 'state': address.state}])
+            except Exception:
+                return Response([])
         queryset = self.queryset.filter(account__username=account_username).order_by('id')
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)

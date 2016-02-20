@@ -1,20 +1,24 @@
-<div class="greybackground">
+<div class="greybackground" ng-hide="vm.loading">
     <div class="profile-container">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 text-center">
                     <div class="form-group edit">
-                        <md-button class="btn md-raised md-primary btn-default" md-ink-ripple="#e9e9e9"
-                                   ng-show="vm.myProfile" type="submit"><span class="ng-scope">Edit</span>
-                        </md-button>
+                        <a href="/+{{ $root.authenticatedAccount.username }}/settings"
+                           class="btn md-raised md-primary btn-default md-button" md-ink-ripple="#e9e9e9"
+                           ng-show="vm.myProfile" type="button"><span class="ng-scope">Edit</span>
+                        </a>
                     </div>
-                    <img class="img-circle avatar" src="/static/img/avatar.jpg"/>
+                    <img class="img-circle avatar"
+                         ng-src="{{ vm.profile.avatar || '/static/img/profile_default.png' }}"/>
                     <md-divider class="profile-divider"></md-divider>
-                    <h1 class="name">Chef Pengxiao Mao</h1>
-                    Austin, TX
+                    <h1 class="name" ng-hide="vm.profile.first_name || vm.profile.last_name">Chef No Name</h1>
+                    <h1 class="name" ng-show="vm.profile.first_name || vm.profile.last_name">
+                        Chef {{ vm.profile.first_name }} {{ vm.profile.last_name }}</h1>
+                    <div ng-hide="!vm.address.city || !vm.address.state">{{ vm.address.city }}, {{ vm.address.state }}</div>
                     <div class="status">
-                        <i class="fa fa-cutlery"> 5 Dishes Available </i><i class="fa fa-usd"> 94 Dishes Sold </i> <i
-                            class="fa fa-users"> 13 Followers </i>
+                        <i class="fa fa-cutlery"> 5 Dishes Available </i><i class="fa fa-check"> Background Checked </i>
+                        <i class="fa fa-star"> Top Rated </i>
                     </div>
                 </div>
             </div>
@@ -22,100 +26,144 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-7 col-md-8">
-                <md-card ng-show="vm.profile" class="profile latest-dishes">
-                    <md-tabs md-dynamic-height md-border-bottom class="md-accent">
-                        <md-tab label="Today" class="white">
-                            <md-card-content class="latest-dish-wrapper">
-                                <div class="col-xs-12 col-sm-4 latest-dish">
-                                    <img src="/static/img/food1.jpg" class="img-responsive"/>
-                                </div>
-                                <div class="col-xs-12 col-sm-4 latest-dish">
-                                    <img src="/static/img/food2.jpg" class="img-responsive"/>
-                                </div>
-                                <div class="col-xs-12 col-sm-4 latest-dish">
-                                    <img src="/static/img/food3.jpg" class="img-responsive"/>
-                                </div>
-                            </md-card-content>
+            <div class="col-lg-8">
+                <md-content class="food-container">
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="Today">
+                            <md-content class="food-container-content">
+                                <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
+                                     class="deckgrid"></div>
+                            </md-content>
                         </md-tab>
-                        <md-tab label="Tomorrow" class="white">
-                            <md-card-content class="latest-dish-wrapper">
-                                <div class="col-xs-12 col-sm-4 latest-dish">
-                                    <img src="/static/img/food1.jpg" class="img-responsive"/>
-                                </div>
-                                <div class="col-xs-12 col-sm-4 latest-dish">
-                                    <img src="/static/img/food2.jpg" class="img-responsive"/>
-                                </div>
-                                <div class="col-xs-12 col-sm-4 latest-dish">
-                                    <img src="/static/img/food3.jpg" class="img-responsive"/>
-                                </div>
-                            </md-card-content>
+                        <md-tab label="Tomorrow">
+                            <md-content class="food-container-content">
+                                <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
+                                     class="deckgrid"></div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="All">
+                            <md-content class="food-container-content">
+                                <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
+                                     class="deckgrid"></div>
+                            </md-content>
                         </md-tab>
                     </md-tabs>
-                </md-card>
+                </md-content>
+            </div>
+            <div class="col-lg-4">
                 <md-card ng-show="vm.profile" class="profile">
                     <md-card-title>
                         <h2 class="cardformheader">Tasty food made from veggies with the dirt washed off 'em</h2>
                     </md-card-title>
                     <md-card-content class="text-left">
-                        <div class="col-md-6">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Cuisine</th>
-                                    <th>Chinese</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="td-main">Type</td>
-                                    <td class="td-second">Homemade, Local Restaurant</td>
-                                </tr>
-                                <tr>
-                                    <td class="td-main">Payment</td>
-                                    <td class="td-second">Cash, Visa, Mastercard</td>
-                                </tr>
-                                <tr>
-                                    <td class="td-main">E-mail</td>
-                                    <td class="td-second"><a href="mailto:mail@example.com">email@example.com</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="td-main">Phone</td>
-                                    <td class="td-second"><a href="tel:01234567890">123-4567-8910</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="td-main">Website</td>
-                                    <td class="td-second"><a href="www.example.net">www.example.com</a></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-6">
-                            Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Cuisine</th>
+                                <th>Chinese</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="td-main">Type</td>
+                                <td class="td-second">Homemade, Local Restaurant</td>
+                            </tr>
+                            <tr>
+                                <td class="td-main">Payment</td>
+                                <td class="td-second">Cash, Visa, Mastercard</td>
+                            </tr>
+                            <tr>
+                                <td class="td-main">E-mail</td>
+                                <td class="td-second"><a href="mailto:mail@example.com">email@example.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-main">Phone</td>
+                                <td class="td-second"><a href="tel:1234567890">123-456-7890</a></td>
+                            </tr>
+                            <tr>
+                                <td class="td-main">Website</td>
+                                <td class="td-second"><a href="www.example.com">www.example.com</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum
+                            ac
                             feugiat.
-                            Vestibulum ullamcorper sodales nisi nec condimentum. Mauris convallis mauris at pellentesque
+                            Vestibulum ullamcorper sodales nisi nec condimentum. Mauris convallis mauris at
+                            pellentesque
                             volutpat. Phasellus at ultricies neque, quis malesuada augue. Donec eleifend
                         </div>
                     </md-card-content>
                 </md-card>
-            </div>
-            <div class="col-sm-5 col-md-4 text-center">
                 <md-card ng-show="vm.profile" class="profile">
-                    <img ng-src="/static/img/cooking.jpg"/>
-                    <md-card-content ng-show="vm.profile.tagline">
-                        {{ vm.profile.tagline }}
-                    </md-card-content>
+
                 </md-card>
             </div>
         </div>
     </div>
-    <div class="food-container">
+    <div class="review-container">
         <div class="container-fluid">
             <div class="col-xs-12">
-                <h1>All Dishes</h1>
+                <h1>Reviews</h1>
             </div>
-            <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                 class="deckgrid"></div>
+            <div class="col-xs-12">
+                <div class="box m-a-0 b-a" ng-hide="vm.myProfile || !$root.isAuthenticated">
+                    <form class="ng-pristine ng-valid">
+                                        <textarea class="form-control no-border" rows="3"
+                                                  placeholder="Type something..."></textarea>
+                        <div class="box-footer clearfix">
+                            <a href=""
+                               class="btn md-raised md-primary btn-default md-button pull-right"
+                               md-ink-ripple="#e9e9e9" type="button"><span class="ng-scope">Submit</span>
+                            </a>
+                            <ul class="nav nav-pills nav-sm" style="cursor: auto">
+                                <li class="nav-item"><a class="nav-link" href=""><i
+                                        class="fa fa-camera text-muted"></i></a></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+                <div class="box-body">
+                    <div class="streamline b-l m-l-md">
+                        <div class="sl-item">
+                            <div class="sl-left"><img src="/static/img/profile_default.png" class="img-circle"></div>
+                            <div class="sl-content">
+                                <div class="sl-date text-muted">2 minutes ago</div>
+                                <div class="sl-author"><a href="">Peter Joo</a></div>
+                                <div><p>Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis
+                                    ipsum ac feugiat. Vestibulum ullamcorper sodales nisi nec condimentum. Mauris
+                                    convallis mauris at pellentesque volutpat. Phasellus at ultricies neque, quis
+                                    malesuada augue. Donec eleifend</p></div>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <div class="sl-left"><img src="/static/img/profile_default.png" class="img-circle"></div>
+                            <div class="sl-content">
+                                <div class="sl-date text-muted">8:30</div>
+                                <div class="sl-author"><a href="">Moke</a></div>
+                                <div><p>Just followed <a href="" class="text-info">Jacob</a> and she followed you too.
+                                </p>
+                                    <p><span class="inline p-a-xs b-a dark-white"><img src="/static/img/food1.jpg"
+                                                                                       class="img-responsive"></span>
+                                    </p></div>
+                            </div>
+                        </div>
+                        <div class="sl-item">
+                            <div class="sl-left"><img src="/static/img/profile_default.png" class="img-circle"></div>
+                            <div class="sl-content">
+                                <div class="sl-date text-muted">Sat, 5 Mar</div>
+                                <div class="sl-author"><a href="">Moke</a></div>
+                                <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
+                                    erat a ante soe aiea ose dos soois.</p>
+                                    <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

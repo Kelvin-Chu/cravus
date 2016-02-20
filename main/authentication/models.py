@@ -15,6 +15,10 @@ STATE_CHOICES = (
     ('SC', 'SC'), ('SD', 'SD'), ('TN', 'TN'), ('TX', 'TX'), ('UT', 'UT'), ('VT', 'VT'), ('VA', 'VA'), ('WA', 'WA'),
     ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY'))
 
+KITCHEN_TYPE_CHOICES = (
+    ('Homemade', 'homemade'), ('Restaurant', 'restaurant'), ('Food Truck', 'foodtruck'), ('Fast Food', 'fastfood'),
+    ('Specialty', 'specialty'), ('', ''))
+
 
 def generate_avatar_filename(self, filename):
     extension = os.path.splitext(filename)[1]
@@ -45,6 +49,8 @@ class AccountManager(BaseUserManager):
         account = self.create_user(email, password, **kwargs)
         account.is_chef = True
         account.save()
+        chef = Chef(account=account)
+        chef.save()
         return account
 
 
@@ -98,3 +104,14 @@ class Address(models.Model):
 
     def __str__(self):
         return "%s at %s" % (self.account, self.address1)
+
+
+class Chef(models.Model):
+    account = models.OneToOneField(Account)
+    tagline = models.TextField(max_length=150, blank=True)
+    bio = models.TextField(max_length=500, blank=True)
+    cuisine = models.CharField(max_length=50, blank=True)
+    type = models.CharField(max_length=50, choices=KITCHEN_TYPE_CHOICES, default='')
+
+    def __str__(self):
+        return "%s" % (self.account)

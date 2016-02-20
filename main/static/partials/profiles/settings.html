@@ -10,68 +10,11 @@
                         <md-card-content>
                             <div id="toastBounds"></div>
                             <md-tabs md-dynamic-height md-border-bottom>
-                                <md-tab label="Account">
+                                <md-tab label="Personal">
                                     <md-content class="md-padding">
                                         <div ng-messages="vm.errors" class="text-center red">
                                             <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
                                         </div>
-                                        <md-input-container class="md-block">
-                                            <label>Email</label>
-                                            <input name="email" ng-model="vm.profile.email" type="email" required>
-                                            <div ng-messages="userForm.email.$error">
-                                                <div ng-message="required" class="my-message">Email is required.</div>
-                                                <div ng-message="email" class="my-message">Invalid email format.</div>
-                                            </div>
-                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                                <div ng-message="email">{{ vm.formErrors.email }}</div>
-                                            </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block">
-                                            <label>Password</label>
-                                            <input name="password" ng-model="vm.profile.password" type="password"
-                                                   ng-minlength="7">
-                                            <div ng-messages="userForm.password.$error">
-                                                <div ng-message="minlength">Your password needs to be at least 7
-                                                    characters.
-                                                </div>
-                                            </div>
-                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                                <div ng-message="password">{{ vm.formErrors.password }}</div>
-                                            </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block">
-                                            <label>Confirm Password</label>
-                                            <input name="confirm_password" ng-model="vm.profile.confirm_password"
-                                                   type="password" ng-minlength="7">
-                                            <div ng-messages="userForm.confirm_password.$error">
-                                                <div ng-message="minlength">Your password needs to be at least 7
-                                                    characters.
-                                                </div>
-                                            </div>
-                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                                <div ng-message="confirm_password">{{ vm.formErrors.confirm_password }}</div>
-                                            </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block">
-                                            <label>Username</label>
-                                            <input ng-model="vm.profile.username" type="text" disabled>
-                                        </md-input-container>
-                                        <div class="form-group text-right">
-                                            <md-button type="button" ng-click="vm.destroy()" disabled
-                                                       class="btn md-raised md-accent btn-default pull-left">Delete
-                                            </md-button>
-                                            <md-button class="btn md-raised md-primary btn-default" type="button"
-                                                       md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">
-                                                <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate"
-                                                                      ng-show="vm.loading" md-diameter="30">
-                                                </md-progress-circular>
-                                                <span ng-hide="vm.loading">Save</span>
-                                            </md-button>
-                                        </div>
-                                    </md-content>
-                                </md-tab>
-                                <md-tab label="Personal">
-                                    <md-content class="md-padding">
                                         <div ng-messages="vm.errors" class="red">
                                             <div ng-message="avatar">{{ vm.formErrors.avatar }}</div>
                                         </div>
@@ -131,8 +74,7 @@
                                             <div class="col-xs-4 col-md-3">
                                                 <md-input-container class="md-block">
                                                     <label>State</label>
-                                                    <md-select ng-model="vm.address.state" id="settings__state"
-                                                               aria-label="State">
+                                                    <md-select ng-model="vm.address.state">
                                                         <md-option ng-repeat="state in vm.states"
                                                                    value="{{ state.abbrev }}">{{ state.abbrev }}
                                                         </md-option>
@@ -162,6 +104,138 @@
                                             </div>
                                         </div>
                                         <div class="form-group text-right">
+                                            <md-button class="btn md-raised md-primary btn-default" type="button"
+                                                       md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">
+                                                <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate"
+                                                                      ng-show="vm.loading" md-diameter="30">
+                                                </md-progress-circular>
+                                                <span ng-hide="vm.loading">Save</span>
+                                            </md-button>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Chef" ng-if="vm.profile.is_chef">
+                                    <md-content class="md-padding">
+                                        <div ng-messages="vm.errors" class="text-center red">
+                                            <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
+                                        </div>
+                                        <md-input-container class="md-block">
+                                            <label>Cuisine</label>
+                                            <input name="cuisine" ng-model="vm.chef.cuisine" type="text">
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="cuisine">{{ vm.formErrors.cuisine }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <label>Tagline</label>
+                                            <textarea name="tagline" ng-model="vm.chef.tagline" md-maxlength="150"
+                                                      rows="5"
+                                                      md-select-on-focus></textarea>
+                                            <div ng-messages="userForm.tagline.$error">
+                                                <div ng-message="maxlength">Cannot exceed 150 characters.</div>
+                                            </div>
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="tagline">{{ vm.formErrors.tagline }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <label>Short Bio</label>
+                                            <textarea name="bio" ng-model="vm.chef.bio" md-maxlength="500" rows="5"
+                                                      md-select-on-focus></textarea>
+                                            <div ng-messages="userForm.bio.$error">
+                                                <div ng-message="maxlength">Cannot exceed 500 characters.</div>
+                                            </div>
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="bio">{{ vm.formErrors.bio }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <label>Kitchen Type</label>
+                                            <md-select ng-model="vm.chef.type">
+                                                <md-option ng-repeat="type in vm.types"
+                                                           value="{{ type }}">{{ type }}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="type">{{ vm.formErrors.type }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block topspace75">
+                                            <label style="margin-bottom: 25px;">Options</label>
+                                            <div class="col-sm-6">
+                                                <md-switch ng-model="vm.chef.deliver" class="md-warn">
+                                                    {{ vm.chef.deliver ? "Delivery Available" : "No Delivery"}}</md-switch>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <md-switch ng-model="vm.chef.pickup" class="md-warn">
+                                                    {{ vm.chef.pickup ? "Pick Up Available" : "No Pick Up"}}</md-switch>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <md-switch ng-model="vm.chef.visa" class="md-warn">
+                                                    {{ vm.chef.visa ? "Credit Cards Accepted" : "Cash Only"}}</md-switch>
+                                            </div>
+                                        </md-input-container>
+                                        <div class="form-group text-right">
+                                            <md-button class="btn md-raised md-primary btn-default" type="button"
+                                                       md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">
+                                                <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate"
+                                                                      ng-show="vm.loading" md-diameter="30">
+                                                </md-progress-circular>
+                                                <span ng-hide="vm.loading">Save</span>
+                                            </md-button>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Account">
+                                    <md-content class="md-padding">
+                                        <div ng-messages="vm.errors" class="text-center red">
+                                            <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
+                                        </div>
+                                        <md-input-container class="md-block">
+                                            <label>Email</label>
+                                            <input name="email" ng-model="vm.profile.email" type="email" required>
+                                            <div ng-messages="userForm.email.$error">
+                                                <div ng-message="required" class="my-message">Email is required.</div>
+                                                <div ng-message="email" class="my-message">Invalid email format.</div>
+                                            </div>
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="email">{{ vm.formErrors.email }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <label>Password</label>
+                                            <input name="password" ng-model="vm.profile.password" type="password"
+                                                   ng-minlength="7">
+                                            <div ng-messages="userForm.password.$error">
+                                                <div ng-message="minlength">Your password needs to be at least 7
+                                                    characters.
+                                                </div>
+                                            </div>
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="password">{{ vm.formErrors.password }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <label>Confirm Password</label>
+                                            <input name="confirm_password" ng-model="vm.profile.confirm_password"
+                                                   type="password" ng-minlength="7">
+                                            <div ng-messages="userForm.confirm_password.$error">
+                                                <div ng-message="minlength">Your password needs to be at least 7
+                                                    characters.
+                                                </div>
+                                            </div>
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="confirm_password">{{ vm.formErrors.confirm_password }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <label>Username</label>
+                                            <input ng-model="vm.profile.username" type="text" disabled>
+                                        </md-input-container>
+                                        <div class="form-group text-right">
+                                            <md-button type="button" ng-click="vm.destroy()" disabled
+                                                       class="btn md-raised md-accent btn-default pull-left">Delete
+                                            </md-button>
                                             <md-button class="btn md-raised md-primary btn-default" type="button"
                                                        md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">
                                                 <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate"
