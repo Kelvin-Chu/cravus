@@ -112,6 +112,9 @@ class Chef(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     cuisine = models.CharField(max_length=50, blank=True)
     type = models.CharField(max_length=50, choices=KITCHEN_TYPE_CHOICES, default='')
+    delivery = models.BooleanField(default=False)
+    pickup = models.BooleanField(default=False)
+    credit = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s" % (self.account)

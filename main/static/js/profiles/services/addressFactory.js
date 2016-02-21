@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.profiles').factory('addressFactory', addressFactory);
-    addressFactory.$inject = ['$location', '$http', 'authFactory'];
-    function addressFactory($location, $http, authFactory) {
+    addressFactory.$inject = ['$http'];
+    function addressFactory($http) {
 
         function get(username) {
             return $http.get('/api/v1/accounts/' + username + '/addresses/');

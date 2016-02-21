@@ -3,9 +3,9 @@
 
     angular.module('cravus.profiles').controller('settingsController', settingsController);
     settingsController.$inject = ['$rootScope', '$location', '$routeParams', 'authFactory', 'profileFactory',
-        'addressFactory', 'ytplayerFactory'];
+        'addressFactory', 'chefFactory', 'ytplayerFactory'];
     function settingsController($rootScope, $location, $routeParams, authFactory, profileFactory,
-                                addressFactory, ytplayerFactory) {
+                                addressFactory, chefFactory, ytplayerFactory) {
         var vm = this;
         vm.destroy = destroy;
         vm.update = update;
@@ -40,6 +40,18 @@
 
             function profileGetSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
+                if (vm.profile.is_chef) {
+                    chefFactory.get(username).then(chefGetSuccessFn, chefGetErrorFn);
+                }
+
+                function chefGetSuccessFn(data, status, headers, config) {
+                    vm.chef = data.data;
+                    console.log(vm.chef);
+                }
+
+                function chefGetErrorFn(data, status, headers, config) {
+                    toast('warning', '#toastBounds', 'Could not retrieve chef information.');
+                }
             }
 
             function profileGetErrorFn(data, status, headers, config) {
@@ -72,8 +84,12 @@
 
         function update(event) {
             vm.loading = true;
-            profileFactory.update(vm.profile).then(profileUpdateSuccessFn, profileUpdateErrorFn, profileUpdateProgFn);
+            profileFactory.update(vm.profile).then(profileUpdateSuccessFn, profileUpdateErrorFn);
             addressFactory.update(vm.address);
+
+            if (vm.profile.is_chef) {
+                chefFactory.update(vm.chef);
+            }
 
             function profileUpdateSuccessFn(data) {
                 authFactory.setAuthenticatedAccount(data.data);
@@ -87,10 +103,6 @@
                 setErrors(vm, data);
                 toast('error', '#toastBounds', 'There was an error processing your request.', 'none');
                 vm.loading = false;
-            }
-
-            function profileUpdateProgFn(data) {
-
             }
         }
     }

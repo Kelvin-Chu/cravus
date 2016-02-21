@@ -49,7 +49,6 @@
 
             function addressSuccessFn(data, status, headers, config) {
                 vm.address = data.data[0];
-                console.log(vm.address);
             }
 
             function addressErrorFn(data, status, headers, config) {
