@@ -12,9 +12,7 @@
                     <img class="img-circle avatar"
                          ng-src="{{ vm.profile.avatar || '/static/img/profile_default.png' }}"/>
                     <md-divider class="profile-divider"></md-divider>
-                    <h1 class="name" ng-hide="vm.profile.first_name || vm.profile.last_name">Chef No Name</h1>
-                    <h1 class="name" ng-show="vm.profile.first_name || vm.profile.last_name">
-                        Chef {{ vm.profile.first_name }} {{ vm.profile.last_name }}</h1>
+                    <h1 class="name">Chef {{ vm.name }}</h1>
                     <div ng-hide="!vm.address.city || !vm.address.state">{{ vm.address.city }}, {{ vm.address.state }}</div>
                     <div class="status">
                         <i class="fa fa-cutlery"> 5 Dishes Available </i><i class="fa fa-check"> Background Checked </i>
@@ -53,48 +51,51 @@
             <div class="col-lg-4">
                 <md-card ng-show="vm.profile" class="profile">
                     <md-card-title>
-                        <h2 class="cardformheader">Tasty food made from veggies with the dirt washed off 'em</h2>
+                        <h2 class="cardformheader" ng-show="vm.myProfile">
+                            {{ vm.chef.tagline ? vm.chef.tagline : "Your Tagline" }}</h2>
+                        <h2 class="cardformheader" ng-hide="vm.myProfile">{{ vm.chef.tagline }}</h2>
                     </md-card-title>
                     <md-card-content class="text-left">
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>Cuisine</th>
-                                <th>Chinese</th>
+                                <th>Main Cuisine</th>
+                                <th>{{ vm.chef.cuisine ? vm.chef.cuisine : "N/A" }}</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td class="td-main">Type</td>
-                                <td class="td-second">Homemade, Local Restaurant</td>
+                                <td class="td-second">{{ vm.chef.type ? vm.chef.type : "N/A" }}</td>
                             </tr>
                             <tr>
                                 <td class="td-main">Payment</td>
-                                <td class="td-second">Cash, Visa, Mastercard</td>
+                                <td class="td-second">{{ vm.chef.credit ? "Cash, Credit Card" : "Cash Only" }}</td>
                             </tr>
                             <tr>
                                 <td class="td-main">E-mail</td>
-                                <td class="td-second"><a href="mailto:mail@example.com">email@example.com</a>
+                                <td class="td-second"><a ng-href="mailto:{{ vm.profile.email }}">
+                                    {{ vm.profile.email ? vm.profile.email : "N/A" }}</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="td-main">Phone</td>
-                                <td class="td-second"><a href="tel:1234567890">123-456-7890</a></td>
+                                <td class="td-second"><a ng-href="tel:{{ vm.profile.mobile }}">
+                                    {{ vm.profile.mobile ? vm.profile.mobile : "N/A" }}</a></td>
                             </tr>
                             <tr>
-                                <td class="td-main">Website</td>
-                                <td class="td-second"><a href="www.example.com">www.example.com</a></td>
+                                <td class="td-main">Delivery</td>
+                                <td class="td-second">{{ vm.chef.delivery ? "Yes" : "No" }}</td>
+                            </tr>
+                            <tr>
+                                <td class="td-main">Pick Up</td>
+                                <td class="td-second">{{ vm.chef.pickup ? "Yes" : "No" }}</td>
                             </tr>
                             </tbody>
                         </table>
-                        <div>
-                            Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum
-                            ac
-                            feugiat.
-                            Vestibulum ullamcorper sodales nisi nec condimentum. Mauris convallis mauris at
-                            pellentesque
-                            volutpat. Phasellus at ultricies neque, quis malesuada augue. Donec eleifend
-                        </div>
+                        <div ng-show="vm.myProfile">
+                            {{ vm.chef.bio ? vm.chef.bio : "A short bio about yourself goes here." }}</div>
+                        <div ng-hide="vm.myProfile">{{ vm.chef.bio }}</div>
                     </md-card-content>
                 </md-card>
                 <md-card ng-show="vm.profile" class="profile">
@@ -111,8 +112,8 @@
             <div class="col-xs-12">
                 <div class="box m-a-0 b-a" ng-hide="vm.myProfile || !$root.isAuthenticated">
                     <form class="ng-pristine ng-valid">
-                                        <textarea class="form-control no-border" rows="3"
-                                                  placeholder="Type something..."></textarea>
+                                        <textarea class="form-control no-border" rows="5"
+                                                  placeholder="Write a review..."></textarea>
                         <div class="box-footer clearfix">
                             <a href=""
                                class="btn md-raised md-primary btn-default md-button pull-right"

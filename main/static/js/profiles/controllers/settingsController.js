@@ -21,6 +21,8 @@
                 return {abbrev: state};
             });
         vm.types = ['Homemade', 'Restaurant', 'Food Truck', 'Fast Food', 'Specialty'];
+        vm.cuisines = ['American', 'Cajun', 'Chinese', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean',
+            'Mediterranean', 'Mexican', 'Thai', 'Vietnamese', 'Other'];
 
         activate();
         function activate() {
@@ -46,7 +48,6 @@
 
                 function chefGetSuccessFn(data, status, headers, config) {
                     vm.chef = data.data;
-                    console.log(vm.chef);
                 }
 
                 function chefGetErrorFn(data, status, headers, config) {

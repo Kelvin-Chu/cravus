@@ -19,6 +19,12 @@ KITCHEN_TYPE_CHOICES = (
     ('Homemade', 'homemade'), ('Restaurant', 'restaurant'), ('Food Truck', 'foodtruck'), ('Fast Food', 'fastfood'),
     ('Specialty', 'specialty'), ('', ''))
 
+CUISINE_CHOICES = (
+    ('American', 'american'), ('Cajun', 'cajun'), ('Chinese', 'chinese'), ('French', 'french'), ('Greek', 'greek'),
+    ('Indian', 'indian'), ('Italian', 'italian'), ('Japanese', 'japanese'), ('Korean', 'korean'),
+    ('Mediterranean', 'mediterranean'), ('Mexican', 'mexican'), ('Thai', 'thai'), ('Vietnamese', 'vietnamese'),
+    ('Other', 'other'), ('', ''))
+
 
 def generate_avatar_filename(self, filename):
     extension = os.path.splitext(filename)[1]
@@ -55,10 +61,10 @@ class AccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser):
-    email = models.EmailField(unique=True)
-    username = models.CharField(max_length=40, unique=True)
-    first_name = models.CharField(max_length=40, blank=True)
-    last_name = models.CharField(max_length=40, blank=True)
+    email = models.EmailField(max_length=254, unique=True)
+    username = models.CharField(max_length=50, unique=True)
+    first_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
     mobile = models.CharField(max_length=16, unique=True, blank=True, null=True)
     avatar = ProcessedImageField(upload_to=generate_avatar_filename, processors=[Transpose(Transpose.AUTO)],
                                  format='JPEG', options={'quality': 85}, blank=True)
@@ -96,8 +102,8 @@ class Account(AbstractBaseUser):
 
 class Address(models.Model):
     account = models.ForeignKey(Account)
-    address1 = models.CharField(max_length=50, blank=True)
-    address2 = models.CharField(max_length=50, blank=True)
+    address1 = models.CharField(max_length=150, blank=True)
+    address2 = models.CharField(max_length=150, blank=True)
     city = models.CharField(max_length=50, blank=True)
     state = models.CharField(max_length=2, choices=STATE_CHOICES, default='TX')
     zip = models.CharField(max_length=10, blank=True)
@@ -110,11 +116,12 @@ class Chef(models.Model):
     account = models.OneToOneField(Account)
     tagline = models.TextField(max_length=150, blank=True)
     bio = models.TextField(max_length=500, blank=True)
-    cuisine = models.CharField(max_length=50, blank=True)
+    cuisine = models.CharField(max_length=50, choices=CUISINE_CHOICES, default='')
     type = models.CharField(max_length=50, choices=KITCHEN_TYPE_CHOICES, default='')
     delivery = models.BooleanField(default=False)
     pickup = models.BooleanField(default=False)
     credit = models.BooleanField(default=False)
+    background = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s" % (self.account)

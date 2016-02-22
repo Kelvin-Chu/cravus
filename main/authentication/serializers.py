@@ -21,7 +21,7 @@ class EmailField(serializers.EmailField):
         request = self.context.get("request")
         if request and hasattr(request, "user"):
             user = request.user
-        if obj == user or not request:
+        if obj.is_chef or obj == user or not request:
             return obj.email
         return ""
 
@@ -45,7 +45,7 @@ class MobileField(serializers.CharField):
         request = self.context.get("request")
         if request and hasattr(request, "user"):
             user = request.user
-        if obj == user or not request:
+        if obj.is_chef or obj == user or not request:
             if obj.mobile:
                 return obj.mobile[1:]
         return ""

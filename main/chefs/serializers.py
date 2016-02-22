@@ -7,8 +7,8 @@ class ChefSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chef
-        fields = ('id', 'account', 'tagline', 'bio', 'cuisine', 'type', 'delivery', 'pickup', 'credit')
-        read_only_fields = ('id', 'account',)
+        fields = ('id', 'account', 'tagline', 'bio', 'cuisine', 'type', 'delivery', 'pickup', 'credit', 'background')
+        read_only_fields = ('id', 'account', 'background')
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(ChefSerializer, self).get_validation_exclusions()

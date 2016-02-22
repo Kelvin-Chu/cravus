@@ -29,14 +29,22 @@
                                         </md-input-container>
                                         <md-input-container class="md-block">
                                             <label>First Name</label>
-                                            <input name="first_name" ng-model="vm.profile.first_name" type="text">
+                                            <input name="first_name" ng-model="vm.profile.first_name" type="text"
+                                                   md-maxlength="50">
+                                            <div ng-messages="userForm.first_name.$error">
+                                                <div ng-message="md-maxlength">Cannot exceed 50 characters.</div>
+                                            </div>
                                             <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                                 <div ng-message="first_name">{{ vm.formErrors.first_name }}</div>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block">
                                             <label>Last Name</label>
-                                            <input name="last_name" ng-model="vm.profile.last_name" type="text">
+                                            <input name="last_name" ng-model="vm.profile.last_name" type="text"
+                                                   md-maxlength="50">
+                                            <div ng-messages="userForm.last_name.$error">
+                                                <div ng-message="md-maxlength">Cannot exceed 50 characters.</div>
+                                            </div>
                                             <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                                 <div ng-message="last_name">{{ vm.formErrors.last_name }}</div>
                                             </div>
@@ -44,7 +52,8 @@
                                         <md-input-container class="md-block">
                                             <label>Phone Number</label>
                                             <input name="mobile" ng-model="vm.profile.mobile" type="text"
-                                                   ui-mask="(999) 999-9999" placeholder="">
+                                                   ui-mask="(999) 999-9999" placeholder=""
+                                                   ng-pattern="/^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/">
                                             <div ng-messages="userForm.mobile.$error">
                                                 <div ng-message="pattern">(###) ###-#### - Please enter a valid phone
                                                     number.
@@ -56,7 +65,11 @@
                                         </md-input-container>
                                         <md-input-container class="md-block">
                                             <label>Address</label>
-                                            <input name="address1" ng-model="vm.address.address1" type="text">
+                                            <input name="address1" ng-model="vm.address.address1" type="text"
+                                                   md-maxlength="150">
+                                            <div ng-messages="userForm.address1.$error">
+                                                <div ng-message="md-maxlength">Cannot exceed 150 characters.</div>
+                                            </div>
                                             <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                                 <div ng-message="address1">{{ vm.formErrors.address1 }}</div>
                                             </div>
@@ -65,7 +78,12 @@
                                             <div class="col-xs-12 col-md-5">
                                                 <md-input-container class="md-block">
                                                     <label>City</label>
-                                                    <input name="city" ng-model="vm.address.city" type="text">
+                                                    <input name="city" ng-model="vm.address.city" type="text"
+                                                           md-maxlength="50">
+                                                    <div ng-messages="userForm.city.$error">
+                                                        <div ng-message="md-maxlength">Cannot exceed 50 characters.
+                                                        </div>
+                                                    </div>
                                                     <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                                         <div ng-message="city">{{ vm.formErrors.city }}</div>
                                                     </div>
@@ -120,19 +138,11 @@
                                             <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
                                         </div>
                                         <md-input-container class="md-block">
-                                            <label>Cuisine</label>
-                                            <input name="cuisine" ng-model="vm.chef.cuisine" type="text">
-                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                                <div ng-message="cuisine">{{ vm.formErrors.cuisine }}</div>
-                                            </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block">
                                             <label>Tagline</label>
                                             <textarea name="tagline" ng-model="vm.chef.tagline" md-maxlength="150"
-                                                      rows="5"
-                                                      md-select-on-focus></textarea>
+                                                      rows="5" md-select-on-focus></textarea>
                                             <div ng-messages="userForm.tagline.$error">
-                                                <div ng-message="maxlength">Cannot exceed 150 characters.</div>
+                                                <div ng-message="md-maxlength">Cannot exceed 150 characters.</div>
                                             </div>
                                             <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                                 <div ng-message="tagline">{{ vm.formErrors.tagline }}</div>
@@ -149,18 +159,7 @@
                                                 <div ng-message="bio">{{ vm.formErrors.bio }}</div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block">
-                                            <label>Kitchen Type</label>
-                                            <md-select ng-model="vm.chef.type">
-                                                <md-option ng-repeat="type in vm.types"
-                                                           value="{{ type }}">{{ type }}
-                                                </md-option>
-                                            </md-select>
-                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                                <div ng-message="type">{{ vm.formErrors.type }}</div>
-                                            </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block topspace75">
+                                        <md-input-container class="md-block topspace50">
                                             <label style="margin-bottom: 25px;">Options</label>
                                             <div class="col-sm-6">
                                                 <md-switch ng-model="vm.chef.delivery" class="md-warn">
@@ -172,10 +171,32 @@
                                             </div>
                                             <div class="col-sm-12">
                                                 <md-switch ng-model="vm.chef.credit" class="md-warn">
-                                                    {{ vm.chef.visa ? "Credit Cards Accepted" : "Cash Only"}}</md-switch>
+                                                    {{ vm.chef.credit ? "Credit Cards Accepted" : "Cash Only"}}</md-switch>
                                             </div>
                                         </md-input-container>
-                                        <div class="form-group text-right">
+                                        <md-input-container class="md-block">
+                                            <label>Main Cuisine</label>
+                                            <md-select ng-model="vm.chef.cuisine">
+                                                <md-option ng-repeat="cuisine in vm.cuisines"
+                                                           value="{{ cuisine }}">{{ cuisine }}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="cuisine">{{ vm.formErrors.cuisine }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <label>Kitchen Type</label>
+                                            <md-select ng-model="vm.chef.type">
+                                                <md-option ng-repeat="type in vm.types"
+                                                           value="{{ type }}">{{ type }}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                <div ng-message="type">{{ vm.formErrors.type }}</div>
+                                            </div>
+                                        </md-input-container>
+                                        <div class="form-group text-right topspace50">
                                             <md-button class="btn md-raised md-primary btn-default" type="button"
                                                        md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">
                                                 <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate"
@@ -193,8 +214,10 @@
                                         </div>
                                         <md-input-container class="md-block">
                                             <label>Email</label>
-                                            <input name="email" ng-model="vm.profile.email" type="email" required>
+                                            <input name="email" ng-model="vm.profile.email" type="email" required
+                                                   md-maxlength="254">
                                             <div ng-messages="userForm.email.$error">
+                                                <div ng-message="md-maxlength">Cannot exceed 254 characters.</div>
                                                 <div ng-message="required" class="my-message">Email is required.</div>
                                                 <div ng-message="email" class="my-message">Invalid email format.</div>
                                             </div>
@@ -205,8 +228,9 @@
                                         <md-input-container class="md-block">
                                             <label>Password</label>
                                             <input name="password" ng-model="vm.profile.password" type="password"
-                                                   ng-minlength="7">
+                                                   ng-minlength="7" md-maxlength="128">
                                             <div ng-messages="userForm.password.$error">
+                                                <div ng-message="md-maxlength">Cannot exceed 128 characters.</div>
                                                 <div ng-message="minlength">Your password needs to be at least 7
                                                     characters.
                                                 </div>
@@ -218,8 +242,9 @@
                                         <md-input-container class="md-block">
                                             <label>Confirm Password</label>
                                             <input name="confirm_password" ng-model="vm.profile.confirm_password"
-                                                   type="password" ng-minlength="7">
+                                                   type="password" ng-minlength="7" md-maxlength="128">
                                             <div ng-messages="userForm.confirm_password.$error">
+                                                <div ng-message="md-maxlength">Cannot exceed 128 characters.</div>
                                                 <div ng-message="minlength">Your password needs to be at least 7
                                                     characters.
                                                 </div>

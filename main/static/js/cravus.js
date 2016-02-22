@@ -49,7 +49,7 @@ function toast(level, target, message, style) {
     toastr.options = {
         'target': $(target),
         'closeButton': true,
-        'timeOut': 5000,
+        'timeOut': 3000,
         "preventDuplicates": true
     };
     if (style) {
