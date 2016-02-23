@@ -5,10 +5,7 @@
     <script type="text/javascript" src="{% static 'lib/jquery/dist/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/underscore/underscore.js' %}"></script>
-    {#    Cropper has been customized to add support for safari#}
-    {#    https://github.com/fengyuanchen/cropper/issues/509 #}
     <script type="text/javascript" src="{% static 'lib/cropper/dist/cropper.js' %}"></script>
-    {#    End Comment#}
     <script type="text/javascript" src="{% static 'lib/toastr/toastr.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/angular/angular.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/angular-animate/angular-animate.js' %}"></script>
@@ -20,6 +17,7 @@
     <script type="text/javascript" src="{% static 'lib/angular-ui-mask/dist/mask.js' %}"></script>
     {#    Deckgrid has been customized to add support for safari#}
     {#    https://github.com/akoenig/angular-deckgrid/issues/69 #}
+    {#    Also added maxColumns attribute... do a compare to find changes  #}
     <script type="text/javascript" src="{% static 'lib/angular-deckgrid/angular-deckgrid.js' %}"></script>
     {#    End Comment#}
     <script type="text/javascript" src="{% static 'lib/angular-route/angular-route.js' %}"></script>
@@ -47,7 +45,7 @@
     <script type="text/javascript" src="{% static 'js/profiles/controllers/settingsController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dishes/dishes.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dishes/services/dishesFactory.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/dishes/controllers/newDishController.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dishes/controllers/manageDishesController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dishes/controllers/listDishesController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/style.js' %}"></script>
 {% endcompress %}

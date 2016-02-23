@@ -23,7 +23,6 @@ class DishViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(chef=self.request.user)
-        return super(DishViewSet, self).perform_create(serializer)
 
 
 class AccountDishesViewSet(viewsets.ViewSet):

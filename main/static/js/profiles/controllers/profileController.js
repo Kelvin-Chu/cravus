@@ -8,9 +8,9 @@
                                chefFactory, ytplayerFactory) {
         ytplayerFactory.stop();
         var vm = this;
-        vm.profile = {};
-        vm.dishes = {};
-        vm.address = {};
+        vm.profile = null;
+        vm.dishes = null;
+        vm.address = null;
         vm.name = "";
         vm.loading = true;
         vm.myProfile = false;
@@ -38,16 +38,16 @@
                 }
                 if (vm.profile.first_name || vm.profile.last_name) {
                     if (vm.profile.first_name) {
-                        vm.name = vm.profile.first_name + " " + vm.profile.last_name;
+                        vm.name = "Chef " + vm.profile.first_name + " " + vm.profile.last_name;
                     } else {
-                        vm.name = vm.profile.last_name;
+                        vm.name = "Chef " + vm.profile.last_name;
                     }
 
                 } else {
                     if (vm.myProfile) {
                         vm.name = "Your Name";
                     } else {
-                        vm.name = "No Name";
+                        vm.name = "Anonymous Chef";
                     }
                 }
                 angular.element(document).ready(function () {
@@ -61,7 +61,11 @@
             }
 
             function dishesSuccessFn(data, status, headers, config) {
-                vm.dishes = data.data;
+                if (data.data.length > 0) {
+                    vm.dishes = data.data;
+                } else {
+                    vm.dishes = false;
+                }
             }
 
             function dishesErrorFn(data, status, headers, config) {
@@ -78,6 +82,16 @@
 
             function chefSuccessFn(data, status, headers, config) {
                 vm.chef = data.data;
+                if (vm.myProfile && !vm.chef.tagline) {
+                    vm.tagline = "Your Tagline";
+                } else {
+                    vm.tagline = vm.chef.tagline;
+                }
+                if (vm.myProfile && !vm.chef.bio) {
+                    vm.bio = "A short description about yourself or your kitchen goes here.";
+                } else {
+                    vm.bio = vm.chef.bio;
+                }
             }
 
             function chefErrorFn(data, status, headers, config) {

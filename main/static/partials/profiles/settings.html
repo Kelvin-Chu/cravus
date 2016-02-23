@@ -159,7 +159,7 @@
                                                 <div ng-message="bio">{{ vm.formErrors.bio }}</div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block topspace50">
+                                        <md-input-container class="md-block topspace50 botspace50">
                                             <label style="margin-bottom: 25px;">Options</label>
                                             <div class="col-sm-6">
                                                 <md-switch ng-model="vm.chef.delivery" class="md-warn">
@@ -175,7 +175,7 @@
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block">
-                                            <label>Main Cuisine</label>
+                                            <label>Specialty</label>
                                             <md-select ng-model="vm.chef.cuisine">
                                                 <md-option ng-repeat="cuisine in vm.cuisines"
                                                            value="{{ cuisine }}">{{ cuisine }}

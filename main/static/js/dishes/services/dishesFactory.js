@@ -2,17 +2,27 @@
     'use strict';
 
     angular.module('cravus.dishes').factory('dishesFactory', dishesFactory);
-    dishesFactory.$inject = ['$http'];
-    function dishesFactory($http) {
+    dishesFactory.$inject = ['$http', 'Upload'];
+    function dishesFactory($http, Upload) {
 
         function all() {
             return $http.get('/api/v1/dishes/');
         }
 
-        function create(name, description) {
-            return $http.post('/api/v1/dishes/', {
-                name: name,
-                description: description
+        function create(newdish) {
+            var fields = {
+                'name': newdish.name,
+                'description': newdish.description,
+                'cuisine': newdish.cuisine
+            };
+            if (newdish.crop) {
+                fields['image'] = newdish.image;
+                fields['crop'] = newdish.crop;
+            }
+            return Upload.upload({
+                url: '/api/v1/dishes/',
+                method: 'POST',
+                fields: fields
             });
         }
 

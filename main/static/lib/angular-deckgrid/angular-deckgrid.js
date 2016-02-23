@@ -133,6 +133,12 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                 scope.cardTemplate = attrs.cardtemplate;
             }
 
+            if (!angular.isUndefined(attrs.maxcolumns)) {
+                scope.maxColumns = parseInt(attrs.maxcolumns);
+            } else {
+                scope.maxColumns = 5;
+            }
+
             scope.mother = scope.$parent;
 
             this.$$deckgrid = Deckgrid.create(scope, elem[0]);
@@ -335,29 +341,27 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
          *
          */
         Deckgrid.prototype.$$getLayout = function $$getLayout() {
-            var content = $window.getComputedStyle(this.$$elem, ':before').content,
+            var self = this,
+                content,
                 layout;
 
-            if (!content || content === '') {
-                var width = $(window).width();
-                if (width > 1199) {
-                    content = '5 .column.column-1-5';
-                } else if (width > 991) {
-                    content = '4 .column.column-1-4';
-                } else if (width > 767) {
-                    content = '3 .column.column-1-3';
-                } else if (width > 479) {
-                    content = '2 .column.column-1-2';
-                } else {
-                    content = '1 .column.column-1-1';
-                }
+            var width = $(window).width();
+            if (width > 1199 && 5 <= self.$$scope.maxColumns) {
+                content = '5 .column.column-1-5';
+            } else if (width > 991 && 4 <= self.$$scope.maxColumns) {
+                content = '4 .column.column-1-4';
+            } else if (width > 767 && 3 <= self.$$scope.maxColumns) {
+                content = '3 .column.column-1-3';
+            } else if (width > 479 && 2 <= self.$$scope.maxColumns) {
+                content = '2 .column.column-1-2';
+            } else {
+                content = '1 .column.column-1-1';
             }
 
             if (content) {
                 content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
                 content = content.replace(/"/g, '');  // before e.g. "3 .column.size-1of3"
                 content = content.split(' ');
-
                 if (2 === content.length) {
                     layout = {};
                     layout.columns = (content[0] | 0);

@@ -2,13 +2,8 @@
     'use strict';
 
     angular.module('cravus.layout').controller('listDishesController', listDishesController);
-    listDishesController.$inject = [
-        '$scope',
-        'dishesFactory',
-        '$mdToast',
-        'ytplayerFactory'
-    ];
-    function listDishesController($scope, dishesFactory, $mdToast, ytplayerFactory) {
+    listDishesController.$inject = ['$scope', 'dishesFactory', 'ytplayerFactory'];
+    function listDishesController($scope, dishesFactory, ytplayerFactory) {
         ytplayerFactory.stop();
         var vm = this;
         vm.dishes = [];
@@ -30,7 +25,7 @@
             }
 
             function dishesErrorFn(data, status, headers, config) {
-                $mdToast.show($mdToast.simple().textContent('Site in maintenance, try again later!').hideDelay(3000));
+                toast('error', '#globalToast', 'Site in maintenance, try again later!', 'none');
             }
         }
     }

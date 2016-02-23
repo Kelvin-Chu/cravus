@@ -20,7 +20,7 @@
             .split(' ').map(function (state) {
                 return {abbrev: state};
             });
-        vm.types = ['Homemade', 'Restaurant', 'Food Truck', 'Fast Food', 'Specialty'];
+        vm.types = ['Homemade', 'Fast Food', 'Food Truck', 'Restaurant', 'Other'];
         vm.cuisines = ['American', 'Cajun', 'Chinese', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean',
             'Mediterranean', 'Mexican', 'Thai', 'Vietnamese', 'Other'];
 
@@ -34,7 +34,6 @@
                     toast('error', '#globalToast', 'You are not authorized to view this page.', 'none');
                     $location.url('/dishes');
                 }
-                ytplayerFactory.stop();
             }
 
             profileFactory.get(username).then(profileGetSuccessFn, profileGetErrorFn);

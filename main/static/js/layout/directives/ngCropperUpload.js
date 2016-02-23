@@ -8,6 +8,9 @@
             '<span class="ng-scope">Change Picture</span></md-button>';
         var controller = ['$scope', '$mdDialog', function ($scope, $mdDialog) {
             var vm = this;
+            if (!vm.ratio) {
+                vm.ratio = 1;
+            }
             vm.cropper = function (event) {
                 if (event.type === "change") {
                     $mdDialog.show({
@@ -20,7 +23,8 @@
                         closeTo: "#uploader",
                         clickOutsideToClose: false,
                         locals: {
-                            image: vm.temp
+                            image: vm.temp,
+                            ratio: vm.ratio
                         }
                     }).then(function (result) {
                         vm.image = result.image;
@@ -69,6 +73,7 @@
             scope: {
                 image: '=',
                 crop: '=',
+                ratio: '@',
                 preview: '@',
                 name: '@'
             },

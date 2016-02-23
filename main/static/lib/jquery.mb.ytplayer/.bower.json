@@ -1,6 +1,6 @@
 {
   "name": "jquery.mb.ytplayer",
-  "version": "2.9.11",
+  "version": "2.9.13",
   "homepage": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer",
   "authors": [
     "pupunzi <matteo@open-lab.com>"
@@ -22,15 +22,14 @@
     "test",
     "tests"
   ],
-  "buildnum": "5797",
-  "_release": "2.9.11",
+  "buildnum": "5815",
+  "_release": "2.9.13",
   "_resolution": {
     "type": "version",
-    "tag": "2.9.11",
-    "commit": "563663e767ed387ff7e2e9b2c9433c81d224d05b"
+    "tag": "2.9.13",
+    "commit": "0353457f8581e0fef9e6f323bb8d05a0e025b86f"
   },
   "_source": "git://github.com/pupunzi/jquery.mb.YTPlayer.git",
-  "_target": "~2.9.11",
-  "_originalSource": "jquery.mb.YTPlayer",
-  "_direct": true
+  "_target": "~2.9.13",
+  "_originalSource": "jquery.mb.ytplayer"
 }

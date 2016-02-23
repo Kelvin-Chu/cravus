@@ -45,6 +45,13 @@
             activetab: 'settings',
             animate: true,
             resolve: {"check": notLoggedIn}
+        }).when('/+:username/managedishes', {
+            controller: 'manageDishesController',
+            controllerAs: 'vm',
+            templateUrl: '/static/partials/dishes/manage-dishes.html',
+            activetab: 'managedishes',
+            animate: true,
+            resolve: {"check": notLoggedIn}
         }).when('/', {
             controller: 'indexController',
             controllerAs: 'vm',

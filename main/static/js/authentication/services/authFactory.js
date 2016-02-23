@@ -25,7 +25,7 @@
 
             function chefRegisterSuccessFn(data, status, headers, config) {
                 clearErrors(vm);
-                login(vm);
+                login(vm, '/+' + vm.username);
             }
 
             function chefRegisterErrorFn(data, status, headers, config) {
@@ -34,14 +34,18 @@
             }
         }
 
-        function login(vm) {
+        function login(vm, page) {
             return $http.post('/api/v1/auth/login/', {email: vm.email, password: vm.password})
                 .then(loginSuccessFn, loginErrorFn);
 
             function loginSuccessFn(data, status, headers, config) {
                 setAuthenticatedAccount(data.data);
                 clearErrors(vm);
-                $location.url('/dishes');
+                if (page) {
+                    $location.url(page);
+                } else {
+                    $location.url('/dishes');
+                }
             }
 
             function loginErrorFn(data, status, headers, config) {

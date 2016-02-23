@@ -17,7 +17,7 @@ STATE_CHOICES = (
 
 KITCHEN_TYPE_CHOICES = (
     ('Homemade', 'homemade'), ('Restaurant', 'restaurant'), ('Food Truck', 'foodtruck'), ('Fast Food', 'fastfood'),
-    ('Specialty', 'specialty'), ('', ''))
+    ('Other', 'other'), ('', ''))
 
 CUISINE_CHOICES = (
     ('American', 'american'), ('Cajun', 'cajun'), ('Chinese', 'chinese'), ('French', 'french'), ('Greek', 'greek'),
@@ -45,13 +45,13 @@ class AccountManager(BaseUserManager):
         address.save()
         return account
 
-    def create_superuser(self, email, password, **kwargs):
+    def create_superuser(self, email, password=None, **kwargs):
         account = self.create_user(email, password, **kwargs)
         account.is_admin = True
         account.save()
         return account
 
-    def create_chef(self, email, password, **kwargs):
+    def create_chef(self, email, password=None, **kwargs):
         account = self.create_user(email, password, **kwargs)
         account.is_chef = True
         account.save()

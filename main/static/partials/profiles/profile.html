@@ -12,10 +12,11 @@
                     <img class="img-circle avatar"
                          ng-src="{{ vm.profile.avatar || '/static/img/profile_default.png' }}"/>
                     <md-divider class="profile-divider"></md-divider>
-                    <h1 class="name">Chef {{ vm.name }}</h1>
+                    <h1 class="name">{{ vm.name }}</h1>
                     <div ng-hide="!vm.address.city || !vm.address.state">{{ vm.address.city }}, {{ vm.address.state }}</div>
                     <div class="status">
-                        <i class="fa fa-cutlery"> 5 Dishes Available </i><i class="fa fa-check"> Background Checked </i>
+                        <i class="fa fa-cutlery"> 5 Dishes Available </i>
+                        <i class="fa fa-check" ng-show="vm.chef.background"> Background Checked </i>
                         <i class="fa fa-star"> Top Rated </i>
                     </div>
                 </div>
@@ -29,20 +30,23 @@
                     <md-tabs md-dynamic-height md-border-bottom>
                         <md-tab label="Today">
                             <md-content class="food-container-content">
+                                <div ng-hide="vm.dishes"><h2>No dishes available.</h2></div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                                     class="deckgrid"></div>
+                                     class="deckgrid" maxColumns="3"></div>
                             </md-content>
                         </md-tab>
                         <md-tab label="Tomorrow">
                             <md-content class="food-container-content">
+                                <div ng-hide="vm.dishes"><h2>No dishes available.</h2></div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                                     class="deckgrid"></div>
+                                     class="deckgrid" maxColumns="3"></div>
                             </md-content>
                         </md-tab>
                         <md-tab label="All">
                             <md-content class="food-container-content">
+                                <div ng-hide="vm.dishes"><h2>No dishes available.</h2></div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                                     class="deckgrid"></div>
+                                     class="deckgrid" maxColumns="3"></div>
                             </md-content>
                         </md-tab>
                     </md-tabs>
@@ -51,15 +55,13 @@
             <div class="col-lg-4">
                 <md-card ng-show="vm.profile" class="profile">
                     <md-card-title>
-                        <h2 class="cardformheader" ng-show="vm.myProfile">
-                            {{ vm.chef.tagline ? vm.chef.tagline : "Your Tagline" }}</h2>
-                        <h2 class="cardformheader" ng-hide="vm.myProfile">{{ vm.chef.tagline }}</h2>
+                        <h2 class="cardformheader">{{ vm.tagline }}</h2>
                     </md-card-title>
                     <md-card-content class="text-left">
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>Main Cuisine</th>
+                                <th>Specialty</th>
                                 <th>{{ vm.chef.cuisine ? vm.chef.cuisine : "N/A" }}</th>
                             </tr>
                             </thead>
@@ -93,73 +95,78 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div ng-show="vm.myProfile">
-                            {{ vm.chef.bio ? vm.chef.bio : "A short bio about yourself goes here." }}</div>
-                        <div ng-hide="vm.myProfile">{{ vm.chef.bio }}</div>
+                        <div>{{ vm.bio }}</div>
                     </md-card-content>
                 </md-card>
                 <md-card ng-show="vm.profile" class="profile">
-
                 </md-card>
             </div>
         </div>
     </div>
     <div class="review-container">
         <div class="container-fluid">
-            <div class="col-xs-12">
-                <h1>Reviews</h1>
-            </div>
-            <div class="col-xs-12">
-                <div class="box m-a-0 b-a" ng-hide="vm.myProfile || !$root.isAuthenticated">
-                    <form class="ng-pristine ng-valid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>Reviews</h1>
+                </div>
+                <div class="col-xs-12">
+                    <div class="box m-a-0 b-a" ng-hide="vm.myProfile || !$root.isAuthenticated">
+                        <form class="ng-pristine ng-valid">
                                         <textarea class="form-control no-border" rows="5"
                                                   placeholder="Write a review..."></textarea>
-                        <div class="box-footer clearfix">
-                            <a href=""
-                               class="btn md-raised md-primary btn-default md-button pull-right"
-                               md-ink-ripple="#e9e9e9" type="button"><span class="ng-scope">Submit</span>
-                            </a>
-                            <ul class="nav nav-pills nav-sm" style="cursor: auto">
-                                <li class="nav-item"><a class="nav-link" href=""><i
-                                        class="fa fa-camera text-muted"></i></a></li>
-                            </ul>
-                        </div>
-                    </form>
-                </div>
-                <div class="box-body">
-                    <div class="streamline b-l m-l-md">
-                        <div class="sl-item">
-                            <div class="sl-left"><img src="/static/img/profile_default.png" class="img-circle"></div>
-                            <div class="sl-content">
-                                <div class="sl-date text-muted">2 minutes ago</div>
-                                <div class="sl-author"><a href="">Peter Joo</a></div>
-                                <div><p>Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis
-                                    ipsum ac feugiat. Vestibulum ullamcorper sodales nisi nec condimentum. Mauris
-                                    convallis mauris at pellentesque volutpat. Phasellus at ultricies neque, quis
-                                    malesuada augue. Donec eleifend</p></div>
+                            <div class="box-footer clearfix">
+                                <a href=""
+                                   class="btn md-raised md-primary btn-default md-button pull-right"
+                                   md-ink-ripple="#e9e9e9" type="button"><span class="ng-scope">Submit</span>
+                                </a>
+                                <ul class="nav nav-pills nav-sm" style="cursor: auto">
+                                    <li class="nav-item"><a class="nav-link" href=""><i
+                                            class="fa fa-camera text-muted"></i></a></li>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="sl-item">
-                            <div class="sl-left"><img src="/static/img/profile_default.png" class="img-circle"></div>
-                            <div class="sl-content">
-                                <div class="sl-date text-muted">8:30</div>
-                                <div class="sl-author"><a href="">Moke</a></div>
-                                <div><p>Just followed <a href="" class="text-info">Jacob</a> and she followed you too.
-                                </p>
-                                    <p><span class="inline p-a-xs b-a dark-white"><img src="/static/img/food1.jpg"
-                                                                                       class="img-responsive"></span>
-                                    </p></div>
+                        </form>
+                    </div>
+                    <div class="box-body">
+                        <div class="streamline b-l m-l-md">
+                            <div class="sl-item">
+                                <div class="sl-left"><img src="/static/img/profile_default.png" class="img-circle">
+                                </div>
+                                <div class="sl-content">
+                                    <div class="sl-date text-muted">2 minutes ago</div>
+                                    <div class="sl-author"><a href="">Peter Joo</a></div>
+                                    <div><p>Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin
+                                        venenatis
+                                        ipsum ac feugiat. Vestibulum ullamcorper sodales nisi nec condimentum. Mauris
+                                        convallis mauris at pellentesque volutpat. Phasellus at ultricies neque, quis
+                                        malesuada augue. Donec eleifend</p></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="sl-item">
-                            <div class="sl-left"><img src="/static/img/profile_default.png" class="img-circle"></div>
-                            <div class="sl-content">
-                                <div class="sl-date text-muted">Sat, 5 Mar</div>
-                                <div class="sl-author"><a href="">Moke</a></div>
-                                <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                                    erat a ante soe aiea ose dos soois.</p>
-                                    <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                                </blockquote>
+                            <div class="sl-item">
+                                <div class="sl-left"><img src="/static/img/profile_default.png" class="img-circle">
+                                </div>
+                                <div class="sl-content">
+                                    <div class="sl-date text-muted">8:30</div>
+                                    <div class="sl-author"><a href="">Moke</a></div>
+                                    <div><p>Just followed <a href="" class="text-info">Jacob</a> and she followed you
+                                        too.
+                                    </p>
+                                        <p><span class="inline p-a-xs b-a dark-white"><img src="/static/img/food1.jpg"
+                                                                                           class="img-responsive"></span>
+                                        </p></div>
+                                </div>
+                            </div>
+                            <div class="sl-item">
+                                <div class="sl-left"><img src="/static/img/profile_default.png" class="img-circle">
+                                </div>
+                                <div class="sl-content">
+                                    <div class="sl-date text-muted">Sat, 5 Mar</div>
+                                    <div class="sl-author"><a href="">Moke</a></div>
+                                    <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                                        posuere
+                                        erat a ante soe aiea ose dos soois.</p>
+                                        <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                                    </blockquote>
+                                </div>
                             </div>
                         </div>
                     </div>

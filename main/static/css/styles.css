@@ -3,6 +3,11 @@
     outline: none;
 }
 
+html {
+    /*Adding this to prevent double scrollbar when launching a mddialog*/
+    overflow: hidden !important;
+}
+
 html, body {
     width: 100% !important;
     height: 100% !important;
@@ -73,6 +78,10 @@ p {
 
 .topspace75 {
     margin-top: 75px;
+}
+
+.botspace50 {
+    margin-bottom: 50px;
 }
 
 .default-margin-left {
@@ -1106,6 +1115,14 @@ a.text-white:focus {
     border: 4px solid #e9e9e9;
 }
 
+.preview-dish {
+    width: 100%;
+}
+
+.dishlg {
+    width: 100%;
+}
+
 .avatarlg {
     width: 250px;
     height: 250px;
@@ -1210,9 +1227,10 @@ spinner {
     max-width: 40px;
 }
 
-.sl-left+.sl-content {
+.sl-left + .sl-content {
     margin-left: 36px;
 }
+
 .sl-content {
     margin-left: 24px;
     padding-bottom: 16px;
@@ -1222,6 +1240,7 @@ spinner {
     color: inherit;
     opacity: .6;
 }
+
 .sl-date {
     font-size: .85em;
 }

@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.layout').controller('cropperController', cropperController);
-    cropperController.$inject = ['$scope', '$mdDialog', 'image', 'Upload', '$timeout'];
-    function cropperController($scope, $mdDialog, image, Upload, $timeout) {
+    cropperController.$inject = ['$scope', '$mdDialog', 'image', 'ratio', 'Upload', '$timeout'];
+    function cropperController($scope, $mdDialog, image, ratio, Upload, $timeout) {
         var vm = this;
         var cropData;
         vm.cancel = cancel;
@@ -16,8 +16,9 @@
         vm.cropper = {};
         vm.options = {
             autoCropArea: 0.60,
-            minCropBoxWidth: 100,
-            aspectRatio: 1,
+            minCropBoxWidth: 50,
+            minCropBoxHeight: 50,
+            aspectRatio: ratio,
             viewMode: 1,
             dragMode: 'move',
             rotatable: false,
