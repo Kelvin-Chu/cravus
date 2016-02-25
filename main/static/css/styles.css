@@ -4,7 +4,7 @@
 }
 
 html {
-    /*Adding this to prevent double scrollbar when launching a mddialog*/
+    /*Adding overflow: hidden will prevent android from being able to refresh page on drag down*/
     /*overflow: hidden !important;*/
 }
 
@@ -27,6 +27,12 @@ body {
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
+    overflow: hidden;
+    /*Angular material design has a function called disableBodyScroll that modifies the overflow of html/body
+ when body.scrollHeight > body.clientHeight.  This modification messes up certain angular material features
+ like mddatepicker and mdselect because for some reason.  To make the condition false, I manually set the
+ padding to the height of the navbar.*/
+    padding-bottom: 52px;
 }
 
 img {
@@ -1417,6 +1423,15 @@ md-content {
 }
 
 @media (max-width: 767px) {
+
+    body {
+        /*Angular material design has a function called disableBodyScroll that modifies the overflow of html/body
+         when body.scrollHeight > body.clientHeight.  This modification messes up certain angular material features
+         like mddatepicker and mdselect because for some reason.  To make the condition false, I manually set the
+         padding to the height of the navbar.*/
+        padding-bottom: 83px;
+    }
+
     .navbar-brand {
         height: 80px !important;
         padding: 23px 0 !important;
@@ -2007,6 +2022,8 @@ md-content {
 
 .view-container {
     position: relative;
+    overflow-y: auto;
+    height: 100%;
 }
 
 /*.view-frame.ng-enter, .view-frame.ng-leave {*/
