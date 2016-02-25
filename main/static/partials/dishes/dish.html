@@ -8,7 +8,8 @@
                     </md-title>
                 </md-card-header-text>
             </md-card-header>
-            <img ng-src="http://images-cdn.9gag.com/photo/aX9qARV_460s.jpg" class="md-card-image" alt="Washed Out">
+            <img ng-src="{{ card.image || '/static/img/dish_default.jpg' }}" class="md-card-image"
+                 style="max-width: 500px;">
             <md-card-title>
                 <a href="/+{{ card.chef }}">+{{ card.chef }}</a>
             </md-card-title>

@@ -1,7 +1,7 @@
 <div class="greybackground">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                 <md-card ng-show="vm.dishes" class="single-card">
                     <md-card-title>
                         <h1 class="cardformheader">My Dishes</h1>
@@ -9,6 +9,54 @@
                     <md-card-content>
                         <div id="toastBounds"></div>
                         <md-tabs md-dynamic-height md-border-bottom>
+                            <md-tab label="Schedule">
+                                <md-content class="md-padding">
+                                    <div ng-messages="vm.errors" class="text-center red">
+                                        <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
+                                    </div>
+                                    <div layout-gt-xs="row">
+                                        <md-datepicker ng-model="vm.schedule.date" md-placeholder="Enter date"
+                                                       md-min-date="vm.schedule.minDate" flex-gt-xs class="topspace12"
+                                                       md-max-date="vm.schedule.maxDate"></md-datepicker>
+                                        <md-input-container class="md-block" flex-gt-xs>
+                                            <label>Search</label>
+                                            <input ng-model="vm.search">
+                                        </md-input-container>
+                                    </div>
+                                    <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                        <div ng-message="date">{{ vm.formErrors.date }}</div>
+                                    </div>
+                                    <md-card ng-repeat="dish in vm.dishes | filter:{ name: vm.search }"
+                                             on-repeat="vm.repeatFn">
+                                        <md-card-content style="padding: 0;">
+                                            <div class="grid cs-style-2">
+                                                <div class="grid-item">
+                                                    <figure>
+                                                        <div class="dish-list-container"
+                                                             ng-style="{'background-image':'url({{ dish.image }})'}">
+                                                        </div>
+                                                        <figcaption>
+                                                            <h3>{{ dish.name }}</h3>
+                                                            <span>Jacob Cummings</span>
+                                                            <a href="#" class="white">Take a
+                                                                look</a>
+                                                        </figcaption>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                    <div class="form-group text-right topspace50">
+                                        <md-button class="btn md-raised md-primary btn-default" type="button"
+                                                   md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">
+                                            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate"
+                                                                  ng-show="vm.loading" md-diameter="30">
+                                            </md-progress-circular>
+                                            <span ng-hide="vm.loading">Save</span>
+                                        </md-button>
+                                    </div>
+                                </md-content>
+                            </md-tab>
                             <md-tab label="New">
                                 <form name="userForm" class="settings" ng-submit="vm.add()"
                                       enctype="multipart/form-data">
@@ -25,7 +73,7 @@
                                             </ng-cropper-upload>
                                             <div id="cropperPreview" class="text-center preview preview-dish">
                                                 <img ngf-src="vm.newdish.image || '/static/img/dish_default.jpg'"
-                                                     class="dishlg"/>
+                                                     class="dishlg" id="cropperPreviewImg"/>
                                             </div>
                                         </md-input-container>
                                         <md-input-container class="md-block topspace50">
@@ -73,145 +121,6 @@
                                         </div>
                                     </md-content>
                                 </form>
-                            </md-tab>
-                            <md-tab label="Schedule">
-                                <md-content class="md-padding">
-                                    <div ng-messages="vm.errors" class="text-center red">
-                                        <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
-                                    </div>
-                                    <md-input-container class="md-block">
-                                        <label>Tagline</label>
-                                            <textarea name="tagline" ng-model="vm.chef.tagline" md-maxlength="150"
-                                                      rows="5" md-select-on-focus></textarea>
-                                        <div ng-messages="userForm.tagline.$error">
-                                            <div ng-message="md-maxlength">Cannot exceed 150 characters.</div>
-                                        </div>
-                                        <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                            <div ng-message="tagline">{{ vm.formErrors.tagline }}</div>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block">
-                                        <label>Short Bio</label>
-                                            <textarea name="bio" ng-model="vm.chef.bio" md-maxlength="500" rows="5"
-                                                      md-select-on-focus></textarea>
-                                        <div ng-messages="userForm.bio.$error">
-                                            <div ng-message="maxlength">Cannot exceed 500 characters.</div>
-                                        </div>
-                                        <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                            <div ng-message="bio">{{ vm.formErrors.bio }}</div>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block topspace50 botspace50">
-                                        <label style="margin-bottom: 25px;">Options</label>
-                                        <div class="col-sm-6">
-                                            <md-switch ng-model="vm.chef.delivery" class="md-warn">
-                                                {{ vm.chef.delivery ? "Delivery Available" : "No Delivery"}}</md-switch>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <md-switch ng-model="vm.chef.pickup" class="md-warn">
-                                                {{ vm.chef.pickup ? "Pick Up Available" : "No Pick Up"}}</md-switch>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <md-switch ng-model="vm.chef.credit" class="md-warn">
-                                                {{ vm.chef.credit ? "Credit Cards Accepted" : "Cash Only"}}</md-switch>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block">
-                                        <label>Specialty</label>
-                                        <md-select ng-model="vm.chef.cuisine">
-                                            <md-option ng-repeat="cuisine in vm.cuisines"
-                                                       value="{{ cuisine }}">{{ cuisine }}
-                                            </md-option>
-                                        </md-select>
-                                        <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                            <div ng-message="cuisine">{{ vm.formErrors.cuisine }}</div>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block">
-                                        <label>Kitchen Type</label>
-                                        <md-select ng-model="vm.chef.type">
-                                            <md-option ng-repeat="type in vm.types"
-                                                       value="{{ type }}">{{ type }}
-                                            </md-option>
-                                        </md-select>
-                                        <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                            <div ng-message="type">{{ vm.formErrors.type }}</div>
-                                        </div>
-                                    </md-input-container>
-                                    <div class="form-group text-right topspace50">
-                                        <md-button class="btn md-raised md-primary btn-default" type="button"
-                                                   md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">
-                                            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate"
-                                                                  ng-show="vm.loading" md-diameter="30">
-                                            </md-progress-circular>
-                                            <span ng-hide="vm.loading">Save</span>
-                                        </md-button>
-                                    </div>
-                                </md-content>
-                            </md-tab>
-                            <md-tab label="All">
-                                <md-content class="md-padding">
-                                    <div ng-messages="vm.errors" class="text-center red">
-                                        <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
-                                    </div>
-                                    <md-input-container class="md-block">
-                                        <label>Email</label>
-                                        <input name="email" ng-model="vm.profile.email" type="email" required
-                                               md-maxlength="254">
-                                        <div ng-messages="userForm.email.$error">
-                                            <div ng-message="md-maxlength">Cannot exceed 254 characters.</div>
-                                            <div ng-message="required" class="my-message">Email is required.</div>
-                                            <div ng-message="email" class="my-message">Invalid email format.</div>
-                                        </div>
-                                        <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                            <div ng-message="email">{{ vm.formErrors.email }}</div>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block">
-                                        <label>Password</label>
-                                        <input name="password" ng-model="vm.profile.password" type="password"
-                                               ng-minlength="7" md-maxlength="128">
-                                        <div ng-messages="userForm.password.$error">
-                                            <div ng-message="md-maxlength">Cannot exceed 128 characters.</div>
-                                            <div ng-message="minlength">Your password needs to be at least 7
-                                                characters.
-                                            </div>
-                                        </div>
-                                        <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                            <div ng-message="password">{{ vm.formErrors.password }}</div>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block">
-                                        <label>Confirm Password</label>
-                                        <input name="confirm_password" ng-model="vm.profile.confirm_password"
-                                               type="password" ng-minlength="7" md-maxlength="128">
-                                        <div ng-messages="userForm.confirm_password.$error">
-                                            <div ng-message="md-maxlength">Cannot exceed 128 characters.</div>
-                                            <div ng-message="minlength">Your password needs to be at least 7
-                                                characters.
-                                            </div>
-                                        </div>
-                                        <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                            <div ng-message="confirm_password">{{ vm.formErrors.confirm_password }}</div>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block">
-                                        <label>Username</label>
-                                        <input ng-model="vm.profile.username" type="text" disabled>
-                                    </md-input-container>
-                                    <div class="form-group text-right">
-                                        <md-button type="button" ng-click="vm.destroy()" disabled
-                                                   class="btn md-raised md-accent btn-default pull-left">Delete
-                                        </md-button>
-                                        <md-button class="btn md-raised md-primary btn-default" type="button"
-                                                   md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">
-                                            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate"
-                                                                  ng-show="vm.loading" md-diameter="30">
-                                            </md-progress-circular>
-                                            <span ng-hide="vm.loading">Save</span>
-                                        </md-button>
-                                    </div>
-                                </md-content>
                             </md-tab>
                         </md-tabs>
                     </md-card-content>

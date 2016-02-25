@@ -22,6 +22,7 @@
                         openFrom: "#uploader",
                         closeTo: "#uploader",
                         clickOutsideToClose: false,
+                        disableParentScroll: false,
                         locals: {
                             image: vm.temp,
                             ratio: vm.ratio

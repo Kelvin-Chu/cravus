@@ -4,7 +4,7 @@ from django.utils.datetime_safe import datetime
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from imagekit.models import ProcessedImageField
-from pilkit.processors import Transpose
+from pilkit.processors import Transpose, ResizeToFit
 
 STATE_CHOICES = (
     ('AL', 'AL'), ('AK', 'AK'), ('AZ', 'AZ'), ('AR', 'AR'), ('CA', 'CA'), ('CO', 'CO'), ('CT', 'CT'), ('DE', 'DE'),
@@ -66,8 +66,9 @@ class Account(AbstractBaseUser):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     mobile = models.CharField(max_length=16, unique=True, blank=True, null=True)
-    avatar = ProcessedImageField(upload_to=generate_avatar_filename, processors=[Transpose(Transpose.AUTO)],
-                                 format='JPEG', options={'quality': 85}, blank=True)
+    avatar = ProcessedImageField(upload_to=generate_avatar_filename,
+                                 processors=[Transpose(Transpose.AUTO), ResizeToFit(1024, 1024, False)],
+                                 format='JPEG', options={'quality': 90}, blank=True)
     is_admin = models.BooleanField(default=False)
     is_chef = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

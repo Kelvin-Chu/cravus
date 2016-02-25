@@ -17,11 +17,13 @@
     <script type="text/javascript" src="{% static 'lib/angular-ui-mask/dist/mask.js' %}"></script>
     {#    Deckgrid has been customized to add support for safari#}
     {#    https://github.com/akoenig/angular-deckgrid/issues/69 #}
-    {#    Also added maxColumns attribute... do a compare to find changes  #}
+    {#    Also added maxColumns attribute #}
+    {#    check commit 2b4794f058843b5c00945e25571ee5772d4afb60 for changes (2/23/16)  #}
     <script type="text/javascript" src="{% static 'lib/angular-deckgrid/angular-deckgrid.js' %}"></script>
     {#    End Comment#}
     <script type="text/javascript" src="{% static 'lib/angular-route/angular-route.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/ngstorage/ngStorage.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/modernizr.custom.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/cravus.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/config.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/layout.js' %}"></script>
@@ -30,6 +32,7 @@
     <script type="text/javascript" src="{% static 'js/layout/controllers/cropperController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/directives/ngCropperUpload.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/directives/ngCropper.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/layout/directives/onRepeat.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/directives/spinner.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/services/ytplayerFactory.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/services/cropperFactory.js' %}"></script>
