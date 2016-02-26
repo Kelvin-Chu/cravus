@@ -15,7 +15,7 @@ def generate_dishes_filename(self, filename):
 
 class Dish(models.Model):
     chef = models.ForeignKey(Account)
-    name = models.CharField(max_length=50, blank=True)
+    name = models.CharField(max_length=50, blank=False, null=False)
     cuisine = models.CharField(max_length=50, choices=CUISINE_CHOICES, default='')
     description = models.TextField(max_length=500, blank=True)
     image = ProcessedImageField(upload_to=generate_dishes_filename,
@@ -27,3 +27,17 @@ class Dish(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class DishSchedule(models.Model):
+    chef = models.ForeignKey(Account)
+    date = models.DateField(null=False)
+    dish = models.ForeignKey(Dish)
+    repeat_daily = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('chef', 'date', 'dish')
+
+    def __str__(self):
+        return self.dish.name

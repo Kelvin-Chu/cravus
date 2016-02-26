@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-
 from cravus.utils import check_img, crop_img
-from dishes.models import Dish
+from dishes.models import Dish, DishSchedule
 
 
 class DishSerializer(serializers.ModelSerializer):
@@ -31,3 +30,21 @@ class DishSerializer(serializers.ModelSerializer):
                     else:
                         return crop_image
         raise ValidationError(error)
+
+
+class DishScheduleSerializer(serializers.ModelSerializer):
+    chef = serializers.CharField(source='chef.username', read_only=True)
+    date = serializers.DateField(required=True, input_formats=['%Y%m%d'])
+
+    class Meta:
+        model = DishSchedule
+        fields = ('id', 'chef', 'date', 'dish', 'repeat_daily', 'created_at')
+        read_only_fields = ('id', 'chef', 'created_at')
+
+    def create(self, validated_data):
+        if validated_data['dish'].chef != validated_data['chef']:
+            raise ValidationError("You are not the chef of this dish.")
+        if DishSchedule.objects.filter(chef=validated_data['chef'], date=validated_data['date'],
+                                       dish=validated_data['dish']).exists():
+            raise ValidationError("This dish has already been scheduled for this date.")
+        return super(DishScheduleSerializer, self).create(validated_data)
