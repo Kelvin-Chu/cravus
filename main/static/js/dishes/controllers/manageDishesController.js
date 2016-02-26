@@ -6,7 +6,7 @@
     function manageDishesController($rootScope, $location, $routeParams, authFactory, dishesFactory) {
         var vm = this;
         vm.loading = false;
-        vm.dishes = null;
+        vm.dishes = [];
         vm.newdish = {};
         vm.schedule = {};
         vm.today = new Date();
@@ -36,7 +36,7 @@
                 if (data.data.length > 0) {
                     vm.dishes = data.data;
                 } else {
-                    vm.dishes = {};
+                    vm.dishes = [];
                 }
             }
 

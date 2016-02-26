@@ -32,7 +32,7 @@ body {
  when body.scrollHeight > body.clientHeight.  This modification messes up certain angular material features
  like mddatepicker and mdselect because for some reason.  To make the condition false, I manually set the
  padding to the height of the navbar.*/
-    padding-bottom: 52px;
+    padding-bottom: 45px;
 }
 
 img {
@@ -489,7 +489,7 @@ a.text-white:focus {
 
 .navbar {
     position: relative;
-    min-height: 50px;
+    min-height: 42px;
     margin-bottom: 0;
     border-top: none;
     border-right: none;
@@ -1295,16 +1295,10 @@ spinner {
     padding: 0;
 }
 
-.grid figcaption span:before {
-    content: 'by ';
-}
-
 .grid figcaption a {
     text-align: center;
-    padding: 5px 10px;
     border-radius: 2px;
     display: inline-block;
-    background: #ed4e6e;
 }
 
 .cs-style-2 figure .dish-list-container {
@@ -1333,6 +1327,67 @@ spinner {
     position: absolute;
     right: 20px;
     bottom: 5px;
+}
+
+.cs-style-3 figure {
+    overflow: hidden;
+}
+
+.cs-style-3 figure .dish-list-container {
+    -webkit-transition: -webkit-transform 0.4s;
+    -moz-transition: -moz-transform 0.4s;
+    transition: transform 0.4s;
+}
+
+.no-touch .cs-style-3 figure:hover .dish-list-container,
+.cs-style-3 figure.cs-hover .dish-list-container {
+    -webkit-transform: translateY(-100px);
+    -moz-transform: translateY(-100px);
+    -ms-transform: translateY(-100px);
+    transform: translateY(-100px);
+}
+
+.cs-style-3 figcaption {
+    height: 100px;
+    width: 100%;
+    padding-left: 5px;
+    top: auto;
+    bottom: 0;
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    transform: translateY(100%);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.1s 0.3s;
+    -moz-transition: -moz-transform 0.4s, opacity 0.1s 0.3s;
+    transition: transform 0.4s, opacity 0.1s 0.3s;
+    position: absolute;
+}
+
+.no-touch .cs-style-3 figure:hover figcaption,
+.cs-style-3 figure.cs-hover figcaption {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    transform: translateY(0px);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
+    -moz-transition: -moz-transform 0.4s, opacity 0.1s;
+    transition: transform 0.4s, opacity 0.1s;
+}
+
+.cs-style-3 figcaption .btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    margin: 0;
+}
+
+.cs-style-3 figcaption a {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    color: #e67e22;
 }
 
 .latest-dishes > md-tabs > md-tabs-wrapper {

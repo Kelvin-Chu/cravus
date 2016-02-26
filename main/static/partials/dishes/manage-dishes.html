@@ -26,35 +26,31 @@
                                     <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                         <div ng-message="date">{{ vm.formErrors.date }}</div>
                                     </div>
+                                    <div ng-hide="vm.dishes.length"><h3>You have to add a dish before you can
+                                        schedule.</h3></div>
                                     <md-card ng-repeat="dish in vm.dishes | filter:{ name: vm.search }"
                                              on-repeat="vm.repeatFn">
                                         <md-card-content style="padding: 0;">
-                                            <div class="grid cs-style-2">
+                                            <div class="grid cs-style-3">
                                                 <div class="grid-item">
                                                     <figure>
                                                         <div class="dish-list-container"
-                                                             ng-style="{'background-image':'url({{ dish.image }})'}">
+                                                             ng-style="{'background-image':'url({{ dish.image || '/static/img/dish_default.jpg' }})'}">
                                                         </div>
                                                         <figcaption>
+                                                            <a href="#"><i class="fa fa-pencil"></i></a>
                                                             <h3>{{ dish.name }}</h3>
-                                                            <span>Jacob Cummings</span>
-                                                            <a href="#" class="white">Take a
-                                                                look</a>
+                                                            <span>{{ dish.cuisine || 'Specialty' }}</span> Cuisine
+                                                            <md-button class="btn md-raised md-primary btn-default"
+                                                                       md-ink-ripple="#e9e9e9" type="button"><span
+                                                                    class="ng-scope">Schedule</span>
+                                                            </md-button>
                                                         </figcaption>
                                                     </figure>
                                                 </div>
                                             </div>
                                         </md-card-content>
                                     </md-card>
-                                    <div class="form-group text-right topspace50">
-                                        <md-button class="btn md-raised md-primary btn-default" type="button"
-                                                   md-ink-ripple="#e9e9e9" ng-click="vm.update($event)">
-                                            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate"
-                                                                  ng-show="vm.loading" md-diameter="30">
-                                            </md-progress-circular>
-                                            <span ng-hide="vm.loading">Save</span>
-                                        </md-button>
-                                    </div>
                                 </md-content>
                             </md-tab>
                             <md-tab label="New">

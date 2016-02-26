@@ -10,7 +10,7 @@ class DishSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dish
-        fields = ('id', 'chef', 'name', 'description', 'image', 'created_at', 'updated_at')
+        fields = ('id', 'chef', 'name', 'description', 'cuisine', 'image', 'created_at', 'updated_at')
         read_only_fields = ('id', 'chef', 'created_at', 'updated_at')
 
     def get_validation_exclusions(self, *args, **kwargs):
