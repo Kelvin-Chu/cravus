@@ -1301,34 +1301,6 @@ spinner {
     display: inline-block;
 }
 
-.cs-style-2 figure .dish-list-container {
-    z-index: 10;
-    -webkit-transition: -webkit-transform 0.4s;
-    -moz-transition: -moz-transform 0.4s;
-    transition: transform 0.4s;
-}
-
-.no-touch .cs-style-2 figure:hover .dish-list-container,
-.cs-style-2 figure.cs-hover .dish-list-container {
-    -webkit-transform: translateY(-50px);
-    -moz-transform: translateY(-50px);
-    -ms-transform: translateY(-50px);
-    transform: translateY(-50px);
-}
-
-.cs-style-2 figcaption {
-    width: 100%;
-    top: auto;
-    bottom: 0;
-    position: absolute;
-}
-
-.cs-style-2 figcaption a {
-    position: absolute;
-    right: 20px;
-    bottom: 5px;
-}
-
 .cs-style-3 figure {
     overflow: hidden;
 }
@@ -1350,7 +1322,7 @@ spinner {
 .cs-style-3 figcaption {
     height: 100px;
     width: 100%;
-    padding-left: 5px;
+    padding: 10px 25px 10px 10px;
     top: auto;
     bottom: 0;
     opacity: 0;
@@ -1376,18 +1348,59 @@ spinner {
     transition: transform 0.4s, opacity 0.1s;
 }
 
-.cs-style-3 figcaption .btn {
+.cs-style-3 figcaption .md-button {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
+    bottom: 10px;
+    right: 10px;
     margin: 0;
 }
 
 .cs-style-3 figcaption a {
     position: absolute;
-    top: 0;
-    right: 5px;
+    top: 5px;
+    right: 10px;
     color: #e67e22;
+}
+
+.md-button:not([disabled]):hover,
+.md-button:not([disabled]) {
+    transition: 0.5s;
+}
+
+.md-primary {
+    color: #fff !important;
+}
+
+.md-primary:after,
+.md-primary:before {
+    backface-visibility: hidden;
+    border: 1px solid rgba(255, 255, 255, 0);
+    bottom: 0;
+    content: " ";
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    transition: all 280ms ease-in-out;
+    width: 0;
+}
+
+.md-primary:not([disabled]):hover:after,
+.md-primary:not([disabled]):hover:before {
+    backface-visibility: hidden;
+    border-color: #fff;
+    transition: width 350ms ease-in-out;
+    width: 70%;
+}
+
+.md-primary:not([disabled]):hover:before {
+    bottom: auto;
+    top: 0;
+    width: 70%;
+}
+
+.md-primary:not([disabled]):hover {
+    color: #e67e22 !important;
+    background-color: #fff !important;
 }
 
 .latest-dishes > md-tabs > md-tabs-wrapper {
@@ -1458,6 +1471,14 @@ md-content {
 
     md-dialog {
         max-width: 100%;
+    }
+
+    md-card {
+        margin: 8px 0 !important;
+    }
+
+    md-content {
+        padding: 8px 0 !important;
     }
 }
 
