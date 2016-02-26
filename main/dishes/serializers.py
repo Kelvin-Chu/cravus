@@ -34,7 +34,7 @@ class DishSerializer(serializers.ModelSerializer):
 
 class DishScheduleSerializer(serializers.ModelSerializer):
     chef = serializers.CharField(source='chef.username', read_only=True)
-    date = serializers.DateField(required=True, input_formats=['%Y%m%d'])
+    date = serializers.DateField(required=True, input_formats=['%Y-%m-%d'])
 
     class Meta:
         model = DishSchedule

@@ -40,7 +40,8 @@ class DishScheduleViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins
                           viewsets.GenericViewSet):
     queryset = DishSchedule.objects.all()
     serializer_class = DishScheduleSerializer
-    throttle_classes = [DishThrottle, ]
+    throttle_classes = [DishThrottle]
+    filter_fields = ['date']
 
     def get_permissions(self):
         if self.request.method in SAFE_METHODS:
@@ -59,11 +60,14 @@ class AccountDishScheduleViewSet(viewsets.ViewSet):
     queryset = DishSchedule.objects.select_related('chef').all()
     serializer_class = DishScheduleSerializer
 
-    def list(self, request, account_username=None, date_str=None):
+    def list(self, request, account_username=None):
+        date_str = self.request.query_params.get('date', None)
+        if not date_str:
+            return Response("Date is required.", status=status.HTTP_400_BAD_REQUEST)
         try:
-            date = datetime.datetime.strptime(date_str, "%Y%m%d").date()
+            date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
         except Exception:
-            return Response("Date has wrong format. Use one of these formats instead: YYYYMMDD.",
+            return Response("Date has wrong format. Use one of these formats instead: YYYY-MM-DD.",
                      status=status.HTTP_400_BAD_REQUEST)
         queryset = self.queryset.filter(chef__username=account_username, date=date).order_by('-created_at')
         serializer = self.serializer_class(queryset, many=True)

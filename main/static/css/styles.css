@@ -1384,18 +1384,17 @@ spinner {
     width: 0;
 }
 
-.md-primary:not([disabled]):hover:after,
 .md-primary:not([disabled]):hover:before {
     backface-visibility: hidden;
-    border-color: #fff;
+    border-color: #e67e22;
     transition: width 350ms ease-in-out;
-    width: 70%;
+    width: 100%;
 }
 
 .md-primary:not([disabled]):hover:before {
     bottom: auto;
     top: 0;
-    width: 70%;
+    width: 100%;
 }
 
 .md-primary:not([disabled]):hover {

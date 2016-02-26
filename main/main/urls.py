@@ -17,7 +17,7 @@ router.register(r'schedule', DishScheduleViewSet)
 accounts_router = routers.NestedSimpleRouter(router, r'accounts', lookup='account')
 accounts_router.register(r'addresses', AccountAddressViewSet)
 accounts_router.register(r'dishes', AccountDishesViewSet)
-accounts_router.register(r'schedule/(?P<date_str>\d+)', AccountDishScheduleViewSet)
+accounts_router.register(r'schedule', AccountDishScheduleViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
