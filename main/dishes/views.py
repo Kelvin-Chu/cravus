@@ -1,4 +1,5 @@
 import datetime
+from django.db.models import Q
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import SAFE_METHODS, AllowAny
 from rest_framework.response import Response
@@ -41,7 +42,6 @@ class DishScheduleViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins
     queryset = DishSchedule.objects.all()
     serializer_class = DishScheduleSerializer
     throttle_classes = [DishThrottle]
-    filter_fields = ['date']
 
     def get_permissions(self):
         if self.request.method in SAFE_METHODS:
@@ -54,6 +54,16 @@ class DishScheduleViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins
 
     def perform_create(self, serializer):
         serializer.save(chef=self.request.user)
+
+    def filter_queryset(self, queryset):
+        date_str = self.request.query_params.get('date', None)
+        if date_str:
+            try:
+                date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+                queryset = queryset.filter(Q(date=date) | Q(repeat_daily=True)).order_by('-created_at')
+            except Exception:
+                pass
+        return queryset
 
 
 class AccountDishScheduleViewSet(viewsets.ViewSet):
@@ -68,7 +78,8 @@ class AccountDishScheduleViewSet(viewsets.ViewSet):
             date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
         except Exception:
             return Response("Date has wrong format. Use one of these formats instead: YYYY-MM-DD.",
-                     status=status.HTTP_400_BAD_REQUEST)
-        queryset = self.queryset.filter(chef__username=account_username, date=date).order_by('-created_at')
+                            status=status.HTTP_400_BAD_REQUEST)
+        queryset = self.queryset.filter(Q(chef__username=account_username),
+                                        Q(date=date) | Q(repeat_daily=True)).order_by('-created_at')
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)

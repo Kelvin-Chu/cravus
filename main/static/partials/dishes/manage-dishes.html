@@ -15,9 +15,16 @@
                                         <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
                                     </div>
                                     <div layout-gt-xs="row">
-                                        <md-datepicker ng-model="vm.schedule.date" md-placeholder="Enter date"
-                                                       md-min-date="vm.schedule.minDate" flex-gt-xs class="topspace12"
-                                                       md-max-date="vm.schedule.maxDate"></md-datepicker>
+                                        <md-switch ng-model="vm.dish.repeat_daily" class="md-warn" flex-gt-xs
+                                                   ng-change="vm.getScheduledDishes()">
+                                            {{ vm.dish.repeat_daily ? "Repeat Everyday" : "No Repeat" }}</md-switch>
+                                        <md-datepicker ng-model=" vm.dish.date
+                                        " md-placeholder="Enter date"
+                                        md-min-date="vm.dish.minDate" flex-gt-xs class="topspace12"
+                                        md-max-date="vm.dish.maxDate" ng-hide="vm.dish.repeat_daily"
+                                        ng-change="vm.getScheduledDishes()"></md-datepicker>
+                                    </div>
+                                    <div layout-gt-xs="row">
                                         <md-input-container class="md-block" flex-gt-xs>
                                             <label>Search</label>
                                             <input ng-model="vm.search">
@@ -28,22 +35,63 @@
                                     </div>
                                     <div ng-hide="vm.dishes.length"><h3>You have to add a dish before you can
                                         schedule.</h3></div>
-                                    <md-card ng-repeat="dish in vm.dishes | filter:{ name: vm.search }"
-                                             on-repeat="vm.repeatFn">
+                                    <div ng-show="vm.dishes.length" class="text-center scheduled">
+                                        <h3><span>Scheduled Dishes</span></h3>
+                                        <md-divider></md-divider>
+                                    </div>
+                                    <div ng-hide="vm.scheduled.length || !vm.dishes.length" class="text-center"><h4>
+                                        Empty.</h4></div>
+                                    <md-card ng-repeat="dish in vm.scheduled" on-repeat="vm.repeatFn"
+                                             class="repeatAnimate">
                                         <md-card-content style="padding: 0;">
                                             <div class="grid cs-style-3">
                                                 <div class="grid-item">
                                                     <figure>
                                                         <div class="dish-list-container"
-                                                             ng-style="{'background-image':'url({{ dish.image || '/static/img/dish_default.jpg' }})'}">
+                                                             ng-style="vm.setDishImage(dish.image)">
                                                         </div>
                                                         <figcaption>
-                                                            <a href="#"><i class="fa fa-pencil"></i></a>
+                                                            <md-button class="md-icon-button" aria-label="Edit"
+                                                                       ng-click="vm.edit(dish.id)">
+                                                                <i class="fa fa-pencil" id="{{ dish.id }}">
+                                                                </i></md-button>
                                                             <h3>{{ dish.name }}</h3>
                                                             <span>{{ dish.cuisine || 'Specialty' }}</span> Cuisine
                                                             <md-button class="md-raised md-primary"
-                                                                       md-ink-ripple="#e9e9e9" type="button"><span
-                                                                    class="ng-scope">Add</span>
+                                                                       md-ink-ripple="#e9e9e9"
+                                                                       ng-click="vm.unschedule(dish.scheduleId)">
+                                                                <span class="ng-scope">Remove</span>
+                                                            </md-button>
+                                                        </figcaption>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                    <div ng-show="vm.dishes.length" class="text-center scheduled">
+                                        <h3><span>Unscheduled Dishes</span></h3>
+                                        <md-divider></md-divider>
+                                    </div>
+                                    <md-card ng-repeat="dish in vm.dishes | filter:{ name: vm.search }"
+                                             on-repeat="vm.repeatFn" class="repeatAnimate">
+                                        <md-card-content style="padding: 0;">
+                                            <div class="grid cs-style-3">
+                                                <div class="grid-item">
+                                                    <figure>
+                                                        <div class="dish-list-container"
+                                                             ng-style="vm.setDishImage(dish.image)">
+                                                        </div>
+                                                        <figcaption>
+                                                            <md-button class="md-icon-button" aria-label="Edit"
+                                                                       id="{{ dish.id }}">
+                                                                <i class="fa fa-pencil" ng-click="vm.edit(dish.id)">
+                                                                </i></md-button>
+                                                            <h3>{{ dish.name }}</h3>
+                                                            <span>{{ dish.cuisine || 'Specialty' }}</span> Cuisine
+                                                            <md-button class="md-raised md-primary"
+                                                                       md-ink-ripple="#e9e9e9"
+                                                                       ng-click="vm.schedule(dish.id)">
+                                                                <span class="ng-scope">Add</span>
                                                             </md-button>
                                                         </figcaption>
                                                     </figure>
@@ -75,9 +123,9 @@
                                         <md-input-container class="md-block topspace50">
                                             <label>Dish Name</label>
                                             <input name="name" ng-model="vm.newdish.name" type="text"
-                                                   md-maxlength="50">
+                                                   md-maxlength="30">
                                             <div ng-messages="userForm.name.$error">
-                                                <div ng-message="md-maxlength">Cannot exceed 50 characters.</div>
+                                                <div ng-message="md-maxlength">Cannot exceed 30 characters.</div>
                                             </div>
                                             <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                                 <div ng-message="name">{{ vm.formErrors.name }}</div>

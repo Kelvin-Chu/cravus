@@ -31,7 +31,7 @@ class Dish(models.Model):
 
 class DishSchedule(models.Model):
     chef = models.ForeignKey(Account)
-    date = models.DateField(null=False)
+    date = models.DateField(db_index=True, null=False)
     dish = models.ForeignKey(Dish)
     repeat_daily = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

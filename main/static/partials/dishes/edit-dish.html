@@ -1,0 +1,60 @@
+<md-dialog aria-label="Edit Dish">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2 class="white">Edit Dish</h2>
+            <span flex></span>
+            <md-button aria-label="close" class="md-icon-button md-ink-ripple" ng-click="vm.cancel()">
+                <i class="fa fa-times white"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding" style="max-width:800px;max-height:810px;">
+        <span flex></span>
+        <md-input-container class="md-block topspace25">
+            <label>Dish Name</label>
+            <input name="name" ng-model="vm.dish.name" type="text"
+                   md-maxlength="30">
+            <div ng-messages="userForm.name.$error">
+                <div ng-message="md-maxlength">Cannot exceed 30 characters.</div>
+            </div>
+            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                <div ng-message="name">{{ vm.formErrors.name }}</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Description</label>
+            <textarea name="description" ng-model="vm.dish.description"
+                      md-maxlength="500" rows="5"
+                      md-select-on-focus></textarea>
+            <div ng-messages="userForm.description.$error">
+                <div ng-message="maxlength">Cannot exceed 500 characters.</div>
+            </div>
+            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                <div ng-message="description">{{ vm.formErrors.description }}</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Cuisine</label>
+            <md-select ng-model="vm.dish.cuisine">
+                <md-option ng-repeat="cuisine in vm.cuisines"
+                           value="{{ cuisine }}">{{ cuisine }}
+                </md-option>
+            </md-select>
+            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                <div ng-message="cuisine">{{ vm.formErrors.cuisine }}</div>
+            </div>
+        </md-input-container>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="vm.del()" class="md-warn">
+            Delete
+        </md-button>
+        <md-button ng-click="vm.cancel()">
+            Cancel
+        </md-button>
+        <md-button ng-click="vm.save()" style="margin-right:20px;" class="orange">
+            Save
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

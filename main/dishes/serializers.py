@@ -44,6 +44,11 @@ class DishScheduleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         if validated_data['dish'].chef != validated_data['chef']:
             raise ValidationError("You are not the chef of this dish.")
+        if validated_data['repeat_daily']:
+            if DishSchedule.objects.filter(dish=validated_data['dish'], repeat_daily=True).exists():
+                raise ValidationError("This dish has already been scheduled for daily repeat.")
+            else:
+                DishSchedule.objects.filter(dish=validated_data['dish']).delete()
         if DishSchedule.objects.filter(chef=validated_data['chef'], date=validated_data['date'],
                                        dish=validated_data['dish']).exists():
             raise ValidationError("This dish has already been scheduled for this date.")
