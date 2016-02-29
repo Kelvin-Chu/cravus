@@ -9,6 +9,7 @@
         vm.loading = false;
         vm.dishes = [];
         vm.scheduled = [];
+        vm.repeated = [];
         vm.newdish = {};
         vm.dish = {};
         vm.dish.repeat_daily = false;
@@ -62,10 +63,13 @@
 
             function getScheduledDishesSuccessFn(data, status, headers, config) {
                 moveElement(vm.scheduled, vm.dishes);
+                moveElement(vm.repeated, vm.dishes);
                 if (data.data.length > 0) {
                     for (var i = 0; i < data.data.length; i++) {
                         if (data.data[i].repeat_daily == vm.dish.repeat_daily) {
                             moveElement(vm.dishes, vm.scheduled, data.data[i]);
+                        } else if (!vm.dish.repeat_daily && data.data[i].repeat_daily) {
+                            moveElement(vm.dishes, vm.repeated, data.data[i]);
                         }
                     }
                 } else {

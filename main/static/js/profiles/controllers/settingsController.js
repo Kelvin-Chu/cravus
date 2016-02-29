@@ -3,9 +3,9 @@
 
     angular.module('cravus.profiles').controller('settingsController', settingsController);
     settingsController.$inject = ['$rootScope', '$location', '$routeParams', 'authFactory', 'profileFactory',
-        'addressFactory', 'chefFactory', 'ytplayerFactory'];
+        'addressFactory', 'chefFactory', 'dishesFactory'];
     function settingsController($rootScope, $location, $routeParams, authFactory, profileFactory,
-                                addressFactory, chefFactory, ytplayerFactory) {
+                                addressFactory, chefFactory, dishesFactory) {
         var vm = this;
         vm.destroy = destroy;
         vm.update = update;
@@ -21,8 +21,7 @@
                 return {abbrev: state};
             });
         vm.types = ['Homemade', 'Fast Food', 'Food Truck', 'Restaurant', 'Other'];
-        vm.cuisines = ['American', 'Cajun', 'Chinese', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean',
-            'Mediterranean', 'Mexican', 'Thai', 'Vietnamese', 'Other'];
+        vm.cuisines = dishesFactory.cuisines;
 
         activate();
         function activate() {

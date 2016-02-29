@@ -123,6 +123,7 @@ class Chef(models.Model):
     pickup = models.BooleanField(default=False)
     credit = models.BooleanField(default=False)
     background = models.BooleanField(default=False)
+    featured = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s" % (self.account)

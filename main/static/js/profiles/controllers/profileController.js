@@ -9,12 +9,19 @@
         ytplayerFactory.stop();
         var vm = this;
         vm.profile = null;
-        vm.dishes = null;
-        vm.address = null;
+        vm.dishes = [];
+        vm.date = {};
+        vm.today = [];
+        vm.tomorrow = [];
+        vm.address = {};
+        vm.disqus_id = "";
+        vm.disqus_url = $location.absUrl();
         vm.name = "";
         vm.loading = true;
         vm.myProfile = false;
         vm.reviewed = false; //need to be worked on
+        vm.date.today = new Date();
+        vm.date.tomorrow = new Date(vm.date.today.getFullYear(), vm.date.today.getMonth(), vm.date.today.getDate() + 1);
 
         activate();
         function activate() {
@@ -50,6 +57,7 @@
                         vm.name = "Anonymous Chef";
                     }
                 }
+                vm.disqus_id = "chef-" + vm.profile.id;
                 angular.element(document).ready(function () {
                     vm.loading = false;
                 });
@@ -63,8 +71,46 @@
             function dishesSuccessFn(data, status, headers, config) {
                 if (data.data.length > 0) {
                     vm.dishes = data.data;
+                    dishesFactory.getScheduledDishes(username, vm.date.today).then(getTodayDishesSuccessFn, getTodayDishesErrorFn);
+                    dishesFactory.getScheduledDishes(username, vm.date.tomorrow).then(getTomorrowDishesSuccessFn, getTomorrowDishesErrorFn);
                 } else {
                     vm.dishes = false;
+                }
+
+                function getTodayDishesSuccessFn(data, status, headers, config) {
+                    if (data.data.length > 0) {
+                        for (var i = 0; i < data.data.length; i++) {
+                            copyElement(vm.dishes, vm.today, data.data[i]);
+                        }
+                    }
+                }
+
+                function getTodayDishesErrorFn(data, status, headers, config) {
+
+                }
+
+                function getTomorrowDishesSuccessFn(data, status, headers, config) {
+                    if (data.data.length > 0) {
+                        for (var i = 0; i < data.data.length; i++) {
+                            copyElement(vm.dishes, vm.tomorrow, data.data[i]);
+                        }
+                    }
+                }
+
+                function getTomorrowDishesErrorFn(data, status, headers, config) {
+
+                }
+
+                function copyElement(source, target, data) {
+                    for (var i = 0; i < source.length; i++) {
+                        var element = source[i];
+                        if (data) {
+                            if (element.id == data.dish) {
+                                target.push(element);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
 

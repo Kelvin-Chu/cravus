@@ -7,6 +7,7 @@
         'ngMaterial',
         'ngMessages',
         'ngFileUpload',
+        'angularUtils.directives.dirDisqus',
         'ui.bootstrap',
         'akoenig.deckgrid',
         'ui.mask',
