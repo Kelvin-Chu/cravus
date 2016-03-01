@@ -20,6 +20,8 @@
     {#    https://github.com/akoenig/angular-deckgrid/issues/69 #}
     {#    Also added maxColumns attribute #}
     {#    check commit 2b4794f058843b5c00945e25571ee5772d4afb60 for changes (2/23/16)  #}
+    {#    Also added support for passing a custom function #}
+    {#    check commit <hash> for changes (2/29/16)  #}
     <script type="text/javascript" src="{% static 'lib/angular-deckgrid/angular-deckgrid.js' %}"></script>
     {#    End Comment#}
     <script type="text/javascript" src="{% static 'lib/angular-route/angular-route.js' %}"></script>
@@ -35,6 +37,7 @@
     <script type="text/javascript" src="{% static 'js/layout/directives/ngCropper.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/directives/onRepeat.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/directives/spinner.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/layout/filters/truncate.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/services/ytplayerFactory.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layout/services/cropperFactory.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/authentication/authentication.js' %}"></script>
@@ -50,6 +53,7 @@
     <script type="text/javascript" src="{% static 'js/dishes/dishes.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dishes/services/dishesFactory.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dishes/controllers/editDishController.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dishes/controllers/dishController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dishes/controllers/manageDishesController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dishes/controllers/listDishesController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/style.js' %}"></script>

@@ -9,14 +9,14 @@
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/register.html',
             activetab: 'register',
-            animate: true,
+            index: true,
             resolve: {"check": loggedIn}
         }).when('/chef/register', {
             controller: 'registerController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/register.html',
             activetab: 'register',
-            animate: true,
+            index: true,
             chefregister: true,
             resolve: {"check": loggedIn}
         }).when('/login', {
@@ -24,39 +24,39 @@
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/login.html',
             activetab: 'login',
-            animate: true,
+            index: true,
             resolve: {"check": loggedIn}
         }).when('/dishes', {
             controller: 'listDishesController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/dishes/list-dishes.html',
             activetab: 'dishes',
-            animate: false
+            index: false
         }).when('/+:username', {
             controller: 'profileController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/profiles/profile.html',
             activetab: 'user',
-            animate: false
+            index: false
         }).when('/+:username/settings', {
             controller: 'settingsController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/profiles/settings.html',
             activetab: 'settings',
-            animate: true,
+            index: false,
             resolve: {"check": notLoggedIn}
         }).when('/+:username/managedishes', {
             controller: 'manageDishesController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/dishes/manage-dishes.html',
             activetab: 'managedishes',
-            animate: true,
+            index: false,
             resolve: {"check": notLoggedIn}
         }).when('/', {
             controller: 'indexController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/layout/index.html',
-            animate: false,
+            index: true,
             resolve: {"check": loggedIn}
         }).otherwise('/');
         $locationProvider.html5Mode(true);

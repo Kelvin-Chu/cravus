@@ -3,9 +3,9 @@
 
     angular.module('cravus.profiles').controller('settingsController', settingsController);
     settingsController.$inject = ['$rootScope', '$location', '$routeParams', 'authFactory', 'profileFactory',
-        'addressFactory', 'chefFactory', 'dishesFactory'];
+        'addressFactory', 'chefFactory', 'dishesFactory', 'ytplayerFactory'];
     function settingsController($rootScope, $location, $routeParams, authFactory, profileFactory,
-                                addressFactory, chefFactory, dishesFactory) {
+                                addressFactory, chefFactory, dishesFactory, ytplayerFactory) {
         var vm = this;
         vm.destroy = destroy;
         vm.update = update;
@@ -25,6 +25,7 @@
 
         activate();
         function activate() {
+            ytplayerFactory.stop();
             var username = $routeParams.username.substr(1);
             authFactory.isAuthenticated();
             authFactory.getAuthenticatedAccount();

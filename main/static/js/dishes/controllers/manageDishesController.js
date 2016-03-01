@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.dishes').controller('manageDishesController', manageDishesController);
-    manageDishesController.$inject = ['$rootScope', '$location', '$routeParams', 'authFactory', 'dishesFactory', '$filter', '$mdDialog'];
-    function manageDishesController($rootScope, $location, $routeParams, authFactory, dishesFactory, $filter, $mdDialog) {
+    manageDishesController.$inject = ['$rootScope', '$location', '$routeParams', 'authFactory', 'dishesFactory', '$filter', '$mdDialog', 'ytplayerFactory'];
+    function manageDishesController($rootScope, $location, $routeParams, authFactory, dishesFactory, $filter, $mdDialog, ytplayerFactory) {
         var username = $routeParams.username.substr(1);
         var vm = this;
         vm.loading = false;
@@ -29,6 +29,7 @@
 
         activate();
         function activate() {
+            ytplayerFactory.stop();
             authFactory.isAuthenticated();
             authFactory.getAuthenticatedAccount();
             if ($rootScope.authenticatedAccount) {

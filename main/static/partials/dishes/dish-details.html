@@ -1,0 +1,40 @@
+<md-dialog aria-label="Dish details" ng-hide="vm.loading" ng-style="{'width': '{{ vm.width }}' }">
+    <md-dialog-content class="dishDetailContainer">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Details">
+                <div class="text-center">
+                    <img ng-src="{{ vm.dish.image }}" class="md-card-image" id="dishImage">
+                </div>
+                <md-content class="md-padding">
+                    <h2>{{ vm.dish.name }}</h2>
+                    <p>{{ vm.dish.description }}</p>
+                </md-content>
+            </md-tab>
+            <md-tab label="Comments">
+                <md-content class="md-padding" ng-show="vm.disqus_ready">
+                    <dir-disqus disqus-shortname="cravus"
+                                disqus-identifier="{{ vm.disqus_id }}"
+                                disqus-url="{{ vm.disqus_url }}"
+                                disqus-title="{{ vm.dish.name }}"
+                                disqus-on-ready="vm.set_ready"
+                                ready-to-bind="{{ vm.disqus_ready }}">
+                    </dir-disqus>
+                </md-content>
+            </md-tab>
+            <md-tab label="Order">
+                <md-content class="md-padding">
+                    <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere
+                        molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit
+                        erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac
+                        est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="vm.cancel()" style="margin-right:20px;">
+            Close
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

@@ -998,7 +998,8 @@ a.text-white:focus {
     padding: 10px 5px !important;
 }
 
-.chefsignup > a:hover {
+.chefsignup > a:hover,
+.chefsignup > a:focus {
     background-color: #e9e9e9 !important;
 }
 
@@ -1066,8 +1067,8 @@ a.text-white:focus {
 
 .avatar {
     margin: 20px 0;
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     border: 4px solid #eee;
     background-color: #fff;
 }
@@ -1084,8 +1085,8 @@ a.text-white:focus {
 }
 
 .profile-divider {
-    margin-top: -85px;
-    margin-bottom: 75px;
+    margin-top: -125px;
+    margin-bottom: 115px;
 }
 
 .status {
@@ -1429,16 +1430,31 @@ spinner {
 }
 
 #disqus_thread {
-     position: relative;
+    position: relative;
 }
+
 #disqus_thread:after {
-     content: "";
-     display: block;
-     height: 55px;
-     width: 100%;
-     position: absolute;
-     bottom: 0;
-     background: white;
+    content: "";
+    display: block;
+    height: 50px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background: white;
+}
+
+md-input-container textarea {
+    overflow: auto;
+}
+
+.dishDetailContainer {
+    max-width: 950px;
+}
+
+.dishDetailContainer img {
+    min-width: 320px;
+    max-height: 50vh;
+    max-width: 100%;
 }
 
 .latest-dishes > md-tabs > md-tabs-wrapper {
@@ -1483,6 +1499,28 @@ md-content {
     overflow-x: hidden;
 }
 
+@media screen and (max-width: 375px) {
+    .avatarlg {
+        width: 175px;
+        height: 175px;
+    }
+
+    .avatar {
+        width: 175px;
+        height: 175px;
+    }
+
+    .preview-avatar {
+        width: 175px;
+        height: 175px;
+    }
+
+    .profile-divider {
+        margin-top: -100px;
+        margin-bottom: 90px;
+    }
+}
+
 @media screen and (max-width: 479px) {
     .deckgrid[deckgrid]::before {
         content: '1 .column.column-1-1';
@@ -1512,10 +1550,10 @@ md-content {
     }
 
     md-card {
-        margin: 8px 3px !important;
+        margin: 8px 0 !important;
     }
 
-    md-content {
+    md-card-content md-tabs md-content {
         padding: 8px 0 !important;
     }
 }
@@ -1533,6 +1571,10 @@ md-content {
     .cropArea {
         width: 360px;
         height: 270px;
+    }
+
+    .dishDetailContainer img {
+        max-width: 375px;
     }
 }
 
@@ -1658,6 +1700,10 @@ md-content {
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .deckgrid[deckgrid]::before {
         content: '3 .column.column-1-3';
+    }
+
+    .dishDetailContainer img {
+        max-width: 600px;
     }
 
     .navbar-brand {
@@ -1977,6 +2023,10 @@ md-content {
         width: 640px;
         height: 480px;
     }
+
+    .dishDetailContainer img {
+        max-width: 750px;
+    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -1986,6 +2036,10 @@ md-content {
 
     .search {
         width: 400px;
+    }
+
+    .dishDetailContainer img {
+        max-width: 950px;
     }
 }
 
@@ -2138,6 +2192,17 @@ md-content {
     position: relative;
     overflow-y: auto;
     height: 100%;
+}
+
+.index-container,
+.index-container-fluid {
+    height: 100%;
+}
+
+.index-container-fluid .row {
+    position: absolute;
+    bottom: 35%;
+    width: 100%;
 }
 
 /*.view-frame.ng-enter, .view-frame.ng-leave {*/

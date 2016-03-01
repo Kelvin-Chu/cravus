@@ -3,10 +3,9 @@
 
     angular.module('cravus.profiles').controller('profileController', profileController);
     profileController.$inject = ['$rootScope', '$location', '$routeParams', 'dishesFactory', 'profileFactory',
-        'addressFactory', 'chefFactory', 'ytplayerFactory'];
+        'addressFactory', 'chefFactory', 'ytplayerFactory', '$timeout'];
     function profileController($rootScope, $location, $routeParams, dishesFactory, profileFactory, addressFactory,
-                               chefFactory, ytplayerFactory) {
-        ytplayerFactory.stop();
+                               chefFactory, ytplayerFactory, $timeout) {
         var vm = this;
         vm.profile = null;
         vm.dishes = [];
@@ -14,8 +13,10 @@
         vm.today = [];
         vm.tomorrow = [];
         vm.address = {};
+        vm.disqus_ready = false;
         vm.disqus_id = "";
         vm.disqus_url = $location.absUrl();
+        vm.set_ready = set_ready();
         vm.name = "";
         vm.loading = true;
         vm.myProfile = false;
@@ -25,8 +26,8 @@
 
         activate();
         function activate() {
+            ytplayerFactory.stop();
             var username = $routeParams.username.substr(1);
-
             profileFactory.get(username).then(profileSuccessFn, profileErrorFn);
             dishesFactory.get(username).then(dishesSuccessFn, dishesErrorFn);
             addressFactory.get(username).then(addressSuccessFn, addressErrorFn);
@@ -54,7 +55,7 @@
                     if (vm.myProfile) {
                         vm.name = "Your Name";
                     } else {
-                        vm.name = "Anonymous Chef";
+                        vm.name = "Chef " + vm.profile.username;
                     }
                 }
                 vm.disqus_id = "chef-" + vm.profile.id;
@@ -143,6 +144,12 @@
             function chefErrorFn(data, status, headers, config) {
 
             }
+        }
+
+        function set_ready() {
+            $timeout(function () {
+                vm.disqus_ready = true;
+            }, 1000);
         }
     }
 

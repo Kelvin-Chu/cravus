@@ -4,17 +4,19 @@
             <md-card-header>
                 <md-card-header-text>
                     <md-title>
-                        <a href="/dish/{{ card.name }}"><span class="md-headline">{{ card.name }}</span></a>
+                        <a href="#" ng-click="customFn({ id : card.id })"><span
+                                class="md-headline">{{ card.name }}</span></a>
                     </md-title>
                 </md-card-header-text>
             </md-card-header>
-            <img ng-src="{{ card.image || '/static/img/dish_default.jpg' }}" class="md-card-image"
-                 style="max-width: 500px;">
+            <a href="#" ng-click="customFn({ id : card.id })">
+                <img ng-src="{{ card.image || '/static/img/dish_default.jpg' }}" class="md-card-image"
+                 style="max-width: 500px;"></a>
             <md-card-title>
                 <a href="/+{{ card.chef }}">+{{ card.chef }}</a>
             </md-card-title>
             <md-card-content>
-                {{ card.description }}
+                {{ card.description | truncate:150 }}
             </md-card-content>
         </md-card>
     </div>

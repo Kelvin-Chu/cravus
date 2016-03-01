@@ -1,7 +1,11 @@
 <div class="greybackground">
     <div class="container-fluid">
         <div class="row">
-            <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html" class="deckgrid"></div>
+            <div class="col-xs-12">
+                <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
+                     custom-fn="vm.dish(id)"
+                     class="deckgrid"></div>
+            </div>
         </div>
     </div>
 </div>
