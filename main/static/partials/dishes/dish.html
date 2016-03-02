@@ -4,12 +4,12 @@
             <md-card-header>
                 <md-card-header-text>
                     <md-title>
-                        <a href="#" ng-click="customFn({ id : card.id })"><span
+                        <a href="#" ng-click="customFn({ id : card.dish || card.id })"><span
                                 class="md-headline">{{ card.name }}</span></a>
                     </md-title>
                 </md-card-header-text>
             </md-card-header>
-            <a href="#" ng-click="customFn({ id : card.id })" style="height: 100%">
+            <a href="#" ng-click="customFn({ id : card.dish || card.id })" style="height: 100%">
                 <img ng-src="{{ card.thumbnail || '/static/img/dish_default_thumbnail.jpg' }}" class="md-card-image"
                  style="max-width: 500px;"></a>
             <md-card-title>

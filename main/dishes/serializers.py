@@ -35,11 +35,14 @@ class DishSerializer(serializers.ModelSerializer):
 
 class DishScheduleSerializer(serializers.ModelSerializer):
     chef = serializers.CharField(source='chef.username', read_only=True)
+    thumbnail = serializers.ImageField(source='dish.thumbnail', read_only=True)
+    description = serializers.CharField(source='dish.description', read_only=True)
+    name = serializers.CharField(source='dish.name', read_only=True)
     date = serializers.DateField(required=True, input_formats=['%Y-%m-%d'])
 
     class Meta:
         model = DishSchedule
-        fields = ('id', 'chef', 'date', 'dish', 'repeat_daily', 'created_at')
+        fields = ('id', 'chef', 'date', 'dish', 'thumbnail', 'description', 'name', 'repeat_daily', 'created_at')
         read_only_fields = ('id', 'chef', 'created_at')
 
     def create(self, validated_data):

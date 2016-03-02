@@ -20,9 +20,9 @@
                                             {{ vm.dish.repeat_daily ? "Repeat Everyday" : "No Repeat" }}</md-switch>
                                         <md-datepicker ng-model=" vm.dish.date
                                         " md-placeholder="Enter date"
-                                        md-min-date="vm.dish.minDate" flex-gt-xs class="topspace12"
-                                        md-max-date="vm.dish.maxDate" ng-hide="vm.dish.repeat_daily"
-                                        ng-change="vm.getScheduledDishes()"></md-datepicker>
+                                                       md-min-date="vm.dish.minDate" flex-gt-xs class="topspace12"
+                                                       md-max-date="vm.dish.maxDate" ng-hide="vm.dish.repeat_daily"
+                                                       ng-change="vm.getScheduledDishes()"></md-datepicker>
                                     </div>
                                     <div layout-gt-xs="row">
                                         <md-input-container class="md-block" flex-gt-xs>
@@ -68,7 +68,7 @@
                                             </div>
                                         </md-card-content>
                                     </md-card>
-                                    <div ng-show="vm.dishes.length" class="text-center scheduled">
+                                    <div ng-show="vm.dishes.length" class="text-center scheduled topspace75">
                                         <h3><span>Unscheduled Dishes</span></h3>
                                         <md-divider></md-divider>
                                     </div>

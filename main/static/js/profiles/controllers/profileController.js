@@ -31,7 +31,7 @@
             ytplayerFactory.stop();
             var username = $routeParams.username.substr(1);
             profileFactory.get(username).then(profileSuccessFn, profileErrorFn);
-            dishesFactory.get(username).then(dishesSuccessFn, dishesErrorFn);
+            dishesFactory.getScheduledDishes(vm.date.today, username).then(getTodayDishesSuccessFn, getTodayDishesErrorFn);
             addressFactory.get(username).then(addressSuccessFn, addressErrorFn);
             chefFactory.get(username).then(chefSuccessFn, chefErrorFn);
 
@@ -73,54 +73,27 @@
                 toast('error', '#globalToast', 'User does not exist.', 'none');
             }
 
-            function dishesSuccessFn(data, status, headers, config) {
-                if (data.data.length > 0) {
+            function getTodayDishesSuccessFn(data, status, headers, config) {
+                vm.today = data.data;
+                dishesFactory.get(username).then(dishesSuccessFn, dishesErrorFn);
+                dishesFactory.getScheduledDishes(vm.date.tomorrow, username).then(getTomorrowDishesSuccessFn, getTomorrowDishesErrorFn);
+
+                function dishesSuccessFn(data, status, headers, config) {
                     vm.dishes = data.data;
-                    dishesFactory.getScheduledDishes(username, vm.date.today).then(getTodayDishesSuccessFn, getTodayDishesErrorFn);
-                    dishesFactory.getScheduledDishes(username, vm.date.tomorrow).then(getTomorrowDishesSuccessFn, getTomorrowDishesErrorFn);
-                } else {
-                    vm.dishes = false;
                 }
 
-                function getTodayDishesSuccessFn(data, status, headers, config) {
-                    if (data.data.length > 0) {
-                        for (var i = 0; i < data.data.length; i++) {
-                            copyElement(vm.dishes, vm.today, data.data[i]);
-                        }
-                    }
-                }
-
-                function getTodayDishesErrorFn(data, status, headers, config) {
-
+                function dishesErrorFn(data, status, headers, config) {
                 }
 
                 function getTomorrowDishesSuccessFn(data, status, headers, config) {
-                    if (data.data.length > 0) {
-                        for (var i = 0; i < data.data.length; i++) {
-                            copyElement(vm.dishes, vm.tomorrow, data.data[i]);
-                        }
-                    }
+                    vm.tomorrow = data.data;
                 }
 
                 function getTomorrowDishesErrorFn(data, status, headers, config) {
-
-                }
-
-                function copyElement(source, target, data) {
-                    for (var i = 0; i < source.length; i++) {
-                        var element = source[i];
-                        if (data) {
-                            if (element.id == data.dish) {
-                                target.push(element);
-                                break;
-                            }
-                        }
-                    }
                 }
             }
 
-            function dishesErrorFn(data, status, headers, config) {
-
+            function getTodayDishesErrorFn(data, status, headers, config) {
             }
 
             function addressSuccessFn(data, status, headers, config) {
@@ -128,7 +101,6 @@
             }
 
             function addressErrorFn(data, status, headers, config) {
-
             }
 
             function chefSuccessFn(data, status, headers, config) {
@@ -146,7 +118,6 @@
             }
 
             function chefErrorFn(data, status, headers, config) {
-
             }
         }
 
@@ -223,7 +194,7 @@
                     config: function () {
                         this.page.identifier = vm.disqus_id;
                         this.page.url = vm.disqus_url;
-                        this.page.title = fm.name;
+                        this.page.title = vm.name;
                     }
                 });
                 vm.disqus_ready = true;

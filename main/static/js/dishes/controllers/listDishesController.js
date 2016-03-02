@@ -5,6 +5,12 @@
     listDishesController.$inject = ['$rootScope', '$scope', 'dishesFactory', 'ytplayerFactory', '$mdDialog'];
     function listDishesController($rootScope, $scope, dishesFactory, ytplayerFactory, $mdDialog) {
         var vm = this;
+        vm.loading = true;
+        vm.date = {};
+        vm.date.today = new Date();
+        vm.date.tomorrow = new Date(vm.date.today.getFullYear(), vm.date.today.getMonth(), vm.date.today.getDate() + 1);
+        vm.today = [];
+        vm.tomorrow = [];
         vm.dishes = [];
         vm.dish = dish;
 
@@ -12,7 +18,7 @@
         function activate() {
             $rootScope.loading = true;
             ytplayerFactory.stop();
-            dishesFactory.all().then(dishesSuccessFn, dishesErrorFn);
+            dishesFactory.getScheduledDishes(vm.date.today).then(getTodayDishesSuccessFn, getTodayDishesErrorFn);
 
             $scope.$on('dish.created', function (event, dish) {
                 vm.dishes.unshift(dish);
@@ -22,12 +28,22 @@
                 vm.dishes.shift();
             });
 
-            function dishesSuccessFn(data, status, headers, config) {
-                vm.dishes = data.data;
+            function getTodayDishesSuccessFn(data, status, headers, config) {
+                vm.today = data.data;
                 $rootScope.loading = false;
+                vm.loading = false;
+                dishesFactory.getScheduledDishes(vm.date.tomorrow).then(getTomorrowDishesSuccessFn, getTomorrowDishesErrorFn);
+
+                function getTomorrowDishesSuccessFn(data, status, headers, config) {
+                    vm.tomorrow = data.data;
+                }
+
+                function getTomorrowDishesErrorFn(data, status, headers, config) {
+
+                }
             }
 
-            function dishesErrorFn(data, status, headers, config) {
+            function getTodayDishesErrorFn(data, status, headers, config) {
                 $rootScope.loading = false;
                 toast('error', '#globalToast', 'Site in maintenance, try again later!', 'none');
             }

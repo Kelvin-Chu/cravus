@@ -13,10 +13,9 @@
         vm.newdish = {};
         vm.dish = {};
         vm.dish.repeat_daily = false;
-        vm.today = new Date();
-        vm.dish.date = new Date(vm.today.getFullYear(), vm.today.getMonth(), vm.today.getDate() + 1);
-        vm.dish.minDate = new Date(vm.today.getFullYear(), vm.today.getMonth(), vm.today.getDate() + 1);
-        vm.dish.maxDate = new Date(vm.dish.date.getFullYear(), vm.dish.date.getMonth(), vm.dish.date.getDate() + 7);
+        vm.dish.date = new Date();
+        vm.dish.minDate = new Date();
+        vm.dish.maxDate = new Date(vm.dish.minDate.getFullYear(), vm.dish.minDate.getMonth(), vm.dish.minDate.getDate() + 7);
         vm.cuisines = dishesFactory.cuisines;
         vm.getDishes = getDishes;
         vm.add = add;
@@ -62,7 +61,7 @@
         }
 
         function getScheduledDishes() {
-            dishesFactory.getScheduledDishes(username, vm.dish.date).then(getScheduledDishesSuccessFn, getScheduledDishesErrorFn);
+            dishesFactory.getScheduledDishes(vm.dish.date, username).then(getScheduledDishesSuccessFn, getScheduledDishesErrorFn);
 
             function getScheduledDishesSuccessFn(data, status, headers, config) {
                 moveElement(vm.scheduled, vm.dishes);

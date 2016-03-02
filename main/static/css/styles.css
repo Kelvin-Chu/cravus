@@ -1461,6 +1461,10 @@ md-dialog md-ink-bar {
     background-color: #e67e22;
 }
 
+.list-page md-ink-bar {
+    background-color: #e67e22;
+}
+
 .latest-dishes > md-tabs > md-tabs-wrapper {
     background-color: transparent !important;
 }
@@ -2312,7 +2316,7 @@ md-content {
     }
 }
 
-@-webkit-keyframes slideOutLeft-out {
+@-webkit-keyframes slideOutLeft {
     to {
         -webkit-transform: translateX(-100%);
         -moz-transform: translateX(-100%);

@@ -48,8 +48,12 @@
             return $http.delete('/api/v1/dishes/' + id + '/');
         }
 
-        function getScheduledDishes(username, date) {
-            return $http.get('/api/v1/accounts/' + username + '/schedule/?date=' + $filter('date')(date, "yyyy-MM-dd"));
+        function getScheduledDishes(date, username) {
+            if(username) {
+                return $http.get('/api/v1/accounts/' + username + '/schedule/?date=' + $filter('date')(date, "yyyy-MM-dd"));
+            } else {
+                return $http.get('/api/v1/schedule/?date=' + $filter('date')(date, "yyyy-MM-dd"));
+            }
         }
 
         function schedule(dish) {
