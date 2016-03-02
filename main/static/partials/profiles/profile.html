@@ -15,7 +15,7 @@
                     <h1 class="name">{{ vm.name }}</h1>
                     <div ng-hide="!vm.address.city || !vm.address.state">{{ vm.address.city }}, {{ vm.address.state }}</div>
                     <div class="status">
-                        <i class="fa fa-cutlery"> {{ vm.dishes.length }} Dishes Available </i>
+                        <i class="fa fa-cutlery"> {{ vm.dishes.length }} Dishes Total </i>
                         <i class="fa fa-check" ng-show="vm.chef.background"> Background Checked </i>
                         <i class="fa fa-star" ng-show="vm.chef.featured"> Featured </i>
                     </div>
@@ -32,21 +32,21 @@
                             <md-content class="food-container-content">
                                 <div ng-hide="vm.today.length"><h2>No dishes available today.</h2></div>
                                 <div deckgrid source="vm.today" cardTemplate="/static/partials/dishes/dish.html"
-                                     class="deckgrid" maxColumns="3"></div>
+                                     class="deckgrid" maxColumns="3" custom-fn="vm.dish(id)"></div>
                             </md-content>
                         </md-tab>
                         <md-tab label="Tomorrow">
                             <md-content class="food-container-content">
                                 <div ng-hide="vm.tomorrow.length"><h2>No dishes available tomorrow.</h2></div>
                                 <div deckgrid source="vm.tomorrow" cardTemplate="/static/partials/dishes/dish.html"
-                                     class="deckgrid" maxColumns="3"></div>
+                                     class="deckgrid" maxColumns="3" custom-fn="vm.dish(id)"></div>
                             </md-content>
                         </md-tab>
                         <md-tab label="All">
                             <md-content class="food-container-content">
                                 <div ng-hide="vm.dishes.length"><h2>No dishes available.</h2></div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                                     class="deckgrid" maxColumns="3"></div>
+                                     class="deckgrid" maxColumns="3" custom-fn="vm.dish(id)"></div>
                             </md-content>
                         </md-tab>
                     </md-tabs>
@@ -111,7 +111,7 @@
                 <div class="col-xs-12">
                     <h1>Comments</h1>
                 </div>
-                <div class="col-xs-12">
+                <div class="col-xs-12" id="disqus-container">
                     <dir-disqus disqus-shortname="cravus"
                                 disqus-identifier="{{ vm.disqus_id }}"
                                 disqus-url="{{ vm.disqus_url }}"

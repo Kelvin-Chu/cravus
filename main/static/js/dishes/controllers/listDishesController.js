@@ -2,14 +2,15 @@
     'use strict';
 
     angular.module('cravus.layout').controller('listDishesController', listDishesController);
-    listDishesController.$inject = ['$scope', 'dishesFactory', 'ytplayerFactory', '$mdDialog'];
-    function listDishesController($scope, dishesFactory, ytplayerFactory, $mdDialog) {
+    listDishesController.$inject = ['$rootScope', '$scope', 'dishesFactory', 'ytplayerFactory', '$mdDialog'];
+    function listDishesController($rootScope, $scope, dishesFactory, ytplayerFactory, $mdDialog) {
         var vm = this;
         vm.dishes = [];
         vm.dish = dish;
 
         activate();
         function activate() {
+            $rootScope.loading = true;
             ytplayerFactory.stop();
             dishesFactory.all().then(dishesSuccessFn, dishesErrorFn);
 
@@ -23,17 +24,21 @@
 
             function dishesSuccessFn(data, status, headers, config) {
                 vm.dishes = data.data;
+                $rootScope.loading = false;
             }
 
             function dishesErrorFn(data, status, headers, config) {
+                $rootScope.loading = false;
                 toast('error', '#globalToast', 'Site in maintenance, try again later!', 'none');
             }
         }
 
         function dish(id) {
+            $rootScope.loading = true;
             dishesFactory.getDish(id).then(getDishSuccessFn, getDishErrorFn);
 
             function getDishSuccessFn(data, status, headers, config) {
+                console.log(data.data);
                 if (!data.data.image) {
                     data.data.image = '/static/img/dish_default.jpg';
                 }
@@ -58,6 +63,7 @@
                     document.body.appendChild(img);
                     var imgWidth = img.clientWidth;
                     img.remove();
+                    $rootScope.loading = false;
                     $mdDialog.show({
                         controller: 'dishController',
                         controllerAs: 'vm',
@@ -75,9 +81,9 @@
             }
 
             function getDishErrorFn(data, status, headers, config) {
+                $rootScope.loading = false;
                 toast('error', '#globalToast', 'Problem connecting to server, refresh the page or try again later', 'none');
             }
-
 
         }
     }

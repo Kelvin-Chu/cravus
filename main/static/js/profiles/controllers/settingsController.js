@@ -25,6 +25,7 @@
 
         activate();
         function activate() {
+            $rootScope.loading = true;
             ytplayerFactory.stop();
             var username = $routeParams.username.substr(1);
             authFactory.isAuthenticated();
@@ -46,15 +47,18 @@
                 }
 
                 function chefGetSuccessFn(data, status, headers, config) {
+                    $rootScope.loading = false;
                     vm.chef = data.data;
                 }
 
                 function chefGetErrorFn(data, status, headers, config) {
+                    $rootScope.loading = false;
                     toast('warning', '#toastBounds', 'Could not retrieve chef information.');
                 }
             }
 
             function profileGetErrorFn(data, status, headers, config) {
+                $rootScope.loading = false;
                 toast('warning', '#toastBounds', 'Could not retrieve profile information.');
                 $location.url('/dishes');
             }

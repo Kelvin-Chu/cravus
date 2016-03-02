@@ -1,4 +1,4 @@
-(function(window) {
+(function (window) {
     'use strict';
 
     angular.module('cravus', [
@@ -24,9 +24,15 @@
         $rootScope.$on("$locationChangeStart", function (event, next, current) {
             $rootScope.route = $route;
         });
+        $rootScope.$on('$stateChangeStart', function () {
+            $rootScope.loading = true;
+        });
+        $rootScope.$on('$stateChangeSuccess', function () {
+            $rootScope.loading = false;
+        });
     }
 
-        function classReg(className) {
+    function classReg(className) {
         return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
     }
 

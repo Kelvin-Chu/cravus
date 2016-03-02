@@ -7,7 +7,7 @@
                 </div>
                 <md-content class="md-padding">
                     <h2>{{ vm.dish.name }}</h2>
-                    <p>{{ vm.dish.description }}</p>
+                    <p>{{ vm.body }}</p>
                 </md-content>
             </md-tab>
             <md-tab label="Comments">
@@ -32,9 +32,13 @@
         </md-tabs>
     </md-dialog-content>
     <md-dialog-actions layout="row">
+        <a href="/+{{ card.chef }}">+{{ vm.dish.chef }}</a>
         <span flex></span>
-        <md-button ng-click="vm.cancel()" style="margin-right:20px;">
+        <md-button ng-click="vm.cancel()">
             Close
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="vm.cancel()" style="margin-right:20px;">
+            Order
         </md-button>
     </md-dialog-actions>
 </md-dialog>

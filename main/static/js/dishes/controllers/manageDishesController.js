@@ -29,6 +29,7 @@
 
         activate();
         function activate() {
+            $rootScope.loading = true;
             ytplayerFactory.stop();
             authFactory.isAuthenticated();
             authFactory.getAuthenticatedAccount();
@@ -55,6 +56,7 @@
 
             function dishesErrorFn(data, status, headers, config) {
                 vm.loading = false;
+                $rootScope.loading = false;
                 toast('error', '#globalToast', 'Problem connecting to server, refresh the page or try again later', 'none');
             }
         }
@@ -77,10 +79,12 @@
                     vm.scheduled = [];
                 }
                 vm.loading = false;
+                $rootScope.loading = false;
             }
 
             function getScheduledDishesErrorFn(data, status, headers, config) {
                 vm.loading = false;
+                $rootScope.loading = false;
                 toast('error', '#globalToast', 'Problem connecting to server, refresh the page or try again later', 'none');
             }
 
