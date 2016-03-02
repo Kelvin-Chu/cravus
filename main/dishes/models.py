@@ -22,7 +22,7 @@ class Dish(models.Model):
     image = ProcessedImageField(upload_to=generate_dishes_filename,
                                 processors=[Transpose(Transpose.AUTO), ResizeToFit(1024, 1024, False)],
                                 format='JPEG', options={'quality': 90}, blank=True)
-    thumbnail = ImageSpecField(source='image', processors=[ResizeToFit(500, 750, False)],
+    thumbnail = ImageSpecField(source='image', processors=[ResizeToFit(500, 500, False)],
                                     format='JPEG', options={'quality': 75})
     approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

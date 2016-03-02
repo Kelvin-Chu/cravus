@@ -161,11 +161,14 @@
             dishesFactory.getDish(id).then(getDishSuccessFn, getDishErrorFn);
 
             function getDishSuccessFn(data, status, headers, config) {
-                console.log(data.data);
                 if (!data.data.image) {
                     data.data.image = '/static/img/dish_default.jpg';
                 }
-                var img = document.createElement("img");
+                var img = document.getElementById('temp-img');
+                if (!img) {
+                    img = document.createElement("img");
+                    img.id = 'temp-img';
+                }
                 var width = $(window).width();
                 var maxWidth = "100%";
                 if (width > 991) {
@@ -187,7 +190,6 @@
                     img.style.visibility = 'hidden';
                     document.body.appendChild(img);
                     var imgWidth = img.clientWidth;
-                    img.remove();
                     $rootScope.loading = false;
                     $mdDialog.show({
                         controller: 'dishController',

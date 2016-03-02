@@ -14,7 +14,6 @@
 
         activate();
         function activate() {
-            console.log(vm.disqus_url);
             vm.disqus_id = vm.dish.id;
             if (vm.dish.cuisine) {
                 if (vm.dish.description) {

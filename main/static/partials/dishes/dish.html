@@ -9,8 +9,8 @@
                     </md-title>
                 </md-card-header-text>
             </md-card-header>
-            <a href="#" ng-click="customFn({ id : card.id })">
-                <img ng-src="{{ card.image || '/static/img/dish_default.jpg' }}" class="md-card-image"
+            <a href="#" ng-click="customFn({ id : card.id })" style="height: 100%">
+                <img ng-src="{{ card.thumbnail || '/static/img/dish_default_thumbnail.jpg' }}" class="md-card-image"
                  style="max-width: 500px;"></a>
             <md-card-title>
                 <a href="/+{{ card.chef }}">+{{ card.chef }}</a>
