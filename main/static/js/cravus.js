@@ -4,6 +4,7 @@
     angular.module('cravus', [
         'ngRoute',
         'ngAnimate',
+        'infinite-scroll',
         'ngMaterial',
         'ngMessages',
         'ngFileUpload',
@@ -17,6 +18,7 @@
         'cravus.dishes'
     ]);
     angular.module('cravus').run(run);
+    angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
     run.$inject = ['$rootScope', '$route', '$http'];
     function run($rootScope, $route, $http) {
         $http.defaults.xsrfHeaderName = 'X-CSRFToken';

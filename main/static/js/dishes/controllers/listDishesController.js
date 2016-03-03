@@ -6,20 +6,21 @@
     function listDishesController($rootScope, $scope, dishesFactory, ytplayerFactory, $mdDialog) {
         var vm = this;
         vm.loading = true;
+        vm.scrolling = false;
+        vm.scrollDisabled = true;
+        vm.nextPage = '';
         vm.date = {};
         vm.date.today = new Date();
         vm.date.tomorrow = new Date(vm.date.today.getFullYear(), vm.date.today.getMonth(), vm.date.today.getDate() + 1);
-        vm.today = [];
-        vm.tomorrow = [];
         vm.dishes = [];
+        vm.tab = 'today';
         vm.dish = dish;
+        vm.tabChange = tabChange;
+        vm.scrollFn = scrollFn;
 
         activate();
         function activate() {
-            $rootScope.loading = true;
             ytplayerFactory.stop();
-            dishesFactory.getScheduledDishes(vm.date.today).then(getTodayDishesSuccessFn, getTodayDishesErrorFn);
-
             $scope.$on('dish.created', function (event, dish) {
                 vm.dishes.unshift(dish);
             });
@@ -27,25 +28,59 @@
             $scope.$on('dish.created.error', function () {
                 vm.dishes.shift();
             });
+        }
 
-            function getTodayDishesSuccessFn(data, status, headers, config) {
-                vm.today = data.data;
+        function tabChange(tab) {
+            vm.dishes = [];
+            $rootScope.loading = true;
+            vm.loading = true;
+            if (tab === 'today') {
+                vm.tab = 'today';
+                dishesFactory.getScheduledDishes(vm.date.today).then(getDishesSuccessFn, getDishesErrorFn);
+            } else if (tab === 'tomorrow') {
+                vm.tab = 'tomorrow';
+                dishesFactory.getScheduledDishes(vm.date.tomorrow).then(getDishesSuccessFn, getDishesErrorFn);
+            } else {
                 $rootScope.loading = false;
                 vm.loading = false;
-                dishesFactory.getScheduledDishes(vm.date.tomorrow).then(getTomorrowDishesSuccessFn, getTomorrowDishesErrorFn);
-
-                function getTomorrowDishesSuccessFn(data, status, headers, config) {
-                    vm.tomorrow = data.data;
-                }
-
-                function getTomorrowDishesErrorFn(data, status, headers, config) {
-
-                }
             }
 
-            function getTodayDishesErrorFn(data, status, headers, config) {
+            function getDishesSuccessFn(data, status, headers, config) {
+                vm.nextPage = data.data.next;
+                vm.dishes = data.data.results;
+                vm.loading = false;
                 $rootScope.loading = false;
+                vm.scrollDisabled = false;
+            }
+
+            function getDishesErrorFn(data, status, headers, config) {
+                $rootScope.loading = false;
+                vm.loading = false;
                 toast('error', '#globalToast', 'Site in maintenance, try again later!', 'none');
+            }
+        }
+
+        function scrollFn() {
+            vm.scrolling = true;
+            if (vm.nextPage && vm.tab === 'today') {
+                dishesFactory.getScheduledDishes(vm.date.today, '', vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
+            } else if (vm.nextPage && vm.tab === 'tomorrow') {
+                dishesFactory.getScheduledDishes(vm.date.tomorrow, '', vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
+            } else {
+                vm.scrollDisabled = true;
+            }
+
+            function getNextDishesSuccessFn(data, status, headers, config) {
+                vm.nextPage = data.data.next;
+                if (!vm.nextPage) {
+                    vm.scrollDisabled = true;
+                }
+                vm.dishes = vm.dishes.concat(data.data.results);
+                vm.scrolling = false;
+            }
+
+            function getNextDishesErrorFn(data, status, headers, config) {
+                vm.scrolling = false;
             }
         }
 
@@ -102,7 +137,7 @@
                 $rootScope.loading = false;
                 toast('error', '#globalToast', 'Problem connecting to server, refresh the page or try again later', 'none');
             }
-
         }
     }
+
 })();

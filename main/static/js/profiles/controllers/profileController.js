@@ -7,33 +7,30 @@
     function profileController($rootScope, $location, $routeParams, dishesFactory, profileFactory, addressFactory,
                                chefFactory, ytplayerFactory, $timeout, $mdDialog, $window) {
         var vm = this;
+        vm.username = $routeParams.username.substr(1);
         vm.profile = null;
         vm.dishes = [];
-        vm.date = {};
-        vm.today = [];
-        vm.tomorrow = [];
         vm.address = {};
         vm.disqus_ready = false;
         vm.disqus_id = "";
         vm.disqus_url = $location.absUrl();
-        vm.set_ready = set_ready();
         vm.name = "";
         vm.loading = true;
         vm.myProfile = false;
-        vm.reviewed = false; //need to be worked on
+        vm.date = {};
         vm.date.today = new Date();
         vm.date.tomorrow = new Date(vm.date.today.getFullYear(), vm.date.today.getMonth(), vm.date.today.getDate() + 1);
+        vm.set_ready = set_ready();
         vm.dish = dish;
+        vm.tabChange = tabChange;
 
         activate();
         function activate() {
             $rootScope.loading = true;
             ytplayerFactory.stop();
-            var username = $routeParams.username.substr(1);
-            profileFactory.get(username).then(profileSuccessFn, profileErrorFn);
-            dishesFactory.getScheduledDishes(vm.date.today, username).then(getTodayDishesSuccessFn, getTodayDishesErrorFn);
-            addressFactory.get(username).then(addressSuccessFn, addressErrorFn);
-            chefFactory.get(username).then(chefSuccessFn, chefErrorFn);
+            profileFactory.get(vm.username).then(profileSuccessFn, profileErrorFn);
+            addressFactory.get(vm.username).then(addressSuccessFn, addressErrorFn);
+            chefFactory.get(vm.username).then(chefSuccessFn, chefErrorFn);
 
             function profileSuccessFn(data, status, headers, config) {
                 if (!data.data.is_chef) {
@@ -73,29 +70,6 @@
                 toast('error', '#globalToast', 'User does not exist.', 'none');
             }
 
-            function getTodayDishesSuccessFn(data, status, headers, config) {
-                vm.today = data.data;
-                dishesFactory.get(username).then(dishesSuccessFn, dishesErrorFn);
-                dishesFactory.getScheduledDishes(vm.date.tomorrow, username).then(getTomorrowDishesSuccessFn, getTomorrowDishesErrorFn);
-
-                function dishesSuccessFn(data, status, headers, config) {
-                    vm.dishes = data.data;
-                }
-
-                function dishesErrorFn(data, status, headers, config) {
-                }
-
-                function getTomorrowDishesSuccessFn(data, status, headers, config) {
-                    vm.tomorrow = data.data;
-                }
-
-                function getTomorrowDishesErrorFn(data, status, headers, config) {
-                }
-            }
-
-            function getTodayDishesErrorFn(data, status, headers, config) {
-            }
-
             function addressSuccessFn(data, status, headers, config) {
                 vm.address = data.data[0];
             }
@@ -118,6 +92,29 @@
             }
 
             function chefErrorFn(data, status, headers, config) {
+            }
+        }
+
+        function tabChange(tab) {
+            vm.dishes = [];
+            $rootScope.loading = true;
+            if (tab === 'today') {
+                dishesFactory.getScheduledDishes(vm.date.today, vm.username).then(getDishesSuccessFn, getDishesErrorFn);
+            } else if (tab === 'tomorrow') {
+                dishesFactory.getScheduledDishes(vm.date.tomorrow, vm.username).then(getDishesSuccessFn, getDishesErrorFn);
+            } else if (tab === 'all') {
+                dishesFactory.get(vm.username).then(getDishesSuccessFn, getDishesSuccessFn);
+            } else {
+                $rootScope.loading = false;
+            }
+
+            function getDishesSuccessFn(data, status, headers, config) {
+                vm.dishes = data.data;
+                $rootScope.loading = false;
+            }
+
+            function getDishesErrorFn(data, status, headers, config) {
+                $rootScope.loading = false;
             }
         }
 

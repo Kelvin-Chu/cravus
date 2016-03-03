@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Home - CravUs</title>
@@ -19,9 +19,8 @@
 </div>
 <div ng-include="'{% static "partials/layout/navbar.html" %}'"></div>
 {% verbatim %}
-<div class="view-container" role="main">
-    <div id="globalToast"></div>
-    <div ng-view ng-class="{ 'index-container': route.current.index }" ng-cloak></div>
+<div id="globalToast"></div>
+<div class="view-container" role="main" ng-view ng-class="{ 'index-container': route.current.index }" ng-cloak>
 </div>
 {% endverbatim %}
 {% include 'javascripts.html' %}

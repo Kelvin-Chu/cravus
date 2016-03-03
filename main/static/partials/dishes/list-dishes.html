@@ -1,23 +1,31 @@
-<div class="greybackground">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 list-page" ng-hide="vm.loading">
-                <md-tabs md-dynamic-height md-border-bottom>
-                    <md-tab label="Today">
-                        <md-content class="food-container-content">
-                            <div ng-hide="vm.today.length"><h2>No dishes available today.</h2></div>
-                            <div deckgrid source="vm.today" cardTemplate="/static/partials/dishes/dish.html"
-                                 custom-fn="vm.dish(id)" class="deckgrid"></div>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Tomorrow">
-                        <md-content class="food-container-content">
-                            <div ng-hide="vm.tomorrow.length"><h2>No dishes available tomorrow.</h2></div>
-                            <div deckgrid source="vm.tomorrow" cardTemplate="/static/partials/dishes/dish.html"
-                                 custom-fn="vm.dish(id)" class="deckgrid"></div>
-                        </md-content>
-                    </md-tab>
-                </md-tabs>
+<div infinite-scroll="vm.scrollFn()" infinite-scroll-disabled="vm.scrollDisabled"
+     infinite-scroll-distance="0" infinite-scroll-immediate-check="false" infinite-scroll-parent="true">
+    <div class="greybackground">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 list-page">
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="Today" md-on-select="vm.tabChange('today')">
+                            <md-content class="food-container-content">
+                                <div ng-hide="vm.dishes.length || vm.loading"><h2>No dishes available today.</h2></div>
+                                <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
+                                     custom-fn="vm.dish(id)" class="deckgrid"></div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Tomorrow" md-on-select="vm.tabChange('tomorrow')">
+                            <md-content class="food-container-content">
+                                <div ng-hide="vm.dishes.length || vm.loading"><h2>No dishes available tomorrow.</h2>
+                                </div>
+                                <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
+                                     custom-fn="vm.dish(id)" class="deckgrid"></div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                    <div class="text-center topspace50 botspace50" ng-hide="vm.scrolling || vm.scrollDisabled">scroll
+                        down to load more...
+                    </div>
+                    <div class="botspace50 spinner" ng-show="vm.scrolling"></div>
+                </div>
             </div>
         </div>
     </div>

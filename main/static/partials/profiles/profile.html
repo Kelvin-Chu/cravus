@@ -15,7 +15,7 @@
                     <h1 class="name">{{ vm.name }}</h1>
                     <div ng-hide="!vm.address.city || !vm.address.state">{{ vm.address.city }}, {{ vm.address.state }}</div>
                     <div class="status">
-                        <i class="fa fa-cutlery"> {{ vm.dishes.length }} Dishes Total </i>
+                        <i class="fa fa-cutlery"> {{ vm.chef.dish_count }} Dishes Total </i>
                         <i class="fa fa-check" ng-show="vm.chef.background"> Background Checked </i>
                         <i class="fa fa-star" ng-show="vm.chef.featured"> Featured </i>
                     </div>
@@ -28,23 +28,26 @@
             <div class="col-lg-8">
                 <md-content class="food-container">
                     <md-tabs md-dynamic-height md-border-bottom>
-                        <md-tab label="Today">
+                        <md-tab label="Today" md-on-select="vm.tabChange('today')">
                             <md-content class="food-container-content">
-                                <div ng-hide="vm.today.length"><h2>No dishes available today.</h2></div>
-                                <div deckgrid source="vm.today" cardTemplate="/static/partials/dishes/dish.html"
+                                <div ng-hide="vm.dishes.length || $root.loading"><h2>No dishes available
+                                    today.</h2></div>
+                                <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
                                      class="deckgrid" maxColumns="3" custom-fn="vm.dish(id)"></div>
                             </md-content>
                         </md-tab>
-                        <md-tab label="Tomorrow">
+                        <md-tab label="Tomorrow" md-on-select="vm.tabChange('tomorrow')">
                             <md-content class="food-container-content">
-                                <div ng-hide="vm.tomorrow.length"><h2>No dishes available tomorrow.</h2></div>
-                                <div deckgrid source="vm.tomorrow" cardTemplate="/static/partials/dishes/dish.html"
+                                <div ng-hide="vm.dishes.length || $root.loading"><h2>No dishes available
+                                    tomorrow.</h2></div>
+                                <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
                                      class="deckgrid" maxColumns="3" custom-fn="vm.dish(id)"></div>
                             </md-content>
                         </md-tab>
-                        <md-tab label="All">
+                        <md-tab label="All" md-on-select="vm.tabChange('all')">
                             <md-content class="food-container-content">
-                                <div ng-hide="vm.dishes.length"><h2>No dishes available.</h2></div>
+                                <div ng-hide="vm.dishes.length || $root.loading"><h2>No dishes available.</h2>
+                                </div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
                                      class="deckgrid" maxColumns="3" custom-fn="vm.dish(id)"></div>
                             </md-content>

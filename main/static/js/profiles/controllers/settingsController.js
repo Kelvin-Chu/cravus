@@ -82,7 +82,7 @@
             }
 
             function profileDelErrorFn(data, status, headers, config) {
-                toast('error', '#toastBounds', 'There was an error processing your request.', 'none');
+                toast('error', '#toastBounds', 'There was an error processing your request.  Please double check your settings.', 'none');
             }
         }
 
@@ -105,7 +105,7 @@
             function profileUpdateErrorFn(data) {
                 clearErrors(vm);
                 setErrors(vm, data);
-                toast('error', '#toastBounds', 'There was an error processing your request.', 'none');
+                toast('error', '#toastBounds', 'There was an error processing your request.  Please double check your settings.', 'none');
                 vm.loading = false;
             }
         }
