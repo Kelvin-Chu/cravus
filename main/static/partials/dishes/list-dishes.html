@@ -7,6 +7,7 @@
                     <md-tabs md-dynamic-height md-border-bottom>
                         <md-tab label="Today" md-on-select="vm.tabChange('today')">
                             <md-content class="food-container-content">
+                                <p ng-show="vm.query">Search result for: {{ vm.query }}</p>
                                 <div ng-hide="vm.dishes.length || vm.loading"><h2>No dishes available today.</h2></div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
                                      custom-fn="vm.dish(id)" class="deckgrid"></div>
@@ -14,6 +15,7 @@
                         </md-tab>
                         <md-tab label="Tomorrow" md-on-select="vm.tabChange('tomorrow')">
                             <md-content class="food-container-content">
+                                <p ng-show="vm.query">Search result for: {{ vm.query }}</p>
                                 <div ng-hide="vm.dishes.length || vm.loading"><h2>No dishes available tomorrow.</h2>
                                 </div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
@@ -21,7 +23,7 @@
                             </md-content>
                         </md-tab>
                     </md-tabs>
-                    <div class="text-center topspace50 botspace50" ng-hide="vm.scrolling || vm.scrollDisabled">scroll
+                    <div class="text-center topspace50 botspace50" ng-hide="vm.scrolling || !vm.nextPage">scroll
                         down to load more...
                     </div>
                     <div class="botspace50 spinner" ng-show="vm.scrolling"></div>

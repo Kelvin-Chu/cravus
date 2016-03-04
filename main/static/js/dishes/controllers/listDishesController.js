@@ -2,13 +2,14 @@
     'use strict';
 
     angular.module('cravus.layout').controller('listDishesController', listDishesController);
-    listDishesController.$inject = ['$rootScope', '$scope', 'dishesFactory', 'ytplayerFactory', '$mdDialog'];
-    function listDishesController($rootScope, $scope, dishesFactory, ytplayerFactory, $mdDialog) {
+    listDishesController.$inject = ['$rootScope', '$scope', 'dishesFactory', 'ytplayerFactory', '$mdDialog', '$routeParams'];
+    function listDishesController($rootScope, $scope, dishesFactory, ytplayerFactory, $mdDialog, $routeParams) {
         var vm = this;
         vm.loading = true;
         vm.scrolling = false;
         vm.scrollDisabled = true;
         vm.nextPage = '';
+        vm.query = null;
         vm.date = {};
         vm.date.today = new Date();
         vm.date.tomorrow = new Date(vm.date.today.getFullYear(), vm.date.today.getMonth(), vm.date.today.getDate() + 1);
@@ -20,13 +21,12 @@
 
         activate();
         function activate() {
+            $rootScope.title = "Dishes";
             ytplayerFactory.stop();
-            $scope.$on('dish.created', function (event, dish) {
-                vm.dishes.unshift(dish);
-            });
-
-            $scope.$on('dish.created.error', function () {
-                vm.dishes.shift();
+            vm.query = $routeParams.query;
+            $scope.$on('dish.search', function (event, query) {
+                vm.query = query;
+                tabChange(vm.tab);
             });
         }
 
@@ -36,10 +36,10 @@
             vm.loading = true;
             if (tab === 'today') {
                 vm.tab = 'today';
-                dishesFactory.getScheduledDishes(vm.date.today).then(getDishesSuccessFn, getDishesErrorFn);
+                dishesFactory.getScheduledDishes(vm.date.today, '', vm.query).then(getDishesSuccessFn, getDishesErrorFn);
             } else if (tab === 'tomorrow') {
                 vm.tab = 'tomorrow';
-                dishesFactory.getScheduledDishes(vm.date.tomorrow).then(getDishesSuccessFn, getDishesErrorFn);
+                dishesFactory.getScheduledDishes(vm.date.tomorrow, '', vm.query).then(getDishesSuccessFn, getDishesErrorFn);
             } else {
                 $rootScope.loading = false;
                 vm.loading = false;
@@ -63,9 +63,9 @@
         function scrollFn() {
             vm.scrolling = true;
             if (vm.nextPage && vm.tab === 'today') {
-                dishesFactory.getScheduledDishes(vm.date.today, '', vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
+                dishesFactory.getScheduledDishes(vm.date.today, '', '', vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
             } else if (vm.nextPage && vm.tab === 'tomorrow') {
-                dishesFactory.getScheduledDishes(vm.date.tomorrow, '', vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
+                dishesFactory.getScheduledDishes(vm.date.tomorrow, '', '', vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
             } else {
                 vm.scrollDisabled = true;
             }

@@ -19,12 +19,13 @@
     ]);
     angular.module('cravus').run(run);
     angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
-    run.$inject = ['$rootScope', '$route', '$http'];
-    function run($rootScope, $route, $http) {
+    run.$inject = ['$rootScope', '$route', '$http', '$mdDialog'];
+    function run($rootScope, $route, $http, $mdDialog) {
         $http.defaults.xsrfHeaderName = 'X-CSRFToken';
         $http.defaults.xsrfCookieName = 'csrftoken';
         $rootScope.$on("$locationChangeStart", function (event, next, current) {
             $rootScope.route = $route;
+            $mdDialog.cancel();
         });
         $rootScope.$on('$stateChangeStart', function () {
             $rootScope.loading = true;

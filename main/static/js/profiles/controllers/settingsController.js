@@ -25,6 +25,7 @@
 
         activate();
         function activate() {
+            $rootScope.title = "Account Settings";
             $rootScope.loading = true;
             ytplayerFactory.stop();
             var username = $routeParams.username.substr(1);

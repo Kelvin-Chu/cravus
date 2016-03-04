@@ -14,18 +14,20 @@
         vm.disqus_ready = false;
         vm.disqus_id = "";
         vm.disqus_url = $location.absUrl();
+        vm.disqus_title = "Chef " + vm.username;
         vm.name = "";
         vm.loading = true;
         vm.myProfile = false;
         vm.date = {};
         vm.date.today = new Date();
         vm.date.tomorrow = new Date(vm.date.today.getFullYear(), vm.date.today.getMonth(), vm.date.today.getDate() + 1);
-        vm.set_ready = set_ready();
         vm.dish = dish;
         vm.tabChange = tabChange;
+        vm.set_ready = set_ready();
 
         activate();
         function activate() {
+            $rootScope.title = vm.username + "'s Profile";
             $rootScope.loading = true;
             ytplayerFactory.stop();
             profileFactory.get(vm.username).then(profileSuccessFn, profileErrorFn);
@@ -58,10 +60,8 @@
                     }
                 }
                 vm.disqus_id = "chef-" + vm.profile.id;
-                angular.element(document).ready(function () {
-                    vm.loading = false;
-                    $rootScope.loading = false;
-                });
+                vm.loading = false;
+                $rootScope.loading = false;
             }
 
             function profileErrorFn(data, status, headers, config) {
@@ -95,6 +95,10 @@
             }
         }
 
+        function set_ready() {
+            vm.disqus_ready = true;
+        }
+
         function tabChange(tab) {
             vm.dishes = [];
             $rootScope.loading = true;
@@ -116,12 +120,6 @@
             function getDishesErrorFn(data, status, headers, config) {
                 $rootScope.loading = false;
             }
-        }
-
-        function set_ready() {
-            $timeout(function () {
-                vm.disqus_ready = true;
-            }, 1000);
         }
 
         function dish(id) {
@@ -191,7 +189,7 @@
                     config: function () {
                         this.page.identifier = vm.disqus_id;
                         this.page.url = vm.disqus_url;
-                        this.page.title = vm.name;
+                        this.page.title = vm.disqus_title;
                     }
                 });
                 vm.disqus_ready = true;

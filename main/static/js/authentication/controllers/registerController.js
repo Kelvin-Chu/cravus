@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.authentication').controller('registerController', registerController);
-    registerController.$inject = ['$scope', '$route', 'authFactory', 'ytplayerFactory'];
-    function registerController($scope, $route, authFactory, ytplayerFactory) {
+    registerController.$inject = ['$rootScope', '$scope', '$route', 'authFactory', 'ytplayerFactory'];
+    function registerController($rootScope, $scope, $route, authFactory, ytplayerFactory) {
         ytplayerFactory.play();
         var vm = this;
         vm.scope = $scope;
@@ -12,6 +12,7 @@
         vm.route = $route;
         activate();
         function activate() {
+            $rootScope.title = "Register An Account";
             if (!authFactory.isAuthenticated()) {
                 ytplayerFactory.play();
             }

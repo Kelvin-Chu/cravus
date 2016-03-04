@@ -2,10 +2,11 @@
     'use strict';
 
     angular.module('cravus.layout').controller('indexController', indexController);
-    indexController.$inject = ['ytplayerFactory', 'authFactory'];
-    function indexController(ytplayerFactory, authFactory) {
+    indexController.$inject = ['$rootScope', 'ytplayerFactory', 'authFactory'];
+    function indexController($rootScope, ytplayerFactory, authFactory) {
         activate();
         function activate() {
+            $rootScope.title = "Home";
             if (!authFactory.isAuthenticated()) {
                 ytplayerFactory.play();
             }

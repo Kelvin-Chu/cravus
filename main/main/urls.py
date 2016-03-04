@@ -5,7 +5,8 @@ from authentication.views import AccountViewSet, AccountAddressViewSet, AddressV
 from chefs.views import ChefViewSet
 from cravus.views import IndexView
 from rest_framework_jwt import views
-from dishes.views import AccountDishesViewSet, DishViewSet, DishScheduleViewSet, AccountDishScheduleViewSet
+from dishes.views import AccountDishesViewSet, DishViewSet, DishScheduleViewSet, AccountDishScheduleViewSet, \
+    DishScheduleSearchView
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
@@ -13,6 +14,7 @@ router.register(r'addresses', AddressViewSet)
 router.register(r'chefs', ChefAccountViewSet)
 router.register(r'chef', ChefViewSet)
 router.register(r'dishes', DishViewSet)
+router.register(r'schedule/search', DishScheduleSearchView, base_name='dish_schedule_search')
 router.register(r'schedule', DishScheduleViewSet)
 accounts_router = routers.NestedSimpleRouter(router, r'accounts', lookup='account')
 accounts_router.register(r'addresses', AccountAddressViewSet)

@@ -48,11 +48,13 @@
             return $http.delete('/api/v1/dishes/' + id + '/');
         }
 
-        function getScheduledDishes(date, username, next) {
+        function getScheduledDishes(date, username, query, next) {
             if (next) {
                 return $http.get(next);
             } else if (username) {
                 return $http.get('/api/v1/accounts/' + username + '/schedule/?date=' + $filter('date')(date, "yyyy-MM-dd"));
+            } else if (query) {
+                return $http.get('/api/v1/schedule/search/?date=' + $filter('date')(date, "yyyy-MM-dd") + '&text=' + query);
             } else {
                 return $http.get('/api/v1/schedule/?date=' + $filter('date')(date, "yyyy-MM-dd"));
             }

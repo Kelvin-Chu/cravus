@@ -1,0 +1,1 @@
+{{ object.chef.username }}, {{ object.chef.first_name }}, {{ object.chef.last_name }}, {{ object.dish.name }}, {{ object.dish.description }}, {{ object.dish.cuisine }}

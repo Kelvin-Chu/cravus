@@ -1,9 +1,9 @@
 {% load staticfiles %}
 
 <!DOCTYPE HTML>
-<html>
+<html ng-app="cravus">
 <head>
-    <title>Home - CravUs</title>
+    <title ng-bind="title">CravUs</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,7 +11,7 @@
     {% include 'stylesheets.html' %}
 </head>
 {% verbatim %}
-<body ng-app="cravus" ng-attr-style="background-image: url({{ bgimg }});">
+<body ng-attr-style="background-image: url({{ bgimg }});">
 {% endverbatim %}
 <div class="loading" ng-show="loading">Loading&#8230;</div>
 <div id="bgndVideo" class="player"

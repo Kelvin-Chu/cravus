@@ -13,7 +13,7 @@
                 <img ng-src="{{ card.thumbnail || '/static/img/dish_default_thumbnail.jpg' }}" class="md-card-image"
                  style="max-width: 500px;"></a>
             <md-card-title>
-                <a href="/+{{ card.chef }}">+{{ card.chef }}</a>
+                <a ng-href="/+{{ card.chef }}">+{{ card.chef }}</a>
             </md-card-title>
             <md-card-content>
                 {{ card.description | truncate:150 }}

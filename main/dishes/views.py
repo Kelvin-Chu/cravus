@@ -1,12 +1,13 @@
 import datetime
 from django.db.models import Q
+from drf_haystack.viewsets import HaystackViewSet
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import SAFE_METHODS, AllowAny
 from rest_framework.response import Response
 from .utils import DishThrottle
 from .models import Dish, DishSchedule
 from .permissions import IsChefOfDish, IsChef
-from .serializers import DishSerializer, DishScheduleSerializer
+from .serializers import DishSerializer, DishScheduleSerializer, DishSearchSerializer
 
 
 class DishViewSet(viewsets.ModelViewSet):
@@ -83,3 +84,25 @@ class AccountDishScheduleViewSet(viewsets.ViewSet):
                                         Q(date=date) | Q(repeat_daily=True)).order_by('-created_at')
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
+
+
+class DishScheduleSearchView(HaystackViewSet):
+    index_models = [DishSchedule]
+    serializer_class = DishSearchSerializer
+
+    def filter_queryset(self, queryset):
+        text = self.request.query_params.get('text', None)
+        date_str = self.request.query_params.get('date', None)
+        date = None
+        if date_str:
+            try:
+                date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+            except Exception:
+                return DishSchedule.objects.none()
+        if text and date:
+            queryset = queryset.filter(text=text).filter(Q(date__exact=date) | Q(repeat_daily=True))
+        elif date:
+            queryset = queryset.filter(Q(date__exact=date) | Q(repeat_daily=True))
+        elif text:
+            queryset = queryset.filter(text=text)
+        return queryset

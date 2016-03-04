@@ -8,7 +8,9 @@
                             <ul class="navbar-top-nav clearfix">
                                 <li><a href="/" class="brand">C</a></li>
                                 <li><i class="fa fa-search"></i>
-                                    <input type="text" class="search" placeholder="Search Food"></li>
+                                    <input type="text" ng-model="vm.query" class="search"
+                                           placeholder="Search Food" ng-enter="vm.search()">
+                                </li>
                             </ul>
                         </div>
                         <div class="pull-right default-margin-right">

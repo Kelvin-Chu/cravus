@@ -28,6 +28,7 @@
 
         activate();
         function activate() {
+            $rootScope.title = "Manage Dishes";
             $rootScope.loading = true;
             ytplayerFactory.stop();
             authFactory.isAuthenticated();

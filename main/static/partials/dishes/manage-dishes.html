@@ -33,9 +33,11 @@
                                     <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                         <div ng-message="date">{{ vm.formErrors.date }}</div>
                                     </div>
-                                    <div ng-hide="vm.dishes.length"><h3>You have to add a dish before you can
+                                    <div ng-hide="vm.dishes.length || vm.scheduled.length"><h3>You have to add a dish
+                                        before you can
                                         schedule.</h3></div>
-                                    <div ng-show="vm.dishes.length" class="text-center scheduled">
+                                    <div ng-show="vm.dishes.length || vm.scheduled.length"
+                                         class="text-center scheduled">
                                         <h3><span>Scheduled Dishes</span></h3>
                                         <md-divider></md-divider>
                                     </div>
@@ -68,10 +70,13 @@
                                             </div>
                                         </md-card-content>
                                     </md-card>
-                                    <div ng-show="vm.dishes.length" class="text-center scheduled topspace75">
+                                    <div ng-show="vm.dishes.length || vm.scheduled.length"
+                                         class="text-center scheduled topspace75">
                                         <h3><span>Unscheduled Dishes</span></h3>
                                         <md-divider></md-divider>
                                     </div>
+                                    <div ng-hide="vm.dishes.length || !vm.scheduled.length" class="text-center"><h4>
+                                        Empty.</h4></div>
                                     <md-card ng-repeat="dish in vm.dishes | filter:{ name: vm.search }"
                                              on-repeat="vm.repeatFn" class="repeatAnimate">
                                         <md-card-content style="padding: 0;">
