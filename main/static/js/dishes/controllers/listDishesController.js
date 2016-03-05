@@ -28,9 +28,9 @@
                 vm.query = query;
                 tabChange(vm.tab);
             });
-            vm.dish = $routeParams.dish;
-            if (vm.dish) {
-                dish(vm.dish);
+            vm.opendish = $routeParams.dish;
+            if (vm.opendish) {
+                dish(vm.opendish);
             }
         }
 
