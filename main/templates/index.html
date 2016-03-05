@@ -17,7 +17,7 @@
 <div id="bgndVideo" class="player"
      data-property="{videoURL:'https://www.youtube.com/watch?v=_5PwDjRcFo4', containment:'body', autoPlay:true, mute:true, startAt:0, realfullscreen:true, optimizeDisplay:true, loop:false, startAt:28, stopAt: 56, quality:'hd1080', showControls: false, showYTLogo:false}">
 </div>
-<div ng-include="'{% static "partials/layout/navbar.html" %}'"></div>
+<div ng-hide="noheader" ng-include="'{% static "partials/layout/navbar.html" %}'"></div>
 {% verbatim %}
 <div id="globalToast"></div>
 <div class="view-container" role="main" ng-view ng-class="{ 'index-container': route.current.index }" ng-cloak>

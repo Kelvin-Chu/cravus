@@ -8,7 +8,10 @@
     <script type="text/javascript" src="{% static 'lib/cropper/dist/cropper.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/toastr/toastr.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/angular/angular.js' %}"></script>
+    {#    Added check for !scope.config (needed for when disqus gets opened in a modal) #}
+    {#    Also added custom config to get single sign on to work with disqus #}
     <script type="text/javascript" src="{% static 'lib/angularUtils-disqus/dirDisqus.js' %}"></script>
+    {#    End Comment#}
     <script type="text/javascript" src="{% static 'lib/ngInfiniteScroll/build/ng-infinite-scroll.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/angular-animate/angular-animate.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/ng-file-upload/ng-file-upload.js' %}"></script>
@@ -17,7 +20,7 @@
     <script type="text/javascript" src="{% static 'lib/angular-messages/angular-messages.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/angular-material/angular-material.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/angular-ui-mask/dist/mask.js' %}"></script>
-    {#    Deckgrid has been customized to add support for safari#}
+    {#    Deckgrid has been customized to add support for safari #}
     {#    https://github.com/akoenig/angular-deckgrid/issues/69 #}
     {#    Also added maxColumns attribute #}
     {#    check commit 2b4794f058843b5c00945e25571ee5772d4afb60 for changes (2/23/16)  #}
@@ -48,6 +51,7 @@
     <script type="text/javascript" src="{% static 'js/authentication/controllers/resetController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/authentication/controllers/confirmController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/authentication/controllers/loginController.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/authentication/controllers/simpleLoginController.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/profiles/profiles.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/profiles/services/profileFactory.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/profiles/services/chefFactory.js' %}"></script>

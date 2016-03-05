@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 text-center">
+            <md-card>
+                <md-card-title>
+                    <h1 class="cardformheader">Log In</h1>
+                </md-card-title>
+                <md-card-content>
+                    <form name="userForm" ng-submit="vm.login()">
+                        <div ng-messages="vm.errors" class="red">
+                            <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
+                        </div>
+                        <md-input-container class="md-block">
+                            <label>Email</label>
+                            <input required name="email" ng-model="vm.email" type="email" md-maxlength="254">
+                            <div ng-messages="userForm.email.$error">
+                                <div ng-message="md-maxlength">Cannot exceed 254 characters.</div>
+                                <div ng-message="required">Email is required.</div>
+                                <div ng-message="email">Invalid email format.</div>
+                            </div>
+                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                <div ng-message="email">{{ vm.formErrors.email }}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Password</label>
+                            <input required name="password" ng-model="vm.password" type="password" ng-minlength="8"
+                                   md-maxlength="32">
+                            <div ng-messages="userForm.password.$error">
+                                <div ng-message="md-maxlength">Cannot exceed 32 characters.</div>
+                                <div ng-message="required">Password is required.</div>
+                                <div ng-message="minlength">Your password needs to be at least 8 characters.</div>
+                            </div>
+                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                <div ng-message="password">{{ vm.formErrors.password }}</div>
+                            </div>
+                        </md-input-container>
+                        <div class="form-group text-right">
+                            <md-button class="md-raised md-primary" md-ink-ripple="#e9e9e9"
+                                       type="submit"><span class="ng-scope">Submit</span>
+                            </md-button>
+                        </div>
+                    </form>
+                </md-card-content>
+            </md-card>
+            <a href="/reset"><span class="grey">Forgot your password?</span></a>
+        </div>
+    </div>
+</div>

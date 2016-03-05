@@ -28,6 +28,10 @@
                 vm.query = query;
                 tabChange(vm.tab);
             });
+            vm.dish = $routeParams.dish;
+            if (vm.dish) {
+                dish(vm.dish);
+            }
         }
 
         function tabChange(tab) {

@@ -15,6 +15,8 @@
         function activate() {
             authFactory.isAuthenticated();
             authFactory.getAuthenticatedAccount();
+            authFactory.refresh();
+            authFactory.setDisqusSSO();
         }
 
         function logout() {

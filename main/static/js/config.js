@@ -26,6 +26,13 @@
             activetab: 'login',
             index: true,
             resolve: {"check": loggedIn}
+        }).when('/simplelogin', {
+            controller: 'simpleLoginController',
+            controllerAs: 'vm',
+            templateUrl: '/static/partials/authentication/simple-login.html',
+            activetab: 'login',
+            index: false,
+            resolve: {"check": loggedIn}
         }).when('/reset', {
             controller: 'resetController',
             controllerAs: 'vm',

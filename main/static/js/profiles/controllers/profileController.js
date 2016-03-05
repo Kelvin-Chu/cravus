@@ -12,9 +12,6 @@
         vm.dishes = [];
         vm.address = {};
         vm.disqus_ready = false;
-        vm.disqus_id = "";
-        vm.disqus_url = $location.absUrl();
-        vm.disqus_title = "Chef " + vm.username;
         vm.name = "";
         vm.loading = true;
         vm.myProfile = false;
@@ -60,7 +57,15 @@
                         vm.name = "Chef " + vm.profile.username;
                     }
                 }
-                vm.disqus_id = "chef-" + vm.profile.id;
+                vm.disqusConfig = {
+                    disqus_shortname: 'cravus',
+                    disqus_identifier: 'chef' + vm.profile.id,
+                    disqus_url: $location.absUrl(),
+                    disqus_title: vm.name,
+                    disqus_remote_auth_s3: $rootScope.disqusPayload,
+                    disqus_api_key: $rootScope.disqusPublic,
+                    disqus_on_ready: set_ready()
+                };
                 vm.loading = false;
                 $rootScope.loading = false;
             }
@@ -98,6 +103,9 @@
 
         function set_ready() {
             vm.disqus_ready = true;
+            $timeout(function () {
+                vm.disqus_ready = true;
+            }, 3000);
         }
 
         function tabChange(tab) {
@@ -188,9 +196,9 @@
                 $window.DISQUS.reset({
                     reload: true,
                     config: function () {
-                        this.page.identifier = vm.disqus_id;
-                        this.page.url = vm.disqus_url;
-                        this.page.title = vm.disqus_title;
+                        this.page.identifier = 'chef' + vm.profile.id;
+                        this.page.url = $location.absUrl();
+                        this.page.title = vm.namee;
                     }
                 });
                 vm.disqus_ready = true;

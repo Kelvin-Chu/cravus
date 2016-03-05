@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.authentication').factory('authFactory', authFactory);
-    authFactory.$inject = ['$rootScope', '$location', '$localStorage', '$http'];
-    function authFactory($rootScope, $location, $localStorage, $http) {
+    authFactory.$inject = ['$rootScope', '$location', '$localStorage', '$http', '$window'];
+    function authFactory($rootScope, $location, $localStorage, $http, $window) {
         function register(vm) {
             return $http.post('/api/v1/accounts/', {email: vm.email, password: vm.password, username: vm.username})
                 .then(registerSuccessFn, registerErrorFn);
@@ -34,15 +34,19 @@
             }
         }
 
-        function login(vm, page) {
+        function login(vm, page, close) {
             return $http.post('/api/v1/auth/login/', {email: vm.email, password: vm.password})
                 .then(loginSuccessFn, loginErrorFn);
 
             function loginSuccessFn(data, status, headers, config) {
                 setAuthenticatedAccount(data.data);
                 clearErrors(vm);
+                setDisqusSSO();
+
                 if (page) {
                     $location.url(page);
+                } else if (close) {
+                    $window.close();
                 } else {
                     $location.url('/dishes');
                 }
@@ -51,6 +55,28 @@
             function loginErrorFn(data, status, headers, config) {
                 clearErrors(vm);
                 setErrors(vm, data);
+            }
+        }
+
+        function setDisqusSSO() {
+            if ($rootScope.authenticatedAccount) {
+                if ($localStorage.disqusPayload) {
+                    $rootScope.disqusPayload = $localStorage.disqusPayload;
+                    $rootScope.disqusPublic = $localStorage.disqusPublic;
+                } else {
+                    $http.get('api/v1/accounts/' + $rootScope.authenticatedAccount.username + '/disqus/')
+                        .then(setDisqusSSOSuccessFn, setDisqusSSOErrorFn);
+                }
+            }
+
+            function setDisqusSSOSuccessFn(data, status, headers, config) {
+                $localStorage.disqusPayload = data.data.payload;
+                $localStorage.disqusPublic = data.data.public_key;
+                $rootScope.disqusPayload = data.data.payload;
+                $rootScope.disqusPublic = data.data.public_key;
+            }
+
+            function setDisqusSSOErrorFn(data, status, headers, config) {
             }
         }
 
@@ -65,16 +91,13 @@
         function refresh() {
             return $http.post('/api/v1/auth/refresh/', {
                 token: $localStorage.token
-            }).then(logoutSuccessFn, logoutErrorFn);
+            }).then(refreshSuccessFn, refreshErrorFn);
 
-            function logoutSuccessFn(data, status, headers, config) {
+            function refreshSuccessFn(data, status, headers, config) {
                 setAuthenticatedAccount(data.data);
             }
 
-            function logoutErrorFn(data, status, headers, config) {
-                toast('error', '#globalToast', 'Please log in.', 'none');
-                unauthenticate();
-                $location.url('/login');
+            function refreshErrorFn(data, status, headers, config) {
             }
         }
 
@@ -116,6 +139,10 @@
             delete $rootScope.isAuthenticated;
             delete $rootScope.authenticatedAccount;
             delete $rootScope.isChef;
+            delete $localStorage.disqusPayload;
+            delete $localStorage.disqusPublic;
+            delete $rootScope.disqusPayload;
+            delete $rootScope.disqusPublic;
         }
 
         return {
@@ -123,6 +150,7 @@
             isAuthenticated: isAuthenticated,
             login: login,
             reset: reset,
+            setDisqusSSO: setDisqusSSO,
             setPassword: setPassword,
             register: register,
             chefRegister: chefRegister,

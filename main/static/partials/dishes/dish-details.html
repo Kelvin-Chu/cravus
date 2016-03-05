@@ -20,13 +20,7 @@
             </md-tab>
             <md-tab label="Comments">
                 <md-content class="md-padding" ng-show="vm.disqus_ready">
-                    <dir-disqus disqus-shortname="cravus"
-                                disqus-identifier="{{ vm.disqus_id }}"
-                                disqus-url="{{ vm.disqus_url }}"
-                                disqus-title="{{ vm.dish.name }}"
-                                disqus-on-ready="vm.set_ready"
-                                ready-to-bind="{{ vm.disqus_ready }}">
-                    </dir-disqus>
+                    <dir-disqus config="vm.disqusConfig"></dir-disqus>
                 </md-content>
             </md-tab>
         </md-tabs>

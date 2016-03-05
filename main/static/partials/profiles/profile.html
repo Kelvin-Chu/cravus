@@ -115,13 +115,7 @@
                     <h1>Comments</h1>
                 </div>
                 <div class="col-xs-12" id="disqus-container">
-                    <dir-disqus disqus-shortname="cravus"
-                                disqus-identifier="{{ vm.disqus_id }}"
-                                disqus-url="{{ vm.disqus_url }}"
-                                disqus-title="{{ vm.name }}"
-                                disqus-on-ready="vm.set_ready"
-                                ready-to-bind="{{ vm.disqus_ready }}">
-                    </dir-disqus>
+                    <dir-disqus config="vm.disqusConfig"></dir-disqus>
                 </div>
             </div>
         </div>

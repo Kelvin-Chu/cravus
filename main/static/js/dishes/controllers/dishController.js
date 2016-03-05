@@ -2,19 +2,15 @@
     'use strict';
 
     angular.module('cravus.dishes').controller('dishController', dishController);
-    dishController.$inject = ['$location', 'dishesFactory', '$mdDialog', '$timeout'];
-    function dishController($location, dishesFactory, $mdDialog, $timeout) {
+    dishController.$inject = ['$rootScope', '$location', 'dishesFactory', '$mdDialog'];
+    function dishController($rootScope, $location, dishesFactory, $mdDialog) {
         var vm = this;
         vm.loading = false;
         vm.disqus_ready = false;
-        vm.disqus_id = "";
-        vm.disqus_url = $location.protocol() + "://" + $location.host() + '/api/v1/dishes/' + vm.dish.id + '/';
-        vm.set_ready = set_ready();
         vm.cancel = cancel;
 
         activate();
         function activate() {
-            vm.disqus_id = vm.dish.id;
             if (vm.dish.cuisine) {
                 if (vm.dish.description) {
                     vm.body = vm.dish.cuisine + " Cuisine - " + vm.dish.description
@@ -28,7 +24,15 @@
                     vm.body = "Chef choice"
                 }
             }
-
+            vm.disqusConfig = {
+                disqus_shortname: 'cravus',
+                disqus_identifier: "dish" + vm.dish.id,
+                disqus_url: $location.protocol() + "://" + $location.host() + '/dishes?dish=' + vm.dish.id,
+                disqus_title: vm.dish.name,
+                disqus_remote_auth_s3: $rootScope.disqusPayload,
+                disqus_api_key: $rootScope.disqusPublic,
+                disqus_on_ready: set_ready()
+            };
         }
 
         function cancel() {
