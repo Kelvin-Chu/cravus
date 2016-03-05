@@ -4,7 +4,6 @@
     angular.module('cravus.authentication').controller('loginController', loginController);
     loginController.$inject = ['$rootScope', '$scope', 'authFactory', 'ytplayerFactory'];
     function loginController($rootScope, $scope, authFactory, ytplayerFactory) {
-        ytplayerFactory.play();
         var vm = this;
         vm.scope = $scope;
         vm.errors = {};

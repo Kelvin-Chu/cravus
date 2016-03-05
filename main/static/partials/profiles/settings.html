@@ -228,10 +228,10 @@
                                         <md-input-container class="md-block">
                                             <label>Password</label>
                                             <input name="password" ng-model="vm.profile.password" type="password"
-                                                   ng-minlength="7" md-maxlength="128">
+                                                   ng-minlength="8" md-maxlength="32">
                                             <div ng-messages="userForm.password.$error">
                                                 <div ng-message="md-maxlength">Cannot exceed 128 characters.</div>
-                                                <div ng-message="minlength">Your password needs to be at least 7
+                                                <div ng-message="minlength">Your password needs to be at least 8
                                                     characters.
                                                 </div>
                                             </div>

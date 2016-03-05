@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 text-center">
+            <md-card>
+                <md-card-title>
+                    <h1 class="cardformheader">Forgot Password?</h1>
+                </md-card-title>
+                <md-card-content>
+                    <form name="userForm" ng-submit="vm.reset()">
+                        <div ng-messages="vm.errors" class="red">
+                            <div ng-message="non_field_errors">{{ vm.formErrors.non_field_errors }}</div>
+                        </div>
+                        <md-input-container class="md-block">
+                            <label>Email</label>
+                            <input required name="email" ng-model="vm.email" type="email" md-maxlength="254" id="input"
+                                   ng-disabled="vm.sent">
+                            <div ng-messages="userForm.email.$error">
+                                <div ng-message="md-maxlength">Cannot exceed 254 characters.</div>
+                                <div ng-message="required">Email is required.</div>
+                                <div ng-message="email">Invalid email format.</div>
+                            </div>
+                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                <div ng-message="email">{{ vm.formErrors.email }}</div>
+                            </div>
+                        </md-input-container>
+                        <p ng-show="vm.sent">Check your email to continue with the password reset process.</p>
+                        <div class="form-group text-right">
+                            <md-button class="md-raised md-primary" md-ink-ripple="#e9e9e9" id="submit"
+                                       type="submit" ng-disabled="vm.sent"><span class="ng-scope">Submit</span>
+                            </md-button>
+                        </div>
+                    </form>
+                </md-card-content>
+            </md-card>
+            <a href="/login"><span class="white">Login</span></a>
+        </div>
+    </div>
+</div>

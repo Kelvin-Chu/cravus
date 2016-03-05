@@ -24,10 +24,12 @@
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Password</label>
-                            <input required name="password" ng-model="vm.password" type="password" md-maxlength="128">
+                            <input required name="password" ng-model="vm.password" type="password" ng-minlength="8"
+                                   md-maxlength="32">
                             <div ng-messages="userForm.password.$error">
-                                <div ng-message="md-maxlength">Cannot exceed 128 characters.</div>
+                                <div ng-message="md-maxlength">Cannot exceed 32 characters.</div>
                                 <div ng-message="required">Password is required.</div>
+                                <div ng-message="minlength">Your password needs to be at least 8 characters.</div>
                             </div>
                             <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                 <div ng-message="password">{{ vm.formErrors.password }}</div>
@@ -41,7 +43,7 @@
                     </form>
                 </md-card-content>
             </md-card>
-            <a href="/"><span class="white">Forgot your password?</span></a>
+            <a href="/reset"><span class="white">Forgot your password?</span></a>
         </div>
     </div>
 </div>

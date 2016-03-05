@@ -22,25 +22,26 @@
                                 <div ng-message="email">{{ vm.formErrors.email }}</div>
                             </div>
                         </md-input-container>
-                        <md-input-container class="md-block md-input-invalid">
+                        <md-input-container class="md-block">
                             <label>Username</label>
-                            <input required name="username" ng-model="vm.username" md-maxlength="50">
+                            <input required name="username" ng-model="vm.username" md-maxlength="50" ng-minlength="6">
                             <div ng-messages="userForm.username.$error">
                                 <div ng-message="md-maxlength">Cannot exceed 50 characters.</div>
                                 <div ng-message="required">Username is required.</div>
+                                <div ng-message="minlength">Your username needs to be at least 6 characters.</div>
                             </div>
                             <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                 <div ng-message="username">{{ vm.formErrors.username }}</div>
                             </div>
                         </md-input-container>
-                        <md-input-container class="md-block md-input-invalid">
+                        <md-input-container class="md-block">
                             <label>Password</label>
-                            <input required name="password" ng-model="vm.password" type="password" ng-minlength="7"
-                                   md-maxlength="128">
+                            <input required name="password" ng-model="vm.password" type="password" ng-minlength="8"
+                                   md-maxlength="32">
                             <div ng-messages="userForm.password.$error">
-                                <div ng-message="md-maxlength">Cannot exceed 128 characters.</div>
+                                <div ng-message="md-maxlength">Cannot exceed 32 characters.</div>
                                 <div ng-message="required">Password is required.</div>
-                                <div ng-message="minlength">Your password needs to be at least 7 characters.</div>
+                                <div ng-message="minlength">Your password needs to be at least 8 characters.</div>
                             </div>
                             <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                 <div ng-message="password">{{ vm.formErrors.password }}</div>

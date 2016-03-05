@@ -36,6 +36,7 @@
 
             function profileSuccessFn(data, status, headers, config) {
                 if (!data.data.is_chef) {
+                    $rootScope.loading = false;
                     $location.url('/dishes');
                     toast('error', '#globalToast', 'User is not a chef.', 'none');
                 }

@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.authentication').factory('authFactory', authFactory);
-    authFactory.$inject = ['$rootScope', '$location', '$localStorage', '$http', '$mdToast'];
-    function authFactory($rootScope, $location, $localStorage, $http, $mdToast) {
+    authFactory.$inject = ['$rootScope', '$location', '$localStorage', '$http'];
+    function authFactory($rootScope, $location, $localStorage, $http) {
         function register(vm) {
             return $http.post('/api/v1/accounts/', {email: vm.email, password: vm.password, username: vm.username})
                 .then(registerSuccessFn, registerErrorFn);
@@ -54,6 +54,14 @@
             }
         }
 
+        function reset(email) {
+            return $http.post('/api/v1/auth/reset/', {email: email});
+        }
+
+        function setPassword(vm) {
+            return $http.post('/api/v1/auth/confirm/', {uid: vm.uid, token: vm.token, new_password: vm.new_password});
+        }
+
         function refresh() {
             return $http.post('/api/v1/auth/refresh/', {
                 token: $localStorage.token
@@ -64,7 +72,7 @@
             }
 
             function logoutErrorFn(data, status, headers, config) {
-                $mdToast.show($mdToast.simple().textContent('Please log in.').hideDelay(3000));
+                toast('error', '#globalToast', 'Please log in.', 'none');
                 unauthenticate();
                 $location.url('/login');
             }
@@ -114,6 +122,8 @@
             getAuthenticatedAccount: getAuthenticatedAccount,
             isAuthenticated: isAuthenticated,
             login: login,
+            reset: reset,
+            setPassword: setPassword,
             register: register,
             chefRegister: chefRegister,
             refresh: refresh,

@@ -34,6 +34,7 @@
             if ($rootScope.authenticatedAccount) {
                 if ($rootScope.authenticatedAccount.username !== username) {
                     toast('error', '#globalToast', 'You are not authorized to view this page.', 'none');
+                    $rootScope.loading = false;
                     $location.url('/dishes');
                 }
             }
@@ -43,17 +44,16 @@
 
             function profileGetSuccessFn(data, status, headers, config) {
                 vm.profile = data.data;
+                $rootScope.loading = false;
                 if (vm.profile.is_chef) {
                     chefFactory.get(username).then(chefGetSuccessFn, chefGetErrorFn);
                 }
 
                 function chefGetSuccessFn(data, status, headers, config) {
-                    $rootScope.loading = false;
                     vm.chef = data.data;
                 }
 
                 function chefGetErrorFn(data, status, headers, config) {
-                    $rootScope.loading = false;
                     toast('warning', '#toastBounds', 'Could not retrieve chef information.');
                 }
             }

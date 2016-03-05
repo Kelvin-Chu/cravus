@@ -71,6 +71,7 @@ class Account(AbstractBaseUser):
                                  format='JPEG', options={'quality': 90}, blank=True)
     is_admin = models.BooleanField(default=False)
     is_chef = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = AccountManager()

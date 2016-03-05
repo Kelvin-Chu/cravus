@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib import admin
+from djoser.views import PasswordResetView, PasswordResetConfirmView
 from rest_framework_nested import routers
 from authentication.views import AccountViewSet, AccountAddressViewSet, AddressViewSet, ChefAccountViewSet
 from chefs.views import ChefViewSet
@@ -26,6 +27,8 @@ urlpatterns = [
     url(r'^api/v1/auth/login/$', views.obtain_jwt_token, name='login'),
     url(r'^api/v1/auth/refresh/$', views.refresh_jwt_token, name='refresh'),
     url(r'^api/v1/auth/verify/$', views.verify_jwt_token, name='verify'),
+    url(r'^api/v1/auth/reset/$', PasswordResetView.as_view(), name='reset'),
+    url(r'^api/v1/auth/confirm/$', PasswordResetConfirmView.as_view(), name='confirm'),
     url(r'^api/v1/', include(router.urls)),
     url(r'^api/v1/', include(accounts_router.urls)),
     url(r'^.*$', IndexView.as_view(), name='index'),

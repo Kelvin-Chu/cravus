@@ -35,6 +35,7 @@
             authFactory.getAuthenticatedAccount();
             if ($rootScope.authenticatedAccount) {
                 if ($rootScope.authenticatedAccount.username !== username) {
+                    $rootScope.loading = false;
                     toast('error', '#globalToast', 'You are not authorized to view this page.', 'none');
                     $location.url('/dishes');
                 }

@@ -26,6 +26,20 @@
             activetab: 'login',
             index: true,
             resolve: {"check": loggedIn}
+        }).when('/reset', {
+            controller: 'resetController',
+            controllerAs: 'vm',
+            templateUrl: '/static/partials/authentication/reset.html',
+            activetab: 'login',
+            index: true,
+            resolve: {"check": loggedIn}
+        }).when('/confirm', {
+            controller: 'confirmController',
+            controllerAs: 'vm',
+            templateUrl: '/static/partials/authentication/confirm.html',
+            activetab: 'login',
+            index: true,
+            resolve: {"check": loggedIn}
         }).when('/dishes', {
             controller: 'listDishesController',
             controllerAs: 'vm',
