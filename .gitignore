@@ -41,4 +41,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-*.xml
+main/.idea/workspace.xml
+main/main/settings.py
+cravus-django-nginx-angular-mysql-phpmyadmin.txt
