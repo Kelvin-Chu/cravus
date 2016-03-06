@@ -15,7 +15,9 @@
             var fields = {
                 'name': newdish.name,
                 'description': newdish.description,
-                'cuisine': newdish.cuisine
+                'cuisine': newdish.cuisine,
+                'price': newdish.price,
+                'ingredients': JSON.stringify(newdish.ingredients)
             };
             if (newdish.crop) {
                 fields['image'] = newdish.image;
@@ -40,7 +42,9 @@
             return $http.put('/api/v1/dishes/' + dish.id + '/', {
                 name: dish.name,
                 description: dish.description,
-                cuisine: dish.cuisine
+                cuisine: dish.cuisine,
+                ingredients: dish.ingredients,
+                price: dish.price
             });
         }
 

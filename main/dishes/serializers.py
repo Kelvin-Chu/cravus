@@ -1,5 +1,7 @@
 import datetime
 
+from django.conf import settings
+from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
 from drf_haystack.serializers import HaystackSerializer
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -8,14 +10,27 @@ from dishes.models import Dish, DishSchedule
 from dishes.search_indexes import DishScheduleIndex
 
 
-class DishSerializer(serializers.ModelSerializer):
+class ImageField(serializers.ImageField):
+    def to_representation(self, obj):
+        img = super(ImageField, self).to_representation(obj)
+        if not img:
+            img = getattr(settings, 'DEFAULT_DISH_IMAGE', None)
+        return img
+
+
+class DishSerializer(TaggitSerializer, serializers.ModelSerializer):
+    dish = serializers.IntegerField(source='id', read_only=True, required=False)
     chef = serializers.CharField(source='chef.username', read_only=True)
-    thumbnail = serializers.ImageField(required=False)
+    image = ImageField(required=False)
+    thumbnail = ImageField(required=False)
+    ingredients = TagListSerializerField(required=False)
 
     class Meta:
         model = Dish
-        fields = ('id', 'chef', 'name', 'description', 'cuisine', 'image', 'thumbnail', 'created_at', 'updated_at')
-        read_only_fields = ('id', 'chef', 'created_at', 'updated_at')
+        fields = (
+            'id', 'dish', 'chef', 'name', 'description', 'cuisine', 'price', 'image', 'thumbnail', 'ingredients', 'created_at',
+            'updated_at')
+        read_only_fields = ('id', 'created_at', 'updated_at')
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(DishSerializer, self).get_validation_exclusions()
@@ -39,7 +54,7 @@ class DishSerializer(serializers.ModelSerializer):
 
 class DishScheduleSerializer(serializers.ModelSerializer):
     chef = serializers.CharField(source='chef.username', read_only=True)
-    thumbnail = serializers.ImageField(source='dish.thumbnail', read_only=True, required=False)
+    thumbnail = ImageField(source='dish.thumbnail', read_only=True, required=False)
     description = serializers.CharField(source='dish.description', read_only=True)
     name = serializers.CharField(source='dish.name', read_only=True)
     date = serializers.DateField(required=True, input_formats=['%Y-%m-%d'])

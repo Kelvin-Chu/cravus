@@ -10,7 +10,7 @@
                                 <p ng-show="vm.query">Search result for: {{ vm.query }}</p>
                                 <div ng-hide="vm.dishes.length || vm.loading"><h2>No dishes available today.</h2></div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                                     custom-fn="vm.dish(id)" class="deckgrid"></div>
+                                     custom-fn="vm.dish" class="deckgrid"></div>
                             </md-content>
                         </md-tab>
                         <md-tab label="Tomorrow" md-on-select="vm.tabChange('tomorrow')">
@@ -19,7 +19,7 @@
                                 <div ng-hide="vm.dishes.length || vm.loading"><h2>No dishes available tomorrow.</h2>
                                 </div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                                     custom-fn="vm.dish(id)" class="deckgrid"></div>
+                                     custom-fn="vm.dish" class="deckgrid"></div>
                             </md-content>
                         </md-tab>
                     </md-tabs>

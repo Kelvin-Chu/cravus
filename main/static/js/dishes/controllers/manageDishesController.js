@@ -2,15 +2,19 @@
     'use strict';
 
     angular.module('cravus.dishes').controller('manageDishesController', manageDishesController);
-    manageDishesController.$inject = ['$rootScope', '$location', '$routeParams', 'authFactory', 'dishesFactory', '$filter', '$mdDialog', 'ytplayerFactory'];
-    function manageDishesController($rootScope, $location, $routeParams, authFactory, dishesFactory, $filter, $mdDialog, ytplayerFactory) {
+    manageDishesController.$inject = ['$rootScope', '$location', '$routeParams', 'authFactory', 'dishesFactory', '$filter', '$mdDialog', 'ytplayerFactory', '$mdConstant', '$scope'];
+    function manageDishesController($rootScope, $location, $routeParams, authFactory, dishesFactory, $filter, $mdDialog, ytplayerFactory, $mdConstant, $scope) {
         var username = $routeParams.username.substr(1);
         var vm = this;
         vm.loading = false;
         vm.dishes = [];
         vm.scheduled = [];
         vm.repeated = [];
+        vm.keys = [$mdConstant.KEY_CODE.ENTER, $mdConstant.KEY_CODE.COMMA];
         vm.newdish = {};
+        vm.errors = {};
+        vm.formErrors = {};
+        vm.newdish.ingredients = [];
         vm.dish = {};
         vm.dish.repeat_daily = false;
         vm.dish.date = new Date();
@@ -22,7 +26,6 @@
         vm.schedule = schedule;
         vm.unschedule = unschedule;
         vm.repeatFn = repeatFn;
-        vm.setDishImage = setDishImage;
         vm.getScheduledDishes = getScheduledDishes;
         vm.edit = edit;
 
@@ -52,6 +55,7 @@
                     getScheduledDishes();
                 } else {
                     vm.dishes = [];
+                    $rootScope.loading = false;
                 }
             }
 
@@ -109,12 +113,25 @@
         }
 
         function add() {
-            vm.loading = true;
+            clearErrors(vm);
+            var input = document.querySelector(".md-chip-input-container > input");
+            var last = input.value;
+            if (/\S/.test(last)) {
+                last = last.split(',');
+                for (var i = 0; i < last.length; i++) {
+                    last[i] = last[i].trim();
+                }
+                vm.newdish.ingredients = _.union(vm.newdish.ingredients, last);
+            }
+            input.value = '';
             dishesFactory.create(vm.newdish).then(createDishSuccessFn, createDishErrorFn);
 
             function createDishSuccessFn(data, status, headers, config) {
                 getDishes();
                 vm.newdish = {};
+                vm.newdish.ingredients = [];
+                $scope.userForm.$setPristine();
+                $scope.userForm.$setUntouched();
                 recreatePreview();
                 toast('success', '#toastBounds', "Dish created.  Don't forget to schedule your new dish.", 'none');
             }
@@ -122,7 +139,8 @@
             function createDishErrorFn(data, status, headers, config) {
                 $rootScope.$broadcast('dish.created.error');
                 vm.loading = false;
-                toast('error', '#toastBounds', data.data, 'none');
+                setErrors(vm, data);
+                toast('error', '#toastBounds', 'Could not add dish, please check your input.', 'none');
             }
 
             function recreatePreview() {
@@ -161,44 +179,58 @@
         }
 
         function edit(id) {
-            $mdDialog.show({
-                controller: 'editDishController',
-                controllerAs: 'vm',
-                bindToController: true,
-                templateUrl: '/static/partials/dishes/edit-dish.html',
-                parent: angular.element(document.body),
-                clickOutsideToClose: false,
-                disableParentScroll: false,
-                locals: {id: id}
-            }).then(function (response) {
-                if (response.action === "delete") {
-                    del(response.id);
-                } else if (response.action === "update") {
-                    updateDishes(vm.scheduled, vm.dishes, response.data);
+            $rootScope.loading = true;
+            dishesFactory.getDish(id).then(getDishSuccessFn, getDishErrorFn);
+
+            function getDishSuccessFn(data, status, headers, config) {
+                var dish = data.data;
+                if (dish.price) {
+                    dish.price = parseFloat(dish.price);
                 }
-
-                function del(id) {
-                    $mdDialog.show(
-                        $mdDialog.confirm()
-                            .clickOutsideToClose(true)
-                            .title('Are you sure you want to delete this Dish?')
-                            .ariaLabel('Delete confirmation')
-                            .ok('Delete')
-                            .cancel('Cancel')
-                    ).then(function () {
-                        dishesFactory.delDish(id).then(delDishSuccessFn, delDishErrorFn);
-                    });
-
-                    function delDishSuccessFn(data, status, headers, config) {
-                        deleteDish(vm.scheduled, vm.dishes, id);
-                        toast('success', '#toastBounds', 'Dish deleted.', 'none');
+                $mdDialog.show({
+                    controller: 'editDishController',
+                    controllerAs: 'vm',
+                    bindToController: true,
+                    templateUrl: '/static/partials/dishes/edit-dish.html',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: false,
+                    disableParentScroll: false,
+                    locals: {dish: dish}
+                }).then(function (response) {
+                    if (response.action === "delete") {
+                        del(response.id);
+                    } else if (response.action === "update") {
+                        updateDishes(vm.scheduled, vm.dishes, response.data);
                     }
 
-                    function delDishErrorFn(data, status, headers, config) {
-                        toast('error', '#toastBounds', "Error deleting dish, try again later.", 'none');
+                    function del(id) {
+                        $mdDialog.show(
+                            $mdDialog.confirm()
+                                .clickOutsideToClose(true)
+                                .title('Are you sure you want to delete this Dish?')
+                                .ariaLabel('Delete confirmation')
+                                .ok('Delete')
+                                .cancel('Cancel')
+                        ).then(function () {
+                            dishesFactory.delDish(id).then(delDishSuccessFn, delDishErrorFn);
+                        });
+
+                        function delDishSuccessFn(data, status, headers, config) {
+                            deleteDish(vm.scheduled, vm.dishes, id);
+                            toast('success', '#toastBounds', 'Dish deleted.', 'none');
+                        }
+
+                        function delDishErrorFn(data, status, headers, config) {
+                            toast('error', '#toastBounds', "Error deleting dish, try again later.", 'none');
+                        }
                     }
-                }
-            });
+                });
+            }
+
+            function getDishErrorFn(data, status, headers, config) {
+                $rootScope.loading = false;
+                toast('error', '#globalToast', 'Problem connecting to server, refresh the page or try again later', 'none');
+            }
 
             function updateDishes(source1, source2, data) {
                 var found = false;
@@ -240,14 +272,6 @@
                         break;
                     }
                 }
-            }
-        }
-
-        function setDishImage(image) {
-            if (image) {
-                return {'background-image': 'url(' + image + ')'}
-            } else {
-                return {'background-image': 'url(/static/img/dish_default.jpg)'}
             }
         }
 

@@ -1,23 +1,20 @@
 <div class="row">
     <div class="col-xs-12">
         <md-card>
-            <md-card-header>
-                <md-card-header-text>
-                    <md-title>
-                        <a href="#" ng-click="customFn({ id : card.dish || card.id })"><span
-                                class="md-headline">{{ card.name }}</span></a>
-                    </md-title>
-                </md-card-header-text>
-            </md-card-header>
-            <a href="#" ng-click="customFn({ id : card.dish || card.id })" style="height: 100%">
-                <img ng-src="{{ card.thumbnail || '/static/img/dish_default_thumbnail.jpg' }}" class="md-card-image"
-                 style="max-width: 500px;"></a>
+            <img ng-src="{{ ::card.thumbnail }}" class="md-card-image"
+                 style="max-width: 500px;" id="{{ ::card.dish }}" ng-click="callback($event)">
             <md-card-title>
-                <a ng-href="/+{{ card.chef }}">+{{ card.chef }}</a>
+                <md-card-title-text>
+                    <a href="#" id="{{ ::card.dish }}" ng-click="callback($event)"><span
+                            class="md-headline">{{ ::card.name }}</span></a>
+                </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                {{ card.description | truncate:150 }}
+                {{ ::card.description }}
             </md-card-content>
+            <md-card-actions layout="column" layout-align="start">
+                <a ng-href="/+{{ ::card.chef }}">+{{ ::card.chef }}</a>
+            </md-card-actions>
         </md-card>
     </div>
 </div>

@@ -72,6 +72,7 @@
                 dishesFactory.getScheduledDishes(vm.date.tomorrow, '', '', vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
             } else {
                 vm.scrollDisabled = true;
+                vm.scrolling = false;
             }
 
             function getNextDishesSuccessFn(data, status, headers, config) {
@@ -114,6 +115,7 @@
                 }
                 img.src = data.data.image;
                 img.onload = function () {
+                    img.src = null;
                     img.style.maxHeight = "50vh";
                     img.style.minWidth = "320px";
                     img.style.maxWidth = maxWidth;

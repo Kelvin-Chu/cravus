@@ -33,77 +33,81 @@
                                     <div ng-messages="vm.errors" class="red" md-auto-hide="false">
                                         <div ng-message="date">{{ vm.formErrors.date }}</div>
                                     </div>
-                                    <div ng-hide="vm.dishes.length || vm.scheduled.length"><h3>You have to add a dish
-                                        before you can
-                                        schedule.</h3></div>
-                                    <div ng-show="vm.dishes.length || vm.scheduled.length"
-                                         class="text-center scheduled">
-                                        <h3><span>Scheduled Dishes</span></h3>
-                                        <md-divider></md-divider>
-                                    </div>
-                                    <div ng-hide="vm.scheduled.length || !vm.dishes.length" class="text-center"><h4>
-                                        Empty.</h4></div>
-                                    <md-card ng-repeat="dish in vm.scheduled" on-repeat="vm.repeatFn"
-                                             class="repeatAnimate">
-                                        <md-card-content style="padding: 0;">
-                                            <div class="grid cs-style-3">
-                                                <div class="grid-item">
-                                                    <figure>
-                                                        <div class="dish-list-container"
-                                                             ng-style="vm.setDishImage(dish.image)">
-                                                        </div>
-                                                        <figcaption>
-                                                            <md-button class="md-icon-button" aria-label="Edit"
-                                                                       ng-click="vm.edit(dish.id)">
-                                                                <i class="fa fa-pencil" id="{{ dish.id }}">
-                                                                </i></md-button>
-                                                            <h3>{{ dish.name }}</h3>
-                                                            <span>{{ dish.cuisine || 'Specialty' }}</span> Cuisine
-                                                            <md-button class="md-raised md-primary"
-                                                                       md-ink-ripple="#e9e9e9"
-                                                                       ng-click="vm.unschedule(dish.scheduleId)">
-                                                                <span class="ng-scope">Remove</span>
-                                                            </md-button>
-                                                        </figcaption>
-                                                    </figure>
+                                    <div ng-hide="vm.dishes.length || vm.scheduled.length"><h2>You have to add a dish
+                                        before you can schedule.</h2></div>
+                                    <section>
+                                        <div ng-show="vm.dishes.length || vm.scheduled.length"
+                                             class="text-center scheduled">
+                                            <md-subheader><h2><span>Scheduled Dishes</span></h2></md-subheader>
+                                            <md-divider></md-divider>
+                                        </div>
+                                        <div ng-hide="vm.scheduled.length || !vm.dishes.length" class="text-center"><h4>
+                                            Empty.</h4></div>
+                                        <md-card ng-repeat="dish in vm.scheduled track by dish.id"
+                                                 on-repeat="vm.repeatFn" class="repeatAnimate">
+                                            <md-card-content style="padding: 0;">
+                                                <div class="grid cs-style-3">
+                                                    <div class="grid-item">
+                                                        <figure>
+                                                            <div class="dish-list-container"
+                                                                 ng-style="{'background-image':'url(
+                                                                         {{ ::dish.image }} )'}">
+                                                            </div>
+                                                            <figcaption>
+                                                                <md-button class="md-icon-button" aria-label="Edit"
+                                                                           ng-click="vm.edit(dish.id)">
+                                                                    <i class="fa fa-pencil"></i></md-button>
+                                                                <h3>{{ ::dish.name }}</h3>
+                                                                <span>{{ ::dish.cuisine || 'Specialty' }}</span> Cuisine
+                                                                <md-button class="md-raised md-primary"
+                                                                           md-ink-ripple="#e9e9e9"
+                                                                           ng-click="vm.unschedule(dish.scheduleId)">
+                                                                    <span class="ng-scope">Remove</span>
+                                                                </md-button>
+                                                            </figcaption>
+                                                        </figure>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </md-card-content>
-                                    </md-card>
-                                    <div ng-show="vm.dishes.length || vm.scheduled.length"
-                                         class="text-center scheduled topspace75">
-                                        <h3><span>Unscheduled Dishes</span></h3>
-                                        <md-divider></md-divider>
-                                    </div>
-                                    <div ng-hide="vm.dishes.length || !vm.scheduled.length" class="text-center"><h4>
-                                        Empty.</h4></div>
-                                    <md-card ng-repeat="dish in vm.dishes | filter:{ name: vm.search }"
-                                             on-repeat="vm.repeatFn" class="repeatAnimate">
-                                        <md-card-content style="padding: 0;">
-                                            <div class="grid cs-style-3">
-                                                <div class="grid-item">
-                                                    <figure>
-                                                        <div class="dish-list-container"
-                                                             ng-style="vm.setDishImage(dish.image)">
-                                                        </div>
-                                                        <figcaption>
-                                                            <md-button class="md-icon-button" aria-label="Edit"
-                                                                       id="{{ dish.id }}">
-                                                                <i class="fa fa-pencil" ng-click="vm.edit(dish.id)">
-                                                                </i></md-button>
-                                                            <h3>{{ dish.name }}</h3>
-                                                            <span>{{ dish.cuisine || 'Specialty' }}</span> Cuisine
-                                                            <md-button class="md-raised md-primary"
-                                                                       md-ink-ripple="#e9e9e9"
-                                                                       ng-click="vm.schedule(dish.id)">
-                                                                <span class="ng-scope">Add</span>
-                                                            </md-button>
-                                                        </figcaption>
-                                                    </figure>
+                                            </md-card-content>
+                                        </md-card>
+                                    </section>
+                                    <section>
+                                        <div ng-show="vm.dishes.length || vm.scheduled.length"
+                                             class="text-center scheduled topspace75">
+                                            <md-subheader><h2><span>Unscheduled Dishes</span></h2></md-subheader>
+                                            <md-divider></md-divider>
+                                        </div>
+                                        <div ng-hide="vm.dishes.length || !vm.scheduled.length" class="text-center"><h4>
+                                            Empty.</h4></div>
+                                        <md-card
+                                                ng-repeat="dish in vm.dishes | filter:{ name: vm.search }"
+                                                on-repeat="vm.repeatFn" class="repeatAnimate">
+                                            <md-card-content style="padding: 0;">
+                                                <div class="grid cs-style-3">
+                                                    <div class="grid-item">
+                                                        <figure>
+                                                            <div class="dish-list-container"
+                                                                 ng-style="{'background-image':'url(
+                                                                         {{ ::dish.image }} )'}">
+                                                            </div>
+                                                            <figcaption>
+                                                                <md-button class="md-icon-button" aria-label="Edit">
+                                                                    <i class="fa fa-pencil" ng-click="vm.edit(dish.id)">
+                                                                    </i></md-button>
+                                                                <h3>{{ ::dish.name }}</h3>
+                                                                <span>{{ ::dish.cuisine || 'Specialty' }}</span> Cuisine
+                                                                <md-button class="md-raised md-primary"
+                                                                           md-ink-ripple="#e9e9e9"
+                                                                           ng-click="vm.schedule(dish.id)">
+                                                                    <span class="ng-scope">Add</span>
+                                                                </md-button>
+                                                            </figcaption>
+                                                        </figure>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </md-card-content>
-                                    </md-card>
+                                            </md-card-content>
+                                        </md-card>
+                                    </section>
                                 </md-content>
                             </md-tab>
                             <md-tab label="New">
@@ -148,17 +152,42 @@
                                                 <div ng-message="description">{{ vm.formErrors.description }}</div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block">
-                                            <label>Cuisine</label>
-                                            <md-select ng-model="vm.newdish.cuisine">
-                                                <md-option ng-repeat="cuisine in vm.cuisines"
-                                                           value="{{ cuisine }}">{{ cuisine }}
-                                                </md-option>
-                                            </md-select>
-                                            <div ng-messages="vm.errors" class="red" md-auto-hide="false">
-                                                <div ng-message="cuisine">{{ vm.formErrors.cuisine }}</div>
-                                            </div>
-                                        </md-input-container>
+                                        <div layout-gt-sm="row">
+                                            <md-input-container class="md-block" flex-gt-sm>
+                                                <label>Cuisine</label>
+                                                <md-select ng-model="vm.newdish.cuisine">
+                                                    <md-option ng-repeat="cuisine in vm.cuisines"
+                                                               value="{{ cuisine }}">{{ cuisine }}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                    <div ng-message="cuisine">{{ vm.formErrors.cuisine }}</div>
+                                                </div>
+                                            </md-input-container>
+                                            <md-input-container class="md-block flexinput" flex-gt-sm>
+                                                <label>Price (USD)</label>
+                                                <input name="price" ng-model="vm.newdish.price" type="number"
+                                                       min="0" max="9999.99" step="0.01" required
+                                                       ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+                                                <div ng-messages="userForm.price.$error">
+                                                    <div ng-message="max">Must be less than $9999.99</div>
+                                                    <div ng-message="min">Must be at least $0.</div>
+                                                    <div ng-message="pattern">Must be in the format 99.99</div>
+                                                    <div ng-message="required">You must put a price on your dish</div>
+                                                </div>
+                                                <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                                    <div ng-message="price">{{ vm.formErrors.price }}</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <h4>Ingredients</h4>
+                                        <md-chips
+                                                ng-model="vm.newdish.ingredients" md-separator-keys="vm.keys">
+                                        </md-chips>
+                                        <p class="note">Seperate each ingredient with a comma.</p>
+                                        <div ng-messages="vm.errors" class="red" md-auto-hide="false">
+                                            <div ng-message="Ingredients">{{ vm.formErrors.Ingredients }}</div>
+                                        </div>
                                         <div class="form-group text-right">
                                             <md-button class="md-raised md-primary" type="button"
                                                        md-ink-ripple="#e9e9e9" ng-click="vm.add($event)">

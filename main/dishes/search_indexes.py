@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.conf import settings
 from django.db.models import Q
 from django.utils import timezone
 from haystack import indexes
@@ -28,4 +29,6 @@ class DishScheduleIndex(indexes.SearchIndex, indexes.Indexable):
 
     @staticmethod
     def prepare_thumbnail(obj):
-        return obj.dish.thumbnail.url
+        if obj.dish.image:
+            return obj.dish.thumbnail.url
+        return getattr(settings, 'DEFAULT_DISH_IMAGE', None)

@@ -56,7 +56,7 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             this.restrict = 'AE';
 
             this.template = '<div data-ng-repeat="column in columns" class="{{layout.classList}}">' +
-                '<div data-ng-repeat="card in column" data-ng-include="cardTemplate"></div>' +
+                '<div data-ng-repeat="card in column track by card.id" data-ng-include="cardTemplate"></div>' +
                 '</div>';
 
             this.scope = {
@@ -139,6 +139,10 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
             } else {
                 scope.maxColumns = 5;
             }
+
+            scope.callback = function (event) {
+                scope.customFn()(event.currentTarget.id);
+            };
 
             scope.mother = scope.$parent;
 
@@ -318,10 +322,25 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                 if (!self.$$scope.columns[column]) {
                     self.$$scope.columns[column] = [];
                 }
-
+                if(card.description) {
+                    card.description = truncate(card.description, 150);
+                }
                 card.$index = index;
                 self.$$scope.columns[column].push(card);
             });
+
+            function truncate(text, length, end) {
+                if (isNaN(length))
+                    length = 10;
+                if (end === undefined)
+                    end = "...";
+                if (text.length <= length || text.length - end.length <= length) {
+                    return text;
+                }
+                else {
+                    return String(text).substring(0, length - end.length) + end;
+                }
+            }
         };
 
         /**

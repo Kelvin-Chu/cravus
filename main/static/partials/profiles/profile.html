@@ -33,7 +33,7 @@
                                 <div ng-hide="vm.dishes.length || $root.loading"><h2>No dishes available
                                     today.</h2></div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                                     class="deckgrid" maxColumns="3" custom-fn="vm.dish(id)"></div>
+                                     class="deckgrid" maxColumns="3" custom-fn="vm.dish"></div>
                             </md-content>
                         </md-tab>
                         <md-tab label="Tomorrow" md-on-select="vm.tabChange('tomorrow')">
@@ -41,7 +41,7 @@
                                 <div ng-hide="vm.dishes.length || $root.loading"><h2>No dishes available
                                     tomorrow.</h2></div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                                     class="deckgrid" maxColumns="3" custom-fn="vm.dish(id)"></div>
+                                     class="deckgrid" maxColumns="3" custom-fn="vm.dish"></div>
                             </md-content>
                         </md-tab>
                         <md-tab label="All" md-on-select="vm.tabChange('all')">
@@ -49,7 +49,7 @@
                                 <div ng-hide="vm.dishes.length || $root.loading"><h2>No dishes available.</h2>
                                 </div>
                                 <div deckgrid source="vm.dishes" cardTemplate="/static/partials/dishes/dish.html"
-                                     class="deckgrid" maxColumns="3" custom-fn="vm.dish(id)"></div>
+                                     class="deckgrid" maxColumns="3" custom-fn="vm.dish"></div>
                             </md-content>
                         </md-tab>
                     </md-tabs>

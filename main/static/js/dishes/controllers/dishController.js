@@ -15,14 +15,17 @@
                 if (vm.dish.description) {
                     vm.body = vm.dish.cuisine + " Cuisine - " + vm.dish.description
                 } else {
-                    vm.body = vm.dish.cuisine + " Cuisine"
+                    vm.body = vm.dish.cuisine + " Cuisine - No Description"
                 }
             } else {
                 if (vm.dish.description) {
-                    vm.body = "Chef choice - " + vm.dish.description
+                    vm.body = "Original Cuisine - " + vm.dish.description
                 } else {
-                    vm.body = "Chef choice"
+                    vm.body = "Original Cuisine - No Description"
                 }
+            }
+            if (vm.dish.ingredients.length > 0) {
+                vm.ingredients = "Ingredients: " + vm.dish.ingredients.join(", ");
             }
             vm.disqusConfig = {
                 disqus_shortname: 'cravus',
