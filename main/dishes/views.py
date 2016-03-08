@@ -93,16 +93,17 @@ class DishScheduleSearchView(HaystackViewSet):
     def filter_queryset(self, queryset):
         text = self.request.query_params.get('text', None)
         date_str = self.request.query_params.get('date', None)
+        cuisine = self.request.query_params.get('cuisine', None)
         date = None
         if date_str:
             try:
                 date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
             except Exception:
                 return DishSchedule.objects.none()
-        if text and date:
-            queryset = queryset.filter(text=text).filter(Q(date__exact=date) | Q(repeat_daily=True))
-        elif date:
+        if date:
             queryset = queryset.filter(Q(date__exact=date) | Q(repeat_daily=True))
-        elif text:
+        if text:
             queryset = queryset.filter(text=text)
+        if cuisine:
+            queryset = queryset.filter(cuisine=cuisine)
         return queryset

@@ -4,11 +4,13 @@
     angular.module('cravus.cart').factory('cartItemFactory', cartItemFactory);
     cartItemFactory.$inject = ['$log'];
     function cartItemFactory($log) {
-        var item = function (id, name, price, quantity, data) {
+        var item = function (id, name, price, quantity, date, time, data) {
             this.setId(id);
             this.setName(name);
             this.setPrice(price);
             this.setQuantity(quantity);
+            this.setDate(date);
+            this.setTime(time);
             this.setData(data);
         };
 
@@ -25,6 +27,24 @@
             if (name)  this._name = name;
             else $log.error('A name must be provided');
         };
+
+        item.prototype.getDate = function () {
+            return this._date;
+        };
+
+        item.prototype.setDate = function (date) {
+            if (date)  this._date = date;
+            else $log.error('A date must be provided');
+        };
+
+        item.prototype.getTime = function () {
+            return this._time;
+        };
+
+        item.prototype.setTime = function (time) {
+            if (time)  this._time = time;
+        };
+
         item.prototype.getName = function () {
             return this._name;
         };
@@ -79,6 +99,8 @@
                 name: this.getName(),
                 price: this.getPrice(),
                 quantity: this.getQuantity(),
+                date: this.getDate(),
+                time: this.getTime(),
                 data: this.getData(),
                 total: this.getTotal()
             }

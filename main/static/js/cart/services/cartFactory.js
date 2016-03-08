@@ -17,12 +17,12 @@
             return _cart;
         }
 
-        function addItem(id, name, price, quantity, data) {
+        function addItem(id, name, price, quantity, date, time, data) {
             var alreadyInCart = getItemById(id);
             if (typeof alreadyInCart === 'object') {
                 alreadyInCart.setQuantity(quantity, true);
             } else {
-                var newItem = new cartItemFactory(id, name, price, quantity, data);
+                var newItem = new cartItemFactory(id, name, price, quantity, date, time, data);
                 _cart.items.push(newItem);
             }
             save();
@@ -34,9 +34,16 @@
             angular.forEach(items, function (item) {
                 if (item.getId() === itemId) found = item;
             });
-            console.log(_cart);
             return found;
+        }
 
+        function getItemsByDate(date) {
+            var items = getItems();
+            var result = [];
+            angular.forEach(items, function (item) {
+                if (item.getDate() === date) result.push(item);
+            });
+            return result;
         }
 
         function setShipping(shipping) {
@@ -149,7 +156,7 @@
                 items: []
             };
             angular.forEach(cart.items, function (item) {
-                _cart.items.push(new cartItemFactory(item._id,  item._name, item._price, item._quantity, item._data));
+                _cart.items.push(new cartItemFactory(item._id, item._name, item._price, item._quantity, item._date, item._time, item._data));
             });
             return _cart
         }
@@ -162,6 +169,7 @@
             init: init,
             addItem: addItem,
             getItemById: getItemById,
+            getItemsByDate: getItemsByDate,
             setShipping: setShipping,
             getShipping: getShipping,
             setTaxRate: setTaxRate,

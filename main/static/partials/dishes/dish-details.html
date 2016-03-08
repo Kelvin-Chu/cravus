@@ -12,7 +12,12 @@
                                 </md-button>
                             </md-fab-trigger>
                             <md-fab-actions>
-                                <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
+                                <md-button aria-label="Facebook" class="md-fab md-raised md-mini" socialshare
+                                           socialshare-provider="facebook"
+                                           socialshare-media="{{ ::vm.dish.image }}"
+                                           socialshare-text="{{ ::vm.dish.name }}"
+                                           socialshare-description="{{ ::vm.dish.description }}"
+                                           socialshare-url="{{ ::vm.dish.image }}">
                                     <i class="fa fa-facebook fa-lg"></i>
                                 </md-button>
                                 <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
@@ -43,6 +48,6 @@
             Close
         </md-button>
         <add-to-cart id="{{ ::vm.id }}" name="{{ ::vm.dish.name }}" price="{{ ::vm.dish.price }}" quantity="1"
-                     quantity-max="10"></add-to-cart>
+                     quantity-max="10" date="{{ ::vm.date }}"></add-to-cart>
     </md-dialog-actions>
 </md-dialog>

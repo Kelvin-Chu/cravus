@@ -28,7 +28,8 @@ class DishSerializer(TaggitSerializer, serializers.ModelSerializer):
     class Meta:
         model = Dish
         fields = (
-            'id', 'dish', 'chef', 'name', 'description', 'cuisine', 'price', 'image', 'thumbnail', 'ingredients', 'created_at',
+            'id', 'dish', 'chef', 'name', 'description', 'cuisine', 'price', 'image', 'thumbnail', 'ingredients',
+            'created_at',
             'updated_at')
         read_only_fields = ('id', 'created_at', 'updated_at')
 
@@ -82,4 +83,5 @@ class DishScheduleSerializer(serializers.ModelSerializer):
 class DishSearchSerializer(HaystackSerializer):
     class Meta:
         index_classes = [DishScheduleIndex]
-        fields = ["id", "dish", "chef", "name", "cuisine", "description", "repeat_daily", "date", "text", 'thumbnail', 'ingredients']
+        fields = ["id", "dish", "chef", "name", "cuisine", "description", "repeat_daily", "date", "text", 'thumbnail',
+                  'ingredients']

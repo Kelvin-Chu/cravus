@@ -1057,6 +1057,11 @@ a.text-white:focus {
     box-shadow: 0 2px 2px -1px #7a7a7a;
 }
 
+.food-container-wrapper {
+    display: inline-block;
+    margin-top: -50px;
+}
+
 .food-container {
     margin-top: 15px;
     background-color: #e9e9e9;
@@ -1547,10 +1552,31 @@ md-input-container textarea {
 }
 
 .custom-fab md-fab-actions .md-fab-action-item {
-  transition: none;
+    transition: none;
 }
+
 .custom-fab:not(.md-is-open) md-fab-actions {
-  visibility: hidden;
+    visibility: hidden;
+}
+
+.row-1 {
+    width: 5%;
+}
+
+.row-2 {
+    width: 50%;
+}
+
+.row-3 {
+    width: 15%;
+}
+
+.row-4 {
+    width: 15%;
+}
+
+.row-5 {
+    width: 15%;
 }
 
 md-dialog md-ink-bar {
@@ -1659,6 +1685,26 @@ md-content {
 
     md-card-content md-tabs md-content {
         padding: 8px 0 !important;
+    }
+
+    .row-1 {
+        width: 5%;
+    }
+
+    .row-2 {
+        width: 35%;
+    }
+
+    .row-3 {
+        width: 20%;
+    }
+
+    .row-4 {
+        width: 20%;
+    }
+
+    .row-5 {
+        width: 20%;
     }
 }
 
@@ -1775,6 +1821,11 @@ md-content {
 
     .navbar-transparent {
         background-color: rgba(0, 0, 0, 0.65) !important;
+    }
+
+    .food-container-wrapper {
+        display: block;
+        margin-top: 0;
     }
 }
 

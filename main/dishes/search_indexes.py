@@ -13,7 +13,7 @@ class DishScheduleIndex(indexes.SearchIndex, indexes.Indexable):
     chef = indexes.NgramField(model_attr='chef__username')
     dish = indexes.IntegerField(model_attr='dish__id')
     name = indexes.NgramField(model_attr='dish__name')
-    cuisine = indexes.NgramField(model_attr='dish__cuisine')
+    cuisine = indexes.CharField(model_attr='dish__cuisine')
     repeat_daily = indexes.BooleanField(model_attr='repeat_daily')
     description = indexes.NgramField(model_attr='dish__description')
     ingredients = indexes.NgramField()

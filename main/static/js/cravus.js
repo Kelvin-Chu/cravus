@@ -12,6 +12,7 @@
         'ui.bootstrap',
         'akoenig.deckgrid',
         'ui.mask',
+        '720kb.socialshare',
         'cravus.authentication',
         'cravus.cart',
         'cravus.layout',

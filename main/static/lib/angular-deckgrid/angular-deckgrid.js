@@ -140,9 +140,15 @@ angular.module('akoenig.deckgrid').factory('DeckgridDescriptor', [
                 scope.maxColumns = 5;
             }
 
-            scope.callback = function (event) {
-                scope.customFn()(event.currentTarget.name, event.currentTarget.id);
-            };
+            if (!angular.isUndefined(attrs.date)) {
+                scope.date = attrs.date;
+            }
+
+            if (!angular.isUndefined(attrs.customFn)) {
+                scope.callback = function (event) {
+                    scope.customFn()(event.currentTarget.name, event.currentTarget.id, event.currentTarget.alt);
+                };
+            }
 
             scope.mother = scope.$parent;
 
@@ -322,8 +328,11 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
                 if (!self.$$scope.columns[column]) {
                     self.$$scope.columns[column] = [];
                 }
-                if(card.description) {
+                if (card.description) {
                     card.description = truncate(card.description, 150);
+                }
+                if (self.$$scope.date) {
+                    card.date = self.$$scope.date;
                 }
                 card.$index = index;
                 self.$$scope.columns[column].push(card);

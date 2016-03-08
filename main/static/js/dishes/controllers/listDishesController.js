@@ -14,7 +14,8 @@
         vm.date = {};
         vm.date.today = new Date();
         vm.date.tomorrow = new Date(vm.date.today.getFullYear(), vm.date.today.getMonth(), vm.date.today.getDate() + 1);
-        vm.dishes = [];
+        vm.today = [];
+        vm.tomorrow = [];
         vm.tab = 'today';
         vm.dish = dish;
         vm.tabChange = tabChange;
@@ -32,13 +33,14 @@
             });
             vm.opendish = $routeParams.dish;
             if (vm.opendish) {
-                dish(vm.opendish);
+                dish('',vm.opendish);
             }
             vm.location = 'Downtown Austin';
         }
 
         function tabChange(tab) {
-            vm.dishes = [];
+            vm.today = [];
+            vm.tomorrow = [];
             $rootScope.loading = true;
             vm.loading = true;
             if (tab === 'today') {
@@ -54,7 +56,8 @@
 
             function getDishesSuccessFn(data, status, headers, config) {
                 vm.nextPage = data.data.next;
-                vm.dishes = data.data.results;
+                if (tab === 'today') vm.today = data.data.results;
+                else if (tab === 'tomorrow') vm.tomorrow = data.data.results;
                 vm.loading = false;
                 $rootScope.loading = false;
                 vm.scrollDisabled = false;
@@ -83,7 +86,8 @@
                 if (!vm.nextPage) {
                     vm.scrollDisabled = true;
                 }
-                vm.dishes = vm.dishes.concat(data.data.results);
+                if (vm.tab === 'today') vm.today = vm.today.concat(data.data.results);
+                else if (vm.tab === 'tomorrow') vm.tomorrow = vm.tomorrow.concat(data.data.results);
                 vm.scrolling = false;
             }
 
@@ -92,10 +96,9 @@
             }
         }
 
-        function dish(id, dish) {
+        function dish(id, dish, date) {
             $rootScope.loading = true;
             authFactory.setDisqusSSO().then(setDisqusSSOSuccessFn, setDisqusSSOErrorFn);
-
 
             function setDisqusSSOSuccessFn(data, status, headers, config) {
                 $rootScope.disqusPayload = data.data.payload;
@@ -118,7 +121,7 @@
                 }
                 var width = $(window).width();
                 var maxWidth = "100%";
-                if (width > 991) {
+                if (width > 1200) {
                     maxWidth = "950px";
                 } else if (width > 991) {
                     maxWidth = "750px";
@@ -145,7 +148,7 @@
                         parent: angular.element(document.body),
                         clickOutsideToClose: true,
                         disableParentScroll: false,
-                        locals: {id: id, dish: data.data, width: imgWidth}
+                        locals: {id: id, dish: data.data, width: imgWidth, date:date}
                     }).then(function (response) {
 
                     });
