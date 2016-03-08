@@ -1,9 +1,26 @@
-<md-dialog aria-label="Dish details" ng-hide="vm.loading" ng-style="{'width': '{{ vm.width }}' }">
+<md-dialog aria-label="Dish details" ng-hide="vm.loading" ng-style="{'width': '{{ ::vm.width }}' }">
     <md-dialog-content class="dishDetailContainer">
         <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Details">
                 <div class="text-center">
                     <img ng-src="{{ ::vm.dish.image }}" class="md-card-image" id="dishImage">
+                    <div class="lock-size" style="position:absolute; top:0;" layout="row" layout-align="center center">
+                        <md-fab-speed-dial md-open="vm.fab" md-direction="down" ng-class="md-fling" class="custom-fab">
+                            <md-fab-trigger>
+                                <md-button aria-label="menu" class="md-fab md-warn">
+                                    <i class="fa fa-share-alt fa-lg"></i>
+                                </md-button>
+                            </md-fab-trigger>
+                            <md-fab-actions>
+                                <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
+                                    <i class="fa fa-facebook fa-lg"></i>
+                                </md-button>
+                                <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+                                    <i class="fa fa-pinterest fa-lg"></i>
+                                </md-button>
+                            </md-fab-actions>
+                        </md-fab-speed-dial>
+                    </div>
                 </div>
                 <md-content class="md-padding">
                     <h2>{{ ::vm.dish.name }}</h2>
@@ -17,6 +34,7 @@
                 </md-content>
             </md-tab>
         </md-tabs>
+        <h2 class="price">${{ ::vm.dish.price }}</h2>
     </md-dialog-content>
     <md-dialog-actions layout="row">
         <a ng-href="/+{{ ::vm.dish.chef }}">+{{ ::vm.dish.chef }}</a>
@@ -24,8 +42,7 @@
         <md-button ng-click="vm.cancel()">
             Close
         </md-button>
-        <md-button class="md-raised md-primary" ng-click="vm.cancel()" style="margin-right:20px;">
-            Add to Cart
-        </md-button>
+        <add-to-cart id="{{ ::vm.id }}" name="{{ ::vm.dish.name }}" price="{{ ::vm.dish.price }}" quantity="1"
+                     quantity-max="10"></add-to-cart>
     </md-dialog-actions>
 </md-dialog>

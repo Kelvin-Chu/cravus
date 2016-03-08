@@ -82,4 +82,4 @@ class DishScheduleSerializer(serializers.ModelSerializer):
 class DishSearchSerializer(HaystackSerializer):
     class Meta:
         index_classes = [DishScheduleIndex]
-        fields = ["dish", "chef", "name", "cuisine", "description", "repeat_daily", "date", "text", 'thumbnail']
+        fields = ["id", "dish", "chef", "name", "cuisine", "description", "repeat_daily", "date", "text", 'thumbnail', 'ingredients']

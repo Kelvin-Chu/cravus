@@ -1,0 +1,110 @@
+<div class="greybackground">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 list-page">
+                <h1>Shopping Cart</h1>
+                <md-divider></md-divider>
+                <div class="table-responsive col-xs-12 topspace50">
+                    <table class="table table-striped cart hidden-xs hidden-sm">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in vm.cartFactory.getCart().items track by $index">
+                            <td><span ng-click="::vm.cartFactory.removeItemById(item.getId())"
+                                      class="glyphicon glyphicon-remove"></span></td>
+
+                            <td>{{ ::item.getName() }}</td>
+                            <td><span class="glyphicon glyphicon-minus" ng-class="{'disabled':item.getQuantity()==1}"
+                                      ng-click="item.setQuantity(-1, true)"></span>&nbsp;&nbsp;
+                                {{ item.getQuantity() | number }}&nbsp;&nbsp;
+                                <span class="glyphicon glyphicon-plus" ng-click="item.setQuantity(1, true)"></span></td>
+                            <td>{{ ::item.getPrice() | currency}}</td>
+                            <td>{{ item.getTotal() | currency }}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr ng-show="::vm.cartFactory.getTax()">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Tax ({{ vm.cartFactory.getTaxRate() }}%):</td>
+                            <td>{{ vm.cartFactory.getTax() | currency }}</td>
+                        </tr>
+                        <tr ng-show="::vm.cartFactory.getShipping()">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Delivery:</td>
+                            <td>{{ vm.cartFactory.getShipping() | currency }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total:</td>
+                            <td>{{ vm.cartFactory.totalCost() | currency }}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <table class="table table-striped cart hidden-md hidden-lg">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="item in vm.cartFactory.getCart().items track by $index">
+                        <tr>
+                            <td><span ng-click="::vm.cartFactory.removeItemById(item.getId())"
+                                      class="glyphicon glyphicon-remove"></span></td>
+                            <td colspan="4">{{ ::item.getName() }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><span class="glyphicon glyphicon-minus"
+                                                  ng-class="{'disabled':item.getQuantity()==1}"
+                                                  ng-click="item.setQuantity(-1, true)"></span>&nbsp;&nbsp;
+                                {{ item.getQuantity() | number }}&nbsp;&nbsp;
+                                <span class="glyphicon glyphicon-plus" ng-click="item.setQuantity(1, true)"></span></td>
+                            <td>{{ ::item.getPrice() | currency}}</td>
+                            <td>{{ item.getTotal() | currency }}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr ng-show="::vm.cartFactory.getTax()">
+                            <td></td>
+                            <td colspan="3" style="text-align: right;">Tax ({{ vm.cartFactory.getTaxRate() }}%):</td>
+                            <td colspan="1">{{ vm.cartFactory.getTax() | currency }}</td>
+                        </tr>
+                        <tr ng-show="::vm.cartFactory.getShipping()">
+                            <td></td>
+                            <td colspan="3" style="text-align: right;">Delivery:</td>
+                            <td colspan="1">{{ vm.cartFactory.getShipping() | currency }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan="3" style="text-align: right;">Total:</td>
+                            <td colspan="1">{{ vm.cartFactory.totalCost() | currency }}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="text-right">
+                    <md-button class="md-raised md-primary" ng-click="" style="margin-right:20px;">
+                        Checkout
+                    </md-button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

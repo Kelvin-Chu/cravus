@@ -2,13 +2,14 @@
     'use strict';
 
     angular.module('cravus.layout').controller('listDishesController', listDishesController);
-    listDishesController.$inject = ['$rootScope', '$scope', 'dishesFactory', 'ytplayerFactory', '$mdDialog', '$routeParams'];
-    function listDishesController($rootScope, $scope, dishesFactory, ytplayerFactory, $mdDialog, $routeParams) {
+    listDishesController.$inject = ['$rootScope', '$scope', 'dishesFactory', 'ytplayerFactory', '$mdDialog', '$routeParams', 'authFactory', 'cartFactory'];
+    function listDishesController($rootScope, $scope, dishesFactory, ytplayerFactory, $mdDialog, $routeParams, authFactory, cartFactory) {
         var vm = this;
         vm.loading = true;
         vm.scrolling = false;
         vm.scrollDisabled = true;
         vm.nextPage = '';
+        vm.location = '';
         vm.query = null;
         vm.date = {};
         vm.date.today = new Date();
@@ -18,6 +19,7 @@
         vm.dish = dish;
         vm.tabChange = tabChange;
         vm.scrollFn = scrollFn;
+        vm.clear = clear;
 
         activate();
         function activate() {
@@ -32,6 +34,7 @@
             if (vm.opendish) {
                 dish(vm.opendish);
             }
+            vm.location = 'Downtown Austin';
         }
 
         function tabChange(tab) {
@@ -89,9 +92,20 @@
             }
         }
 
-        function dish(id) {
+        function dish(id, dish) {
             $rootScope.loading = true;
-            dishesFactory.getDish(id).then(getDishSuccessFn, getDishErrorFn);
+            authFactory.setDisqusSSO().then(setDisqusSSOSuccessFn, setDisqusSSOErrorFn);
+
+
+            function setDisqusSSOSuccessFn(data, status, headers, config) {
+                $rootScope.disqusPayload = data.data.payload;
+                $rootScope.disqusPublic = data.data.public_key;
+                dishesFactory.getDish(dish).then(getDishSuccessFn, getDishErrorFn);
+            }
+
+            function setDisqusSSOErrorFn(data, status, headers, config) {
+                dishesFactory.getDish(dish).then(getDishSuccessFn, getDishErrorFn);
+            }
 
             function getDishSuccessFn(data, status, headers, config) {
                 if (!data.data.image) {
@@ -115,16 +129,16 @@
                 }
                 img.src = data.data.image;
                 img.onload = function () {
-                    img.src = null;
                     img.style.maxHeight = "50vh";
                     img.style.minWidth = "320px";
                     img.style.maxWidth = maxWidth;
                     img.style.visibility = 'hidden';
                     document.body.appendChild(img);
                     var imgWidth = img.clientWidth;
+                    img.src = null;
                     $rootScope.loading = false;
                     $mdDialog.show({
-                        controller: 'dishController',
+                        controller: 'dishDetailsController',
                         controllerAs: 'vm',
                         bindToController: true,
                         templateUrl: '/static/partials/dishes/dish-details.html',
@@ -143,6 +157,11 @@
                 $rootScope.loading = false;
                 toast('error', '#globalToast', 'Problem connecting to server, refresh the page or try again later', 'none');
             }
+        }
+
+        function clear() {
+            vm.query = null;
+            $rootScope.$broadcast('dish.search', vm.query);
         }
     }
 

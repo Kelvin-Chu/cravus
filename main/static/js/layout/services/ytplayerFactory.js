@@ -2,13 +2,14 @@
     'use strict';
 
     angular.module('cravus.layout').factory('ytplayerFactory', ytplayerFactory);
-    ytplayerFactory.$inject = ['$rootScope'];
-    function ytplayerFactory($rootScope) {
+    ytplayerFactory.$inject = ['$rootScope', '$timeout'];
+    function ytplayerFactory($rootScope, $timeout) {
 
         function stop() {
             $rootScope.bgimg = 'none';
             $rootScope.showBrand = false;
             try {
+                var player = $('#bgndVideo');
                 $('.mbYTP_wrapper').css({'z-index': '-100'});
             } catch (e) {
             }

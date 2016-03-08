@@ -16,13 +16,17 @@
                         <div class="pull-right default-margin-right">
                             <div class="navbar-collapse">
                                 <ul class="nav navbar-nav">
-                                    <li ng-class="{active: $root.route.current.activetab == 'dishes'}">
-                                        <a href="/dishes" ng-click="vm.isCollapsed = true">Dishes</a>
+                                    <li class="right16" ng-class="{active: $root.route.current.activetab == 'cart'}">
+                                        <cart-summary extra="fa-lg"></cart-summary>
+                                    </li>
+                                    <li class="border-left"
+                                        ng-class="{active: $root.route.current.activetab == 'dishes'}">
+                                        <a href="/dishes" class="left16" ng-click="vm.isCollapsed = true">Dishes</a>
                                     </li>
                                     <li uib-dropdown is-open="vm.isOpen" ng-show="$root.isAuthenticated"
-                                        ng-class="{active: $root.route.current.activetab == 'settings'}"
-                                        class="right15">
-                                        <a href="#" uib-dropdown-toggle>+{{ $root.authenticatedAccount.username }}</a>
+                                        ng-class="{active: $root.route.current.activetab == 'settings'}">
+                                        <a href="#" class="right16"
+                                           uib-dropdown-toggle>+{{ $root.authenticatedAccount.username }}</a>
                                         <ul uib-dropdown-menu role="menu">
                                             <li role="menuitem" ng-show="$root.isChef">
                                                 <a href="/+{{ $root.authenticatedAccount.username }}/managedishes"
@@ -42,19 +46,20 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li ng-hide="$root.isAuthenticated || $root.route.current.activetab == 'login'">
-                                        <a href="/login" ng-click="vm.isCollapsed = true">Login</a>
+                                    <li ng-hide="$root.isAuthenticated">
+                                        <a href="/{{ $root.route.current.login ? 'register' : 'login'}}" class="right16"
+                                           ng-click="vm.isCollapsed = true">
+                                            {{ $root.route.current.login ? 'Sign Up' : 'Login'}}</a>
                                     </li>
-                                    <li ng-show="!$root.isAuthenticated && $root.route.current.activetab == 'login'">
-                                        <a href="/register" ng-click="vm.isCollapsed = true">Sign Up</a>
-                                    </li>
-                                    <li class="border-left"><a class="left15" href="#" ng-click="vm.isCollapsed = true"><i
-                                            class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#" ng-click="vm.isCollapsed = true" class="margin-right0"><i
+                                    <li class="border-left hidden-sm">
+                                        <a class="left16" href="http://www.facebook.com/cravus"
+                                           ng-click="vm.isCollapsed = true"><i
+                                                class="fa fa-facebook"></i></a></li>
+                                    <li class="hidden-sm"><a href="#" ng-click="vm.isCollapsed = true"><i
                                             class="fa fa-twitter"></i></a>
                                     </li>
                                     <li ng-show="!$root.isAuthenticated" class="chefsignup">
-                                        <a ng-click="vm.isCollapsed = true" href="/chef/register">Be
+                                        <a ng-click="vm.isCollapsed = true" href="/chef/register" class="right0">Be
                                             A Chef</a>
                                     </li>
                                 </ul>
@@ -73,13 +78,16 @@
                             <a class="navbar-brand text-uppercase withoutripple" ng-click="vm.isCollapsed = true"
                                ng-class="{'visible-xs': !$root.showBrand}" href="/">Crav<span
                                     class="colortext">us</span></a>
-                            <button type="button" class="navbar-toggle btn-circle pull-right collapsed"
-                                    ng-click="vm.isCollapsed = !vm.isCollapsed">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
+                            <div class="pull-right hidden-md hidden-lg hidden-sm">
+                                <cart-summary extra="fa-2x" class="shopping"></cart-summary>
+                                <button type="button" class="navbar-toggle btn-circle collapsed" style="float:none;"
+                                        ng-click="vm.isCollapsed = !vm.isCollapsed">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
                         </div>
                         <div class="hidden-md hidden-lg hidden-sm">
                             <div class="navbar-collapse" ng-class="{collapse: vm.isCollapsed}">
@@ -113,7 +121,8 @@
                                     <li ng-show="!$root.isAuthenticated">
                                         <a ng-click="vm.isCollapsed = true" href="/chef/register">Be A Chef</a>
                                     </li>
-                                    <li class="border-left"><a href="#" ng-click="vm.isCollapsed = true"><i
+                                    <li class="border-left"><a href="http://www.facebook.com/cravus"
+                                                               ng-click="vm.isCollapsed = true"><i
                                             class="fa fa-facebook"></i> Follow On Facebook</a></li>
                                     <li><a href="#" ng-click="vm.isCollapsed = true"><i class="fa fa-twitter"></i>
                                         Follow On Twitter</a>

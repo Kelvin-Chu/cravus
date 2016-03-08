@@ -1,13 +1,14 @@
 (function () {
     'use strict';
 
-    angular.module('cravus.dishes').controller('dishController', dishController);
-    dishController.$inject = ['$rootScope', '$location', 'dishesFactory', '$mdDialog'];
-    function dishController($rootScope, $location, dishesFactory, $mdDialog) {
+    angular.module('cravus.dishes').controller('dishDetailsController', dishDetailsController);
+    dishDetailsController.$inject = ['$rootScope', '$location', '$mdDialog'];
+    function dishDetailsController($rootScope, $location, $mdDialog) {
         var vm = this;
         vm.loading = false;
         vm.disqus_ready = false;
         vm.cancel = cancel;
+        vm.fab = false;
 
         activate();
         function activate() {

@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.layout').controller('navbarController', navbarController);
-    navbarController.$inject = ['$rootScope', 'authFactory', '$location'];
-    function navbarController($rootScope, authFactory, $location) {
+    navbarController.$inject = ['$rootScope', 'authFactory', '$location', '$route'];
+    function navbarController($rootScope, authFactory, $location, $route) {
         var vm = this;
         vm.isOpen = false;
         vm.isCollapsed = true;
@@ -13,10 +13,6 @@
 
         activate();
         function activate() {
-            authFactory.isAuthenticated();
-            authFactory.getAuthenticatedAccount();
-            authFactory.refresh();
-            authFactory.setDisqusSSO();
         }
 
         function logout() {

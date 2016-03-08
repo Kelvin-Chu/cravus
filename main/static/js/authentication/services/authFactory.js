@@ -59,25 +59,7 @@
         }
 
         function setDisqusSSO() {
-            if ($rootScope.authenticatedAccount) {
-                if ($localStorage.disqusPayload) {
-                    $rootScope.disqusPayload = $localStorage.disqusPayload;
-                    $rootScope.disqusPublic = $localStorage.disqusPublic;
-                } else {
-                    $http.get('api/v1/accounts/' + $rootScope.authenticatedAccount.username + '/disqus/')
-                        .then(setDisqusSSOSuccessFn, setDisqusSSOErrorFn);
-                }
-            }
-
-            function setDisqusSSOSuccessFn(data, status, headers, config) {
-                $localStorage.disqusPayload = data.data.payload;
-                $localStorage.disqusPublic = data.data.public_key;
-                $rootScope.disqusPayload = data.data.payload;
-                $rootScope.disqusPublic = data.data.public_key;
-            }
-
-            function setDisqusSSOErrorFn(data, status, headers, config) {
-            }
+            return $http.get('api/v1/disqus/');
         }
 
         function reset(email) {
@@ -139,8 +121,6 @@
             delete $rootScope.isAuthenticated;
             delete $rootScope.authenticatedAccount;
             delete $rootScope.isChef;
-            delete $localStorage.disqusPayload;
-            delete $localStorage.disqusPublic;
             delete $rootScope.disqusPayload;
             delete $rootScope.disqusPublic;
         }

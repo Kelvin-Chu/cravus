@@ -8,14 +8,14 @@
             controller: 'registerController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/register.html',
-            activetab: 'register',
+            login: false,
             index: true,
             resolve: {"check": loggedIn}
         }).when('/chef/register', {
             controller: 'registerController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/register.html',
-            activetab: 'register',
+            login: false,
             index: true,
             chefregister: true,
             resolve: {"check": loggedIn}
@@ -23,14 +23,14 @@
             controller: 'loginController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/login.html',
-            activetab: 'login',
+            login: true,
             index: true,
             resolve: {"check": loggedIn}
         }).when('/simplelogin', {
             controller: 'simpleLoginController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/authentication/simple-login.html',
-            activetab: 'login',
+            login: true,
             index: false,
             resolve: {"check": loggedIn}
         }).when('/reset', {
@@ -52,6 +52,12 @@
             controllerAs: 'vm',
             templateUrl: '/static/partials/dishes/list-dishes.html',
             activetab: 'dishes',
+            index: false
+        }).when('/cart', {
+            controller: 'cartController',
+            controllerAs: 'vm',
+            templateUrl: '/static/partials/cart/cart.html',
+            activetab: 'cart',
             index: false
         }).when('/+:username', {
             controller: 'profileController',
@@ -77,6 +83,7 @@
             controller: 'indexController',
             controllerAs: 'vm',
             templateUrl: '/static/partials/layout/index.html',
+            login: false,
             index: true,
             resolve: {"check": loggedIn}
         }).otherwise('/');
@@ -95,7 +102,7 @@
                         return config;
                     },
                     'responseError': function (response) {
-                        if (response.status === 401 || response.status === 403) {
+                        if (response.status === 401) {
                             $location.path('/login');
                         }
                         return $q.reject(response);

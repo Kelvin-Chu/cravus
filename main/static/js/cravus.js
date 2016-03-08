@@ -13,14 +13,15 @@
         'akoenig.deckgrid',
         'ui.mask',
         'cravus.authentication',
+        'cravus.cart',
         'cravus.layout',
         'cravus.profiles',
         'cravus.dishes'
     ]);
     angular.module('cravus').run(run);
     angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
-    run.$inject = ['$rootScope', '$route', '$http', '$mdDialog'];
-    function run($rootScope, $route, $http, $mdDialog) {
+    run.$inject = ['$rootScope', '$route', '$http', '$mdDialog', 'cartFactory', 'authFactory'];
+    function run($rootScope, $route, $http, $mdDialog, cartFactory, authFactory) {
         $http.defaults.xsrfHeaderName = 'X-CSRFToken';
         $http.defaults.xsrfCookieName = 'csrftoken';
         $rootScope.$on("$locationChangeStart", function (event, next, current) {
@@ -33,6 +34,12 @@
         $rootScope.$on('$stateChangeSuccess', function () {
             $rootScope.loading = false;
         });
+        authFactory.isAuthenticated();
+        authFactory.getAuthenticatedAccount();
+        authFactory.refresh();
+        cartFactory.init();
+        cartFactory.setShipping(2.99);
+        cartFactory.setTaxRate(8.25);
     }
 
     function classReg(className) {

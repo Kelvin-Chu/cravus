@@ -9,12 +9,14 @@ from .models import DishSchedule
 
 class DishScheduleIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
+    id = indexes.IntegerField(model_attr='id')
     chef = indexes.NgramField(model_attr='chef__username')
     dish = indexes.IntegerField(model_attr='dish__id')
     name = indexes.NgramField(model_attr='dish__name')
     cuisine = indexes.NgramField(model_attr='dish__cuisine')
     repeat_daily = indexes.BooleanField(model_attr='repeat_daily')
     description = indexes.NgramField(model_attr='dish__description')
+    ingredients = indexes.NgramField()
     date = indexes.DateField(model_attr='date')
     thumbnail = indexes.CharField()
 
@@ -32,3 +34,7 @@ class DishScheduleIndex(indexes.SearchIndex, indexes.Indexable):
         if obj.dish.image:
             return obj.dish.thumbnail.url
         return getattr(settings, 'DEFAULT_DISH_IMAGE', None)
+
+    @staticmethod
+    def prepare_ingredients(obj):
+        return [ingredient.name for ingredient in obj.dish.ingredients.all()]

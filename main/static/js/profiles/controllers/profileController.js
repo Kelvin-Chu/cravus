@@ -3,9 +3,9 @@
 
     angular.module('cravus.profiles').controller('profileController', profileController);
     profileController.$inject = ['$rootScope', '$location', '$routeParams', 'dishesFactory', 'profileFactory',
-        'addressFactory', 'chefFactory', 'ytplayerFactory', '$timeout', '$mdDialog', '$window'];
+        'addressFactory', 'chefFactory', 'ytplayerFactory', '$timeout', '$mdDialog', '$window', 'authFactory'];
     function profileController($rootScope, $location, $routeParams, dishesFactory, profileFactory, addressFactory,
-                               chefFactory, ytplayerFactory, $timeout, $mdDialog, $window) {
+                               chefFactory, ytplayerFactory, $timeout, $mdDialog, $window, authFactory) {
         var vm = this;
         vm.username = $routeParams.username.substr(1);
         vm.profile = null;
@@ -57,17 +57,22 @@
                         vm.name = "Chef " + vm.profile.username;
                     }
                 }
-                vm.disqusConfig = {
-                    disqus_shortname: 'cravus',
-                    disqus_identifier: 'chef' + vm.profile.id,
-                    disqus_url: $location.absUrl(),
-                    disqus_title: vm.name,
-                    disqus_remote_auth_s3: $rootScope.disqusPayload,
-                    disqus_api_key: $rootScope.disqusPublic,
-                    disqus_on_ready: set_ready()
-                };
-                vm.loading = false;
-                $rootScope.loading = false;
+                authFactory.setDisqusSSO().then(setDisqusSSOSuccessFn, setDisqusSSOErrorFn);
+
+                function setDisqusSSOSuccessFn(data, status, headers, config) {
+                    $rootScope.disqusPayload = data.data.payload;
+                    $rootScope.disqusPublic = data.data.public_key;
+                    setDisquss();
+                    vm.loading = false;
+                    $rootScope.loading = false;
+                }
+
+                function setDisqusSSOErrorFn(data, status, headers, config) {
+                    setDisquss();
+                    vm.loading = false;
+                    $rootScope.loading = false;
+                    dishesFactory.getDish(id).then(getDishSuccessFn, getDishErrorFn);
+                }
             }
 
             function profileErrorFn(data, status, headers, config) {
@@ -99,6 +104,18 @@
 
             function chefErrorFn(data, status, headers, config) {
             }
+        }
+
+        function setDisquss() {
+            vm.disqusConfig = {
+                disqus_shortname: 'cravus',
+                disqus_identifier: 'chef' + vm.profile.id,
+                disqus_url: $location.absUrl(),
+                disqus_title: vm.name,
+                disqus_remote_auth_s3: $rootScope.disqusPayload,
+                disqus_api_key: $rootScope.disqusPublic,
+                disqus_on_ready: set_ready()
+            };
         }
 
         function set_ready() {
@@ -133,7 +150,17 @@
 
         function dish(id) {
             $rootScope.loading = true;
-            dishesFactory.getDish(id).then(getDishSuccessFn, getDishErrorFn);
+            authFactory.setDisqusSSO().then(setDisqusSSOSuccessFn, setDisqusSSOErrorFn);
+
+            function setDisqusSSOSuccessFn(data, status, headers, config) {
+                $rootScope.disqusPayload = data.data.payload;
+                $rootScope.disqusPublic = data.data.public_key;
+                dishesFactory.getDish(id).then(getDishSuccessFn, getDishErrorFn);
+            }
+
+            function setDisqusSSOErrorFn(data, status, headers, config) {
+                dishesFactory.getDish(id).then(getDishSuccessFn, getDishErrorFn);
+            }
 
             function getDishSuccessFn(data, status, headers, config) {
                 if (!data.data.image) {
@@ -167,7 +194,7 @@
                     var imgWidth = img.clientWidth;
                     $rootScope.loading = false;
                     $mdDialog.show({
-                        controller: 'dishController',
+                        controller: 'dishDetailsController',
                         controllerAs: 'vm',
                         bindToController: true,
                         templateUrl: '/static/partials/dishes/dish-details.html',
@@ -198,7 +225,7 @@
                     config: function () {
                         this.page.identifier = 'chef' + vm.profile.id;
                         this.page.url = $location.absUrl();
-                        this.page.title = vm.namee;
+                        this.page.title = vm.name;
                     }
                 });
                 vm.disqus_ready = true;

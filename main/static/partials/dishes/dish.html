@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-xs-12">
         <md-card>
-            <img ng-src="{{ ::card.thumbnail }}" class="md-card-image"
-                 style="max-width: 500px;" id="{{ ::card.dish }}" ng-click="callback($event)">
+            <img ng-src="{{ ::card.thumbnail }}" class="md-card-image" name="{{ ::card.id }}"
+                 style="max-width: 500px;" id="{{ ::card.dish }}" ng-click="::callback($event)">
             <md-card-title>
                 <md-card-title-text>
-                    <a href="#" id="{{ ::card.dish }}" ng-click="callback($event)"><span
+                    <a href="#" id="{{ ::card.dish }}" name="{{ ::card.id }}" ng-click="::callback($event)"><span
                             class="md-headline">{{ ::card.name }}</span></a>
                 </md-card-title-text>
             </md-card-title>
