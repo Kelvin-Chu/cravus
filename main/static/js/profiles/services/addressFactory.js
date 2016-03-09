@@ -6,11 +6,11 @@
     function addressFactory($http) {
 
         function get(username) {
-            return $http.get('/api/v1/accounts/' + username + '/addresses/');
+            return $http.get('/api/v1/address/' + username + '/');
         }
 
         function update(address) {
-            return $http.put('/api/v1/addresses/' + address.id + '/', address);
+            return $http.put('/api/v1/address/' + address.account + '/', address);
         }
 
         return {

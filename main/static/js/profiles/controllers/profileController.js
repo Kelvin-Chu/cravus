@@ -82,7 +82,7 @@
             }
 
             function addressSuccessFn(data, status, headers, config) {
-                vm.address = data.data[0];
+                vm.address = data.data;
             }
 
             function addressErrorFn(data, status, headers, config) {

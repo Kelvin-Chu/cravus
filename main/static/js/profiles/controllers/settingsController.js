@@ -65,7 +65,7 @@
             }
 
             function addressGetSuccessFn(data, status, headers, config) {
-                vm.address = data.data[0];
+                vm.address = data.data;
             }
 
             function addressGetErrorFn(data, status, headers, config) {
@@ -90,7 +90,6 @@
         function update(event) {
             vm.loading = true;
             profileFactory.update(vm.profile).then(profileUpdateSuccessFn, profileUpdateErrorFn);
-            addressFactory.update(vm.address);
 
             if (vm.profile.is_chef) {
                 chefFactory.update(vm.chef);
@@ -99,8 +98,17 @@
             function profileUpdateSuccessFn(data) {
                 authFactory.setAuthenticatedAccount(data.data);
                 clearErrors(vm);
-                toast('success', '#toastBounds', 'Your profile has been updated.', 'none');
-                vm.loading = false;
+                addressFactory.update(vm.address).then(addressUpdateSuccessFn, addressUpdateErrorFn);
+
+                function addressUpdateSuccessFn(data) {
+                    toast('success', '#toastBounds', 'Your profile has been updated.', 'none');
+                    vm.loading = false;
+                }
+
+                function addressUpdateErrorFn(data) {
+                    toast('error', '#toastBounds', 'Could not find your address, please make sure your address is correct.', 'none');
+                    vm.loading = false;
+                }
             }
 
             function profileUpdateErrorFn(data) {

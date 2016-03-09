@@ -1,8 +1,13 @@
+import googlemaps
+from django.conf import settings
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from authentication.models import Account, Address
 from authentication.utils import trim_mobile
 from cravus.utils import check_img, crop_img
+
+
+gmaps = googlemaps.Client(key=getattr(settings, 'GOOGLE_API_KEY', None))
 
 
 def jwt_response_payload_handler(token, user=None, request=None):
@@ -120,14 +125,26 @@ class AccountSerializer(serializers.ModelSerializer):
 
 
 class AddressSerializer(serializers.ModelSerializer):
-    account = AccountSerializer(read_only=True, required=False)
+    account = serializers.CharField(source='account.username', read_only=True)
 
     class Meta:
         model = Address
-        fields = ['id', 'account', 'address1', 'address2', 'city', 'state', 'zip']
-        read_only_fields = ['id', ]
+        fields = ['account', 'address1', 'address2', 'city', 'state', 'zip', 'latitude', 'longitude']
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(AddressSerializer, self).AddressSerializer()
-
         return exclusions + ['account']
+
+    def update(self, instance, validated_data):
+        instance.address1 = validated_data.get('address1', instance.address1)
+        instance.city = validated_data.get('city', instance.city)
+        instance.state = validated_data.get('state', instance.state)
+        instance.zip = validated_data.get('zip', instance.zip)
+        geocode = gmaps.geocode('%s, %s, %s %s' % (instance.address1, instance.city, instance.state, instance.zip))
+        if geocode:
+            instance.latitude = geocode[0]['geometry']['location']['lat']
+            instance.longitude = geocode[0]['geometry']['location']['lng']
+        else:
+            raise ValidationError('Address not found. Please check your address, city, state, zip and try again.')
+        instance.save()
+        return instance

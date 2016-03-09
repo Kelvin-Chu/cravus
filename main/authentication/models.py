@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from imagekit.models import ProcessedImageField
 from pilkit.processors import Transpose, ResizeToFit
+from haystack.utils.geo import Point
 
 STATE_CHOICES = (
     ('AL', 'AL'), ('AK', 'AK'), ('AZ', 'AZ'), ('AR', 'AR'), ('CA', 'CA'), ('CO', 'CO'), ('CT', 'CT'), ('DE', 'DE'),
@@ -103,15 +104,23 @@ class Account(AbstractBaseUser):
 
 
 class Address(models.Model):
-    account = models.ForeignKey(Account)
+    account = models.OneToOneField(Account, related_name="address", on_delete=models.CASCADE, primary_key=True)
     address1 = models.CharField(max_length=150, blank=True)
     address2 = models.CharField(max_length=150, blank=True)
     city = models.CharField(max_length=50, blank=True)
     state = models.CharField(max_length=2, choices=STATE_CHOICES, default='TX')
     zip = models.CharField(max_length=10, blank=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "%s at %s" % (self.account, self.address1)
+        return "%s at %s" % (self.account.username, self.address1)
+
+    @property
+    def coordinates(self):
+        return Point(self.longitude, self.latitude)
 
 
 class Chef(models.Model):

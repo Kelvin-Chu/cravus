@@ -77,29 +77,28 @@ class ChefAccountViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
 
 class AddressViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+    lookup_field = 'account__username'
     queryset = Address.objects.select_related('account').all()
     serializer_class = AddressSerializer
 
     def get_permissions(self):
-        self.permission_classes = [IsAuthenticated, IsAccountOwner, ]
+        if self.request.method in SAFE_METHODS:
+            self.permission_classes = [AllowAny, ]
+        else:
+            self.permission_classes = [IsAuthenticated, IsAccountOwner, ]
         return super(AddressViewSet, self).get_permissions()
 
-
-class AccountAddressViewSet(viewsets.ViewSet):
-    queryset = Address.objects.select_related('account').all()
-    serializer_class = AddressSerializer
-
-    def list(self, request, account_username=None):
-        if request.user.username != account_username:
+    def retrieve(self, request, *args, **kwargs):
+        target = kwargs.get('account__username', None)
+        if request.user.username != target:
             try:
-                account = Account.objects.get(username=account_username)
+                account = Account.objects.get(username=target)
                 if account.is_chef:
-                    address = self.queryset.filter(account__username=account_username).order_by('id').first()
-                    return Response([{'city': address.city, 'state': address.state}])
+                    address = self.queryset.get(account__username=target)
+                    return Response({'city': address.city, 'state': address.state})
             except Exception:
-                return Response([])
-        queryset = self.queryset.filter(account__username=account_username).order_by('id')
-        serializer = self.serializer_class(queryset, many=True)
+                return Response({})
+        serializer = self.serializer_class(self.get_object())
         return Response(serializer.data)
 
 

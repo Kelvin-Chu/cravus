@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from djoser.views import PasswordResetView, PasswordResetConfirmView
 from rest_framework_nested import routers
-from authentication.views import AccountViewSet, AccountAddressViewSet, AddressViewSet, ChefAccountViewSet, disqus
+from authentication.views import AccountViewSet, AddressViewSet, ChefAccountViewSet, disqus
 from chefs.views import ChefViewSet
 from cravus.views import IndexView
 from rest_framework_jwt import views
@@ -11,14 +11,13 @@ from dishes.views import AccountDishesViewSet, DishViewSet, DishScheduleViewSet,
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
-router.register(r'addresses', AddressViewSet)
 router.register(r'chefs', ChefAccountViewSet)
 router.register(r'chef', ChefViewSet)
+router.register(r'address', AddressViewSet)
 router.register(r'dishes', DishViewSet)
 router.register(r'schedule/search', DishScheduleSearchView, base_name='dish_schedule_search')
 router.register(r'schedule', DishScheduleViewSet)
 accounts_router = routers.NestedSimpleRouter(router, r'accounts', lookup='account')
-accounts_router.register(r'addresses', AccountAddressViewSet)
 accounts_router.register(r'dishes', AccountDishesViewSet)
 accounts_router.register(r'schedule', AccountDishScheduleViewSet)
 
