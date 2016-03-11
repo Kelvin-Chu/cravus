@@ -20,7 +20,11 @@
                                            socialshare-url="{{ ::vm.dish.image }}">
                                     <i class="fa fa-facebook fa-lg"></i>
                                 </md-button>
-                                <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+                                <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini" socialshare
+                                           socialshare-provider="pinterest"
+                                           socialshare-media="{{ ::vm.dish.image }}"
+                                           socialshare-text="{{ ::vm.dish.name }}"
+                                           socialshare-url="{{ ::vm.dish.image }}">
                                     <i class="fa fa-pinterest fa-lg"></i>
                                 </md-button>
                             </md-fab-actions>

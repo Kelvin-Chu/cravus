@@ -1058,8 +1058,6 @@ a.text-white:focus {
 }
 
 .food-container-wrapper {
-    display: inline-block;
-    margin-top: -50px;
 }
 
 .food-container {
@@ -1824,8 +1822,6 @@ md-content {
     }
 
     .food-container-wrapper {
-        display: block;
-        margin-top: 0;
     }
 }
 

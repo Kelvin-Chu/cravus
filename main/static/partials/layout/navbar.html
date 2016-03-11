@@ -52,11 +52,12 @@
                                             {{ $root.route.current.login ? 'Sign Up' : 'Login'}}</a>
                                     </li>
                                     <li class="border-left hidden-sm">
-                                        <a class="left16" href="http://www.facebook.com/cravus"
+                                        <a class="left16" href="http://www.facebook.com/cravus" target="_blank"
                                            ng-click="vm.isCollapsed = true"><i
                                                 class="fa fa-facebook"></i></a></li>
-                                    <li class="hidden-sm"><a href="#" ng-click="vm.isCollapsed = true"><i
-                                            class="fa fa-twitter"></i></a>
+                                    <li class="hidden-sm"><a href="https://www.pinterest.com/Cravus/" target="_blank"
+                                                             ng-click="vm.isCollapsed = true"><i
+                                            class="fa fa-pinterest"></i></a>
                                     </li>
                                     <li ng-show="!$root.isAuthenticated" class="chefsignup">
                                         <a ng-click="vm.isCollapsed = true" href="/chef/register" class="right0">Be
@@ -121,11 +122,13 @@
                                     <li ng-show="!$root.isAuthenticated">
                                         <a ng-click="vm.isCollapsed = true" href="/chef/register">Be A Chef</a>
                                     </li>
-                                    <li class="border-left"><a href="http://www.facebook.com/cravus"
+                                    <li class="border-left"><a href="http://www.facebook.com/cravus" target="_blank"
                                                                ng-click="vm.isCollapsed = true"><i
                                             class="fa fa-facebook"></i> Follow On Facebook</a></li>
-                                    <li><a href="#" ng-click="vm.isCollapsed = true"><i class="fa fa-twitter"></i>
-                                        Follow On Twitter</a>
+                                    <li><a href="https://www.pinterest.com/Cravus/" target="_blank"
+                                           ng-click="vm.isCollapsed = true"><i
+                                            class="fa fa-pinterest"></i>
+                                        Follow On Pinterest</a>
                                     </li>
                                 </ul>
                             </div>

@@ -2,15 +2,15 @@
     'use strict';
 
     angular.module('cravus.layout').controller('listDishesController', listDishesController);
-    listDishesController.$inject = ['$rootScope', '$scope', 'dishesFactory', 'ytplayerFactory', '$mdDialog', '$routeParams', 'authFactory', 'cartFactory'];
-    function listDishesController($rootScope, $scope, dishesFactory, ytplayerFactory, $mdDialog, $routeParams, authFactory, cartFactory) {
+    listDishesController.$inject = ['$rootScope', '$scope', 'dishesFactory', 'ytplayerFactory', '$mdDialog', '$routeParams', 'authFactory'];
+    function listDishesController($rootScope, $scope, dishesFactory, ytplayerFactory, $mdDialog, $routeParams, authFactory) {
         var vm = this;
         vm.loading = true;
         vm.scrolling = false;
         vm.scrollDisabled = true;
         vm.nextPage = '';
-        vm.location = '';
-        vm.query = null;
+        vm.query = '';
+        vm.cuisines = ['Any'].concat(dishesFactory.cuisines);
         vm.date = {};
         vm.date.today = new Date();
         vm.date.tomorrow = new Date(vm.date.today.getFullYear(), vm.date.today.getMonth(), vm.date.today.getDate() + 1);
@@ -21,6 +21,7 @@
         vm.tabChange = tabChange;
         vm.scrollFn = scrollFn;
         vm.clear = clear;
+        vm.update = update;
 
         activate();
         function activate() {
@@ -33,9 +34,8 @@
             });
             vm.opendish = $routeParams.dish;
             if (vm.opendish) {
-                dish('',vm.opendish);
+                dish('', vm.opendish);
             }
-            vm.location = 'Downtown Austin';
         }
 
         function tabChange(tab) {
@@ -43,12 +43,16 @@
             vm.tomorrow = [];
             $rootScope.loading = true;
             vm.loading = true;
+            if (vm.cuisine === 'Any') {
+                vm.cuisine = null;
+                $('#cuisine').removeClass('md-input-focused');
+            }
             if (tab === 'today') {
                 vm.tab = 'today';
-                dishesFactory.getScheduledDishes(vm.date.today, '', vm.query).then(getDishesSuccessFn, getDishesErrorFn);
+                dishesFactory.getScheduledDishes(vm.date.today, null, vm.query, $rootScope.location, vm.cuisine).then(getDishesSuccessFn, getDishesErrorFn);
             } else if (tab === 'tomorrow') {
                 vm.tab = 'tomorrow';
-                dishesFactory.getScheduledDishes(vm.date.tomorrow, '', vm.query).then(getDishesSuccessFn, getDishesErrorFn);
+                dishesFactory.getScheduledDishes(vm.date.tomorrow, null, vm.query, $rootScope.location, vm.cuisine).then(getDishesSuccessFn, getDishesErrorFn);
             } else {
                 $rootScope.loading = false;
                 vm.loading = false;
@@ -72,10 +76,8 @@
 
         function scrollFn() {
             vm.scrolling = true;
-            if (vm.nextPage && vm.tab === 'today') {
-                dishesFactory.getScheduledDishes(vm.date.today, '', '', vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
-            } else if (vm.nextPage && vm.tab === 'tomorrow') {
-                dishesFactory.getScheduledDishes(vm.date.tomorrow, '', '', vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
+            if (vm.nextPage) {
+                dishesFactory.getScheduledDishes(null, null, null, null, null, vm.nextPage).then(getNextDishesSuccessFn, getNextDishesErrorFn);
             } else {
                 vm.scrollDisabled = true;
                 vm.scrolling = false;
@@ -148,7 +150,7 @@
                         parent: angular.element(document.body),
                         clickOutsideToClose: true,
                         disableParentScroll: false,
-                        locals: {id: id, dish: data.data, width: imgWidth, date:date}
+                        locals: {id: id, dish: data.data, width: imgWidth, date: date}
                     }).then(function (response) {
 
                     });
@@ -165,6 +167,10 @@
         function clear() {
             vm.query = null;
             $rootScope.$broadcast('dish.search', vm.query);
+        }
+
+        function update() {
+            tabChange(vm.tab);
         }
     }
 

@@ -14,6 +14,14 @@
             </md-card-content>
             <md-card-actions layout="column" layout-align="start">
                 <a ng-href="/+{{ ::card.chef }}">+{{ ::card.chef }}</a>
+                    <span class="float-right"><div ng-if="::(!card.deliverable)"><i class="fa fa-exclamation"></i>
+                        {{ ::card.distance.mi }} miles away
+                        <md-tooltip md-direction="bottom">Pickup Only At Your Location</md-tooltip>
+                    </div>
+                        <div ng-if="::(card.deliverable)">
+                            <i class="fa fa-car orange"></i> {{ ::card.distance.mi }} miles away
+                            <md-tooltip md-direction="bottom">Delivery Available</md-tooltip>
+                    </span>
             </md-card-actions>
         </md-card>
     </div>

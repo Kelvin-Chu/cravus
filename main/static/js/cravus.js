@@ -37,6 +37,7 @@
         });
         authFactory.isAuthenticated();
         authFactory.getAuthenticatedAccount();
+        authFactory.getAddress();
         authFactory.refresh();
         cartFactory.init();
         cartFactory.setShipping(2.99);

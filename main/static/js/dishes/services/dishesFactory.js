@@ -52,16 +52,15 @@
             return $http.delete('/api/v1/dishes/' + id + '/');
         }
 
-        function getScheduledDishes(date, username, query, next) {
-            if (next) {
-                return $http.get(next);
-            } else if (username) {
-                return $http.get('/api/v1/accounts/' + username + '/schedule/?date=' + $filter('date')(date, "yyyy-MM-dd"));
-            } else if (query) {
-                return $http.get('/api/v1/schedule/search/?date=' + $filter('date')(date, "yyyy-MM-dd") + '&text=' + query);
-            } else {
-                return $http.get('/api/v1/schedule/?date=' + $filter('date')(date, "yyyy-MM-dd"));
-            }
+        function getScheduledDishes(date, username, query, origin, cuisine, next) {
+            if (next) return $http.get(next);
+            else if (username) return $http.get('/api/v1/accounts/' + username + '/schedule/?date=' + $filter('date')(date, "yyyy-MM-dd"));
+            if (!date) return;
+            var url = '/api/v1/schedule/search/?date=' + $filter('date')(date, "yyyy-MM-dd");
+            if (cuisine) url = url + '&cuisine=' + cuisine;
+            if (query) url = url + '&text=' + query;
+            if (origin) url = url + '&origin=' + origin.replace(new RegExp('#([^\\s]*)','g'), ''); ;
+            return $http.get(url);
         }
 
         function schedule(dish) {

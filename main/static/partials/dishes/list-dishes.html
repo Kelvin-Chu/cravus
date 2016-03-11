@@ -4,10 +4,22 @@
         <div class="row">
             <div class="col-xs-12 list-page">
                 <div class="row">
-                    <div class="text-right col-lg-3 col-lg-offset-9 col-md-4 col-md-offset-8 col-sm-5 col-sm-offset-7">
+                    <div class="col-lg-3 col-md-4 col-sm-5">
+                        <md-input-container class="md-block location" id="cuisine">
+                            <label>Cuisine</label>
+                            <md-select ng-model="vm.cuisine" ng-change="vm.update()">
+                                <md-option ng-repeat="cuisine in vm.cuisines" value="{{ cuisine }}">{{ cuisine }}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-lg-3 col-lg-offset-6 col-md-4 col-md-offset-4 col-sm-5 col-sm-offset-2">
                         <md-input-container class="md-block location">
-                            <label>Location</label>
-                            <input ng-model="vm.location" disabled>
+                            <label>Your Current Location</label>
+                            <input ng-model="$root.location" ng-enter="vm.update()">
+                            <md-tooltip md-direction="bottom">We will use this location to find the chef closest to
+                                you!
+                            </md-tooltip>
                         </md-input-container>
                     </div>
                 </div>

@@ -17,7 +17,7 @@ class DishScheduleIndex(indexes.SearchIndex, indexes.Indexable):
     repeat_daily = indexes.BooleanField(model_attr='repeat_daily')
     description = indexes.NgramField(model_attr='dish__description')
     ingredients = indexes.NgramField()
-    coordinates = indexes.LocationField(model_attr="chef__address")
+    coordinate = indexes.LocationField(model_attr="chef__address__coordinates")
     date = indexes.DateField(model_attr='date')
     thumbnail = indexes.CharField()
 

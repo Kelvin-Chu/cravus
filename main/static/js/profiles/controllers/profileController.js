@@ -71,7 +71,6 @@
                     setDisquss();
                     vm.loading = false;
                     $rootScope.loading = false;
-                    dishesFactory.getDish(id).then(getDishSuccessFn, getDishErrorFn);
                 }
             }
 

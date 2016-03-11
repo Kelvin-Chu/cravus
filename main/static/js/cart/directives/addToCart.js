@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('cravus.cart')
-        .directive('addToCart', ['cartFactory', '$location', function (cartFactory, $location) {
+        .directive('addToCart', ['cartFactory', '$mdDialog', function (cartFactory, $mdDialog) {
             return {
                 restrict: 'E',
                 scope: {
@@ -20,7 +20,7 @@
                     scope.add = function () {
                         cartFactory.addItem(scope.id, scope.name, scope.price, scope.quantity, scope.date, scope.time, scope.data);
                         toast('success', '#globalToast', 'Item added to shopping cart.', 'none');
-                        $location.url('/cart');
+                        $mdDialog.cancel();
                     };
                 }
             }

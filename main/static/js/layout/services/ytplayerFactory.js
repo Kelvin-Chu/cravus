@@ -10,7 +10,7 @@
             $rootScope.showBrand = false;
             try {
                 var player = $('#bgndVideo');
-                $('.mbYTP_wrapper').css({'z-index': '-100'});
+                $('.mbYTP_wrapper').remove();
             } catch (e) {
             }
         }

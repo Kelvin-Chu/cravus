@@ -1,6 +1,7 @@
 import datetime
 
 from django.conf import settings
+from rest_framework.fields import SerializerMethodField
 from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
 from drf_haystack.serializers import HaystackSerializer
 from rest_framework import serializers
@@ -8,6 +9,8 @@ from rest_framework.exceptions import ValidationError
 from cravus.utils import check_img, crop_img
 from dishes.models import Dish, DishSchedule
 from dishes.search_indexes import DishScheduleIndex
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
 
 
 class ImageField(serializers.ImageField):
@@ -29,8 +32,7 @@ class DishSerializer(TaggitSerializer, serializers.ModelSerializer):
         model = Dish
         fields = (
             'id', 'dish', 'chef', 'name', 'description', 'cuisine', 'price', 'image', 'thumbnail', 'ingredients',
-            'created_at',
-            'updated_at')
+            'created_at', 'updated_at')
         read_only_fields = ('id', 'created_at', 'updated_at')
 
     def get_validation_exclusions(self, *args, **kwargs):
@@ -80,8 +82,45 @@ class DishScheduleSerializer(serializers.ModelSerializer):
         return super(DishScheduleSerializer, self).create(validated_data)
 
 
+class DistanceSerializer(serializers.Serializer):
+    mi = serializers.DecimalField(max_digits=6, decimal_places=1)
+    km = serializers.DecimalField(max_digits=6, decimal_places=2)
+
+
+class DeliverableField(serializers.BooleanField):
+    def get_attribute(self, obj):
+        return obj
+
+    def to_representation(self, obj):
+        try:
+            if not obj.object.chef.chef.delivery:
+                return False
+        except Exception:
+            return False
+        try:
+            user = self.context['origin']
+            user = Point(user.coords[1], user.coords[0])
+            bound = Polygon(
+                [(30.389945, -97.760052), (30.433556, -97.730523), (30.393181, -97.644627), (30.349188, -97.672983)])
+            return bound.contains(user)
+        except Exception:
+            return False
+
+
 class DishSearchSerializer(HaystackSerializer):
+    distance = SerializerMethodField()
+    deliverable = DeliverableField(required=False)
+
     class Meta:
         index_classes = [DishScheduleIndex]
-        fields = ["id", "dish", "chef", "name", "cuisine", "description", "repeat_daily", "date", "text", 'thumbnail',
-                  'ingredients']
+        fields = ("id", "dish", "chef", "name", "cuisine", "description", "repeat_daily", "date", "text", 'thumbnail',
+                  'ingredients', 'distance', 'deliverable')
+        read_only_fields = ('id', 'thumbnail', 'distance', 'deliverable')
+
+    @staticmethod
+    def get_distance(obj):
+        try:
+            if hasattr(obj, "distance"):
+                return DistanceSerializer(obj.distance, many=False).data
+        except Exception:
+            return None

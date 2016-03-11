@@ -1,13 +1,19 @@
 import datetime
+
+import googlemaps
+from django.conf import settings
 from django.db.models import Q
 from drf_haystack.viewsets import HaystackViewSet
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import SAFE_METHODS, AllowAny
 from rest_framework.response import Response
+from haystack.utils.geo import Point
 from .utils import DishThrottle
 from .models import Dish, DishSchedule
 from .permissions import IsChefOfDish, IsChef
 from .serializers import DishSerializer, DishScheduleSerializer, DishSearchSerializer
+
+gmaps = googlemaps.Client(key=getattr(settings, 'GOOGLE_API_KEY', None))
 
 
 class DishViewSet(viewsets.ModelViewSet):
@@ -89,11 +95,18 @@ class AccountDishScheduleViewSet(viewsets.ViewSet):
 class DishScheduleSearchView(HaystackViewSet):
     index_models = [DishSchedule]
     serializer_class = DishSearchSerializer
+    origin = None
+
+    def get_serializer_context(self):
+        res = super(DishScheduleSearchView, self).get_serializer_context()
+        res['origin'] = self.origin
+        return res
 
     def filter_queryset(self, queryset):
         text = self.request.query_params.get('text', None)
         date_str = self.request.query_params.get('date', None)
         cuisine = self.request.query_params.get('cuisine', None)
+        origin = self.request.query_params.get('origin', None)
         date = None
         if date_str:
             try:
@@ -106,4 +119,19 @@ class DishScheduleSearchView(HaystackViewSet):
             queryset = queryset.filter(text=text)
         if cuisine:
             queryset = queryset.filter(cuisine=cuisine)
+        if origin:
+            geocode = gmaps.geocode(address=origin, components={'administrative_area': 'TX', 'country': 'US'})
+            if geocode:
+                user_coordinate = Point(geocode[0]['geometry']['location']['lng'],
+                                        geocode[0]['geometry']['location']['lat'])
+                self.origin = user_coordinate
+                queryset = queryset.distance('coordinate', user_coordinate).order_by('distance')
+            else:
+                return queryset
+        elif hasattr(self.request.user, 'longitude') and self.request.user.longitude:
+            user_coordinate = Point(self.request.user.longitude, self.request.user.latitude)
+            queryset = queryset.distance('coordinate', user_coordinate).order_by('distance')
+        else:
+            austin = Point(-97.743061, 30.267153)
+            queryset = queryset.distance('coordinate', austin).order_by('distance')
         return queryset

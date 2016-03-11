@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('cravus.authentication').factory('authFactory', authFactory);
-    authFactory.$inject = ['$rootScope', '$location', '$localStorage', '$http', '$window'];
-    function authFactory($rootScope, $location, $localStorage, $http, $window) {
+    authFactory.$inject = ['$rootScope', '$location', '$localStorage', '$http', '$window', 'cartFactory'];
+    function authFactory($rootScope, $location, $localStorage, $http, $window, cartFactory) {
         function register(vm) {
             return $http.post('/api/v1/accounts/', {email: vm.email, password: vm.password, username: vm.username})
                 .then(registerSuccessFn, registerErrorFn);
@@ -25,7 +25,7 @@
 
             function chefRegisterSuccessFn(data, status, headers, config) {
                 clearErrors(vm);
-                login(vm, '/+' + vm.username);
+                login(vm, '/+' + vm.username + '/settings');
             }
 
             function chefRegisterErrorFn(data, status, headers, config) {
@@ -41,6 +41,7 @@
             function loginSuccessFn(data, status, headers, config) {
                 setAuthenticatedAccount(data.data);
                 clearErrors(vm);
+                getAddress();
                 setDisqusSSO();
 
                 if (page) {
@@ -100,7 +101,32 @@
             }
             $rootScope.authenticatedAccount = JSON.parse($localStorage.authenticatedAccount);
             $rootScope.isChef = $rootScope.authenticatedAccount.is_chef;
+
+
             return $rootScope.authenticatedAccount;
+        }
+
+        function getAddress() {
+            if (!$localStorage.authenticatedAccount) {
+                $rootScope.location = 'Downtown Austin';
+                return;
+            }
+            $http.get('api/v1/address/' + $rootScope.authenticatedAccount.username + '/').then(addressSuccessFn, addressErrorFn);
+
+            function addressSuccessFn(data, status, headers, config) {
+                var result = data.data;
+                $rootScope.location = '';
+                if (result.zip) $rootScope.location = result.zip;
+                if (result.state) $rootScope.location = result.state + ' ' + $rootScope.location;
+                if (result.city)  $rootScope.location = result.city + ', ' + $rootScope.location;
+                if (result.address1) $rootScope.location = result.address1 + ', ' + $rootScope.location;
+                $rootScope.location = $rootScope.location.replace(/(^\s*,)|(,\s*$)/g, '');
+                if ($rootScope.location === '') $rootScope.location = 'Downtown Austin';
+            }
+
+            function addressErrorFn(data, status, headers, config) {
+                $rootScope.location = 'Downtown Austin';
+            }
         }
 
         function isAuthenticated() {
@@ -123,6 +149,8 @@
             delete $rootScope.isChef;
             delete $rootScope.disqusPayload;
             delete $rootScope.disqusPublic;
+            $rootScope.location = 'Downtown Austin';
+            cartFactory.empty();
         }
 
         return {
@@ -138,7 +166,8 @@
             verify: verify,
             logout: logout,
             setAuthenticatedAccount: setAuthenticatedAccount,
-            unauthenticate: unauthenticate
+            unauthenticate: unauthenticate,
+            getAddress: getAddress
         };
     }
 

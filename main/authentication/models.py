@@ -68,8 +68,8 @@ class Account(AbstractBaseUser):
     last_name = models.CharField(max_length=50, blank=True)
     mobile = models.CharField(max_length=16, unique=True, blank=True, null=True)
     avatar = ProcessedImageField(upload_to=generate_avatar_filename,
-                                 processors=[Transpose(Transpose.AUTO), ResizeToFit(1024, 1024, False)],
-                                 format='JPEG', options={'quality': 90}, blank=True)
+                                 processors=[Transpose(Transpose.AUTO), ResizeToFit(600, 600, False)],
+                                 format='JPEG', options={'quality': 85}, blank=True)
     is_admin = models.BooleanField(default=False)
     is_chef = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -108,10 +108,10 @@ class Address(models.Model):
     address1 = models.CharField(max_length=150, blank=True)
     address2 = models.CharField(max_length=150, blank=True)
     city = models.CharField(max_length=50, blank=True)
-    state = models.CharField(max_length=2, choices=STATE_CHOICES, default='TX')
+    state = models.CharField(max_length=2, choices=STATE_CHOICES, default=None, blank=True, null=True)
     zip = models.CharField(max_length=10, blank=True)
-    longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -124,14 +124,14 @@ class Address(models.Model):
 
 
 class Chef(models.Model):
-    account = models.OneToOneField(Account)
+    account = models.OneToOneField(Account, related_name="chef", on_delete=models.CASCADE, primary_key=True)
     tagline = models.TextField(max_length=150, blank=True)
     bio = models.TextField(max_length=500, blank=True)
     cuisine = models.CharField(max_length=50, choices=CUISINE_CHOICES, default='')
     type = models.CharField(max_length=50, choices=KITCHEN_TYPE_CHOICES, default='')
-    delivery = models.BooleanField(default=False)
-    pickup = models.BooleanField(default=False)
-    credit = models.BooleanField(default=False)
+    delivery = models.BooleanField(default=True)
+    pickup = models.BooleanField(default=True)
+    credit = models.BooleanField(default=True)
     background = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
 

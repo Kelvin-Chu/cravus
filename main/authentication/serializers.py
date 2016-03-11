@@ -6,7 +6,6 @@ from authentication.models import Account, Address
 from authentication.utils import trim_mobile
 from cravus.utils import check_img, crop_img
 
-
 gmaps = googlemaps.Client(key=getattr(settings, 'GOOGLE_API_KEY', None))
 
 
@@ -50,7 +49,7 @@ class MobileField(serializers.CharField):
         request = self.context.get("request")
         if request and hasattr(request, "user"):
             user = request.user
-        if obj.is_chef or obj == user or not request:
+        if obj == user or not request:
             if obj.mobile:
                 return obj.mobile[1:]
         return ""
@@ -65,11 +64,20 @@ class MobileField(serializers.CharField):
         return validated_data
 
 
+class ImageField(serializers.ImageField):
+    def to_representation(self, obj):
+        img = super(ImageField, self).to_representation(obj)
+        if not img:
+            img = getattr(settings, 'DEFAULT_CHEF_IMAGE', None)
+        return img
+
+
 class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
     confirm_password = serializers.CharField(write_only=True, required=False)
     email = EmailField(required=False)  # The email field should only be populated if it's the account owner
     mobile = MobileField(required=False)
+    avatar = ImageField(required=False)
 
     class Meta:
         model = Account
@@ -140,7 +148,9 @@ class AddressSerializer(serializers.ModelSerializer):
         instance.city = validated_data.get('city', instance.city)
         instance.state = validated_data.get('state', instance.state)
         instance.zip = validated_data.get('zip', instance.zip)
-        geocode = gmaps.geocode('%s, %s, %s %s' % (instance.address1, instance.city, instance.state, instance.zip))
+        geocode = gmaps.geocode(
+            address='%s, %s, %s %s' % (instance.address1, instance.city, instance.state, instance.zip),
+            components={'administrative_area': 'TX', 'country': 'US'})
         if geocode:
             instance.latitude = geocode[0]['geometry']['location']['lat']
             instance.longitude = geocode[0]['geometry']['location']['lng']
