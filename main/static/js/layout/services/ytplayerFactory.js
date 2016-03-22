@@ -10,7 +10,10 @@
             $rootScope.showBrand = false;
             try {
                 var player = $('#bgndVideo');
-                $('.mbYTP_wrapper').remove();
+                $timeout(function () {
+                    player.YTPStop();
+                    $('.mbYTP_wrapper').remove();
+                }, 500);
             } catch (e) {
             }
         }

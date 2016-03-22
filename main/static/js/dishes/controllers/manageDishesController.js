@@ -113,6 +113,7 @@
         }
 
         function add() {
+            vm.loading = true;
             clearErrors(vm);
             var input = document.querySelector(".md-chip-input-container > input");
             var last = input.value;

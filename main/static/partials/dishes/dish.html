@@ -16,7 +16,7 @@
                 <a ng-href="/+{{ ::card.chef }}">+{{ ::card.chef }}</a>
                     <span class="float-right"><div ng-if="::(!card.deliverable)"><i class="fa fa-exclamation"></i>
                         {{ ::card.distance.mi }} miles away
-                        <md-tooltip md-direction="bottom">Pickup Only At Your Location</md-tooltip>
+                        <md-tooltip md-direction="bottom">Pickup Only</md-tooltip>
                     </div>
                         <div ng-if="::(card.deliverable)">
                             <i class="fa fa-car orange"></i> {{ ::card.distance.mi }} miles away

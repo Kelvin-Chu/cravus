@@ -1,5 +1,6 @@
 import uuid
 import os
+from django.conf import settings
 from django.utils.datetime_safe import datetime
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
@@ -101,6 +102,14 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return self.is_admin
+
+    def get_avatar(self):
+        if self.avatar:
+            return self.avatar.url
+        elif self.is_chef:
+            return getattr(settings, 'DEFAULT_CHEF_IMAGE', None)
+        else:
+            return getattr(settings, 'DEFAULT_PROFILE_IMAGE', None)
 
 
 class Address(models.Model):

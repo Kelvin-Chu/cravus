@@ -24,6 +24,12 @@
                                                        md-max-date="vm.dish.maxDate" ng-hide="vm.dish.repeat_daily"
                                                        ng-change="vm.getScheduledDishes()"></md-datepicker>
                                     </div>
+                                    <div>
+                                        <div ng-if="vm.dish.repeat_daily" class="alert alert-warning" role="alert">
+                                            Adding a dish in repeat daily will remove the dish from its previous
+                                            schedule.
+                                        </div>
+                                    </div>
                                     <div layout-gt-xs="row">
                                         <md-input-container class="md-block" flex-gt-xs>
                                             <label>Search</label>

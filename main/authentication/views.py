@@ -4,6 +4,7 @@ import base64
 import hmac
 import time
 from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
 from rest_framework import viewsets, status, mixins
 from rest_framework.decorators import api_view, detail_route, parser_classes, throttle_classes, permission_classes
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
@@ -110,10 +111,12 @@ def disqus(request):
     public = getattr(settings, 'DISQUS_PUBLIC_KEY', None)
     if not secret or not public:
         Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    full_url = ''.join(['http://', get_current_site(request).domain, request.user.get_avatar()])
     data = json.dumps({
         'id': request.user.id,
         'username': request.user.username,
         'email': request.user.email,
+        'avatar': full_url
     })
     timestamp = int(time.time())
     message = base64.b64encode(bytes(data, 'ascii'))
